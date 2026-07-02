@@ -1,0 +1,152 @@
+{
+  "mapCollections": {
+    "py": {
+      "map": {
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/main.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/main.py",
+          "totalLinesOfCode": 10,
+          "activeLinesOfCode": 4,
+          "methodDefined": 1,
+          "methodCalls": 0,
+          "variables": 0
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/__init__.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/__init__.py",
+          "totalLinesOfCode": 0,
+          "activeLinesOfCode": 0,
+          "methodDefined": 0,
+          "methodCalls": 0,
+          "variables": 0
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/api/__init__.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/api/__init__.py",
+          "totalLinesOfCode": 0,
+          "activeLinesOfCode": 0,
+          "methodDefined": 0,
+          "methodCalls": 0,
+          "variables": 0
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/api/routes.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/api/routes.py",
+          "totalLinesOfCode": 43,
+          "activeLinesOfCode": 19,
+          "methodDefined": 3,
+          "methodCalls": 7,
+          "variables": 6
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/config/__init__.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/config/__init__.py",
+          "totalLinesOfCode": 0,
+          "activeLinesOfCode": 0,
+          "methodDefined": 0,
+          "methodCalls": 0,
+          "variables": 0
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/config/settings.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/config/settings.py",
+          "totalLinesOfCode": 52,
+          "activeLinesOfCode": 26,
+          "methodDefined": 2,
+          "methodCalls": 5,
+          "variables": 13
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/crypto/__init__.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/crypto/__init__.py",
+          "totalLinesOfCode": 0,
+          "activeLinesOfCode": 0,
+          "methodDefined": 0,
+          "methodCalls": 0,
+          "variables": 0
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/crypto/cipher.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/crypto/cipher.py",
+          "totalLinesOfCode": 37,
+          "activeLinesOfCode": 17,
+          "methodDefined": 2,
+          "methodCalls": 7,
+          "variables": 2
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/crypto/keys.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/crypto/keys.py",
+          "totalLinesOfCode": 16,
+          "activeLinesOfCode": 6,
+          "methodDefined": 1,
+          "methodCalls": 1,
+          "variables": 0
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/services/__init__.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/services/__init__.py",
+          "totalLinesOfCode": 0,
+          "activeLinesOfCode": 0,
+          "methodDefined": 0,
+          "methodCalls": 0,
+          "variables": 0
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/services/auth.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/services/auth.py",
+          "totalLinesOfCode": 29,
+          "activeLinesOfCode": 14,
+          "methodDefined": 2,
+          "methodCalls": 4,
+          "variables": 3
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/services/user.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/services/user.py",
+          "totalLinesOfCode": 19,
+          "activeLinesOfCode": 8,
+          "methodDefined": 1,
+          "methodCalls": 3,
+          "variables": 3
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/utils/__init__.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/utils/__init__.py",
+          "totalLinesOfCode": 0,
+          "activeLinesOfCode": 0,
+          "methodDefined": 0,
+          "methodCalls": 0,
+          "variables": 0
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/utils/hashing.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/utils/hashing.py",
+          "totalLinesOfCode": 26,
+          "activeLinesOfCode": 12,
+          "methodDefined": 2,
+          "methodCalls": 4,
+          "variables": 1
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/utils/tokens.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/utils/tokens.py",
+          "totalLinesOfCode": 17,
+          "activeLinesOfCode": 8,
+          "methodDefined": 1,
+          "methodCalls": 2,
+          "variables": 0
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/setup.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/setup.py",
+          "totalLinesOfCode": 15,
+          "activeLinesOfCode": 14,
+          "methodDefined": 0,
+          "methodCalls": 0,
+          "variables": 0
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/tests/__init__.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/tests/__init__.py",
+          "totalLinesOfCode": 0,
+          "activeLinesOfCode": 0,
+          "methodDefined": 0,
+          "methodCalls": 0,
+          "variables": 0
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/tests/test_auth.py": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/tests/test_auth.py",
+          "totalLinesOfCode": 14,
+          "activeLinesOfCode": 7,
+          "methodDefined": 2,
+          "methodCalls": 0,
+          "variables": 1
+        }
+      }
+    }
+  }
+}

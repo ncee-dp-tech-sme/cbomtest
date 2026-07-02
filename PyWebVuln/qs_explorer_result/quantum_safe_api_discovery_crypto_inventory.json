@@ -1,0 +1,333 @@
+{
+  "scanId": "30c064e53b444369b5460b0a86fb11b0",
+  "applicationId": "PyWebVuln",
+  "applicationVersion": "1.0.4",
+  "scanTime": "2026-07-02T21:54:57.984364Z",
+  "totalCryptoArtifacts": "24",
+  "metadata": {
+    "provider": {
+      "name": "IBM Quantum Safe Explorer",
+      "version": "2.3.1.0"
+    },
+    "properties": []
+  },
+  "findings": [
+    {
+      "fileType": "py",
+      "children": [
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/crypto/keys.py",
+          "cryptoArtifacts": 2,
+          "cryptoInfo": [
+            {
+              "functionName": "hmac.new",
+              "library": "hmac",
+              "locations": [
+                {
+                  "line": 15,
+                  "startColumn": 17,
+                  "endColumn": 20
+                }
+              ]
+            },
+            {
+              "functionName": "hmac.HMAC.hexdigest",
+              "library": "hmac",
+              "locations": [
+                {
+                  "line": 15,
+                  "startColumn": 51,
+                  "endColumn": 60
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/utils/hashing.py",
+          "cryptoArtifacts": 1,
+          "cryptoInfo": [
+            {
+              "functionName": "cryptography.hazmat.primitives.asymmetric.rsa.generate_private_key",
+              "library": "cryptography",
+              "locations": [
+                {
+                  "line": 12,
+                  "startColumn": 16,
+                  "endColumn": 36
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/api/routes.py",
+          "cryptoArtifacts": 6,
+          "cryptoInfo": [
+            {
+              "functionName": "Crypto.Cipher.AES.new",
+              "library": "Crypto",
+              "locations": [
+                {
+                  "line": 15,
+                  "startColumn": 18,
+                  "endColumn": 21
+                }
+              ]
+            },
+            {
+              "functionName": "Crypto.Cipher._mode_cbc.CbcMode.encrypt",
+              "library": "Crypto",
+              "locations": [
+                {
+                  "line": 17,
+                  "startColumn": 24,
+                  "endColumn": 31
+                }
+              ]
+            },
+            {
+              "functionName": "Crypto.Cipher.Blowfish.new",
+              "library": "Crypto",
+              "locations": [
+                {
+                  "line": 31,
+                  "startColumn": 17,
+                  "endColumn": 20
+                }
+              ]
+            },
+            {
+              "functionName": "Crypto.Cipher._mode_ecb.EcbMode.encrypt",
+              "library": "Crypto",
+              "locations": [
+                {
+                  "line": 34,
+                  "startColumn": 19,
+                  "endColumn": 26
+                }
+              ]
+            },
+            {
+              "functionName": "hashlib.md5",
+              "library": "hashlib",
+              "locations": [
+                {
+                  "line": 42,
+                  "startColumn": 20,
+                  "endColumn": 23
+                }
+              ]
+            },
+            {
+              "functionName": "hashlib.hash.hexdigest",
+              "library": "hashlib",
+              "locations": [
+                {
+                  "line": 42,
+                  "startColumn": 43,
+                  "endColumn": 52
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/utils/tokens.py",
+          "cryptoArtifacts": 1,
+          "cryptoInfo": [
+            {
+              "functionName": "cryptography.hazmat.primitives.asymmetric.padding.PKCS1v15",
+              "library": "cryptography",
+              "locations": [
+                {
+                  "line": 15,
+                  "startColumn": 22,
+                  "endColumn": 30
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/crypto/cipher.py",
+          "cryptoArtifacts": 5,
+          "cryptoInfo": [
+            {
+              "functionName": "hashlib.sha1",
+              "library": "hashlib",
+              "locations": [
+                {
+                  "line": 13,
+                  "startColumn": 17,
+                  "endColumn": 21
+                }
+              ]
+            },
+            {
+              "functionName": "hashlib.hash.update",
+              "library": "hashlib",
+              "locations": [
+                {
+                  "line": 16,
+                  "startColumn": 15,
+                  "endColumn": 21
+                }
+              ]
+            },
+            {
+              "functionName": "hashlib.hash.hexdigest",
+              "library": "hashlib",
+              "locations": [
+                {
+                  "line": 17,
+                  "startColumn": 14,
+                  "endColumn": 23
+                }
+              ]
+            },
+            {
+              "functionName": "cryptography.hazmat.primitives.asymmetric.padding.PKCS1v15",
+              "library": "cryptography",
+              "locations": [
+                {
+                  "line": 26,
+                  "startColumn": 45,
+                  "endColumn": 53
+                }
+              ]
+            },
+            {
+              "functionName": "cryptography.hazmat.primitives.hashes.SHA1",
+              "library": "cryptography",
+              "locations": [
+                {
+                  "line": 26,
+                  "startColumn": 64,
+                  "endColumn": 68
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/services/user.py",
+          "cryptoArtifacts": 2,
+          "cryptoInfo": [
+            {
+              "functionName": "Crypto.Cipher.AES.new",
+              "library": "Crypto",
+              "locations": [
+                {
+                  "line": 16,
+                  "startColumn": 18,
+                  "endColumn": 21
+                }
+              ]
+            },
+            {
+              "functionName": "Crypto.Cipher._mode_cbc.CbcMode.encrypt",
+              "library": "Crypto",
+              "locations": [
+                {
+                  "line": 18,
+                  "startColumn": 19,
+                  "endColumn": 26
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/config/settings.py",
+          "cryptoArtifacts": 1,
+          "cryptoInfo": [
+            {
+              "functionName": "hashlib.pbkdf2_hmac",
+              "library": "hashlib",
+              "locations": [
+                {
+                  "line": 39,
+                  "startColumn": 20,
+                  "endColumn": 31
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/services/auth.py",
+          "cryptoArtifacts": 6,
+          "cryptoInfo": [
+            {
+              "functionName": "Crypto.Cipher.AES.new",
+              "library": "Crypto",
+              "locations": [
+                {
+                  "line": 15,
+                  "startColumn": 18,
+                  "endColumn": 21
+                }
+              ]
+            },
+            {
+              "functionName": "Crypto.Cipher._mode_ecb.EcbMode.encrypt",
+              "library": "Crypto",
+              "locations": [
+                {
+                  "line": 17,
+                  "startColumn": 36,
+                  "endColumn": 43
+                }
+              ]
+            },
+            {
+              "functionName": "cryptography.hazmat.primitives.asymmetric.ec.generate_private_key",
+              "library": "cryptography",
+              "locations": [
+                {
+                  "line": 27,
+                  "startColumn": 17,
+                  "endColumn": 37
+                }
+              ]
+            },
+            {
+              "functionName": "cryptography.hazmat.primitives.asymmetric.ec.SECP256R1",
+              "library": "cryptography",
+              "locations": [
+                {
+                  "line": 27,
+                  "startColumn": 38,
+                  "endColumn": 47
+                }
+              ]
+            },
+            {
+              "functionName": "cryptography.hazmat.primitives.asymmetric.ec.EllipticCurvePrivateKey.exchange",
+              "library": "cryptography",
+              "locations": [
+                {
+                  "line": 28,
+                  "startColumn": 22,
+                  "endColumn": 30
+                }
+              ]
+            },
+            {
+              "functionName": "cryptography.hazmat.primitives.asymmetric.ec.ECDH",
+              "library": "cryptography",
+              "locations": [
+                {
+                  "line": 28,
+                  "startColumn": 31,
+                  "endColumn": 35
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

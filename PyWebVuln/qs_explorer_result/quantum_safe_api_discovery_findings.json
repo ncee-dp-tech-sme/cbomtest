@@ -1,0 +1,1462 @@
+{
+  "scanId": "30c064e53b444369b5460b0a86fb11b0",
+  "name": "crypto artifacts",
+  "applicationId": "vulnpython",
+  "applicationVersion": "1.0.7a",
+  "scanTime": "2026-07-02T21:57:57.990792Z",
+  "num_artifacts": 24,
+  "repositoryId": "3487533",
+  "repositoryUrl": "https://ibm.github.com/erwinfri/vulnpython",
+  "metadata": {
+    "provider": {
+      "name": "IBM Quantum Safe Explorer",
+      "version": "2.3.1.0"
+    },
+    "properties": []
+  },
+  "children": [
+    {
+      "file_type": "py",
+      "children": [
+        {
+          "file_id": "67a87680-a3a8-4b46-bab2-656e74c0d183",
+          "name": "keys.py",
+          "full_name": "vulnpython/crypto/keys.py",
+          "num_artifacts": 2,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "hmac.new",
+              "tooltip": [
+                "hmac.new"
+              ],
+              "crypto_properties": {
+                "library": "hmac",
+                "name": "hmac.new",
+                "primitive": "mac",
+                "variant": "HMAC",
+                "assetType": "algorithm",
+                "algorithmFamily": "HMAC"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "vulnpython/crypto/keys.py",
+              "call_line": 15,
+              "start": 17,
+              "end": 20,
+              "startScoped": 17,
+              "endScoped": 20,
+              "lineHash": "221f3978b2786bed9d509743b5aba737df93354566bbd1028d8ddb7dab91e3a9",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 non-compliant",
+                  "isUnCompliant": true,
+                  "message": "Python cryptographic modules cryptography, cryptojwt and hashlib are only certified for FIPS 140-3."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "hmac.HMAC.hexdigest",
+              "tooltip": [
+                "hmac.HMAC.hexdigest"
+              ],
+              "crypto_properties": {
+                "library": "hmac",
+                "name": "hmac.HMAC.hexdigest",
+                "primitive": "mac",
+                "assetType": "algorithm",
+                "cryptoFunction": "digest",
+                "algorithmFamily": "HMAC"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "vulnpython/crypto/keys.py",
+              "call_line": 15,
+              "start": 51,
+              "end": 60,
+              "startScoped": 51,
+              "endScoped": 60,
+              "lineHash": "221f3978b2786bed9d509743b5aba737df93354566bbd1028d8ddb7dab91e3a9",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 non-compliant",
+                  "isUnCompliant": true,
+                  "message": "Python cryptographic modules cryptography, cryptojwt and hashlib are only certified for FIPS 140-3."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "550f6ec5-699c-474c-a8f6-8e1dcf27c3ee",
+          "name": "hashing.py",
+          "full_name": "vulnpython/utils/hashing.py",
+          "num_artifacts": 1,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "cryptography.hazmat.primitives.asymmetric.rsa.generate_private_key",
+              "tooltip": [
+                "cryptography.hazmat.primitives.asymmetric.rsa.generate_private_key"
+              ],
+              "crypto_properties": {
+                "library": "cryptography",
+                "name": "cryptography.hazmat.primitives.asymmetric.rsa.generate_private_key",
+                "primitive": "pke",
+                "variant": "RSA",
+                "assetType": "algorithm",
+                "cryptoFunction": "keygen"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "4",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of non-quantum-resistant public-key algorithms (must be ML-KEM, ML-DSA, SLH-DSA): RSA",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RSA",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/utils/hashing.py",
+                          "line": 12,
+                          "startColumn": 16,
+                          "endColumn": 36
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "vulnerabilityId": "18",
+                  "classification": "cwe326",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/326.html",
+                  "debugMessage": "Cryptographic keys should be robust. Use a key length of more than 1024 bits.",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RSA",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/utils/hashing.py",
+                          "line": 12,
+                          "startColumn": 16,
+                          "endColumn": 36
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/utils/hashing.py",
+              "call_line": 12,
+              "start": 16,
+              "end": 36,
+              "startScoped": 16,
+              "endScoped": 36,
+              "lineHash": "2de8be820ae141157fd452cbe68e8e5f8368d9a65017eaf2e59590ef770a050e",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 capable",
+                  "isUnCompliant": true,
+                  "message": "Use of asymmetric key pair generation algorithm RSA is FIPS compliant, provided approved key sizes [2048, 3072, 4096] are used."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Quantum Safe",
+                  "isUnCompliant": true,
+                  "message": "The asset has an asymmetric primitive and does not match with the Quantum Safe whitelists of OIDs and algorithms."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "6f9c0b51-8c11-4e86-b7d1-f1e0dba37d8c",
+          "name": "routes.py",
+          "full_name": "vulnpython/api/routes.py",
+          "num_artifacts": 6,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "Crypto.Cipher.AES.new",
+              "tooltip": [
+                "Crypto.Cipher.AES.new"
+              ],
+              "crypto_properties": {
+                "library": "Crypto",
+                "name": "Crypto.Cipher.AES.new",
+                "variant": "AES",
+                "assetType": "algorithm"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "3",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use a secure cipher mode. For AES, the weakest modes are CBC (Cipher Block Chaining) and ECB (Electronic Codebook), as they are either vulnerable to padding oracles or do not provide authentication mechanisms.",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "AES",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/api/routes.py",
+                          "line": 15,
+                          "startColumn": 18,
+                          "endColumn": 21
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/api/routes.py",
+              "call_line": 15,
+              "start": 18,
+              "end": 21,
+              "startScoped": 18,
+              "endScoped": 21,
+              "lineHash": "124fc96e9165095f4d6be4fa54452917341ddcb3172c367fad2d6e14f33a313f",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The asset primitive was not set, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "Crypto.Cipher._mode_cbc.CbcMode.encrypt",
+              "tooltip": [
+                "Crypto.Cipher._mode_cbc.CbcMode.encrypt"
+              ],
+              "crypto_properties": {
+                "library": "Crypto",
+                "name": "Crypto.Cipher._mode_cbc.CbcMode.encrypt",
+                "primitive": "block-cipher",
+                "assetType": "algorithm",
+                "cryptoFunction": "encrypt",
+                "mode": "cbc"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "20",
+                  "classification": "cwe1204",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/1204.html",
+                  "debugMessage": "Use a dynamically-generated, random initialization vector (IV).",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "primitive",
+                      "value": "block-cipher",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/api/routes.py",
+                          "line": 17,
+                          "startColumn": 24,
+                          "endColumn": 31
+                        }
+                      }
+                    },
+                    {
+                      "type": "mode",
+                      "value": "cbc",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/api/routes.py",
+                          "line": 17,
+                          "startColumn": 24,
+                          "endColumn": 31
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/api/routes.py",
+              "call_line": 17,
+              "start": 24,
+              "end": 31,
+              "startScoped": 24,
+              "endScoped": 31,
+              "lineHash": "dc0e1793b5b1d2c84551b8d935d6d7782d4b6cf2386679999490cba1588164f5",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "Crypto.Cipher.Blowfish.new",
+              "tooltip": [
+                "Crypto.Cipher.Blowfish.new"
+              ],
+              "crypto_properties": {
+                "library": "Crypto",
+                "name": "Crypto.Cipher.Blowfish.new",
+                "variant": "Blowfish",
+                "assetType": "algorithm"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "2",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of broken or risky cryptographic algorithm: Blowfish",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "Blowfish",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/api/routes.py",
+                          "line": 31,
+                          "startColumn": 17,
+                          "endColumn": 20
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/api/routes.py",
+              "call_line": 31,
+              "start": 17,
+              "end": 20,
+              "startScoped": 17,
+              "endScoped": 20,
+              "lineHash": "a5e396e9a589b1e86f04fcc2b835ca4e20b32cec5f2df5e894f699d667dc4133",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The asset primitive was not set, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "Crypto.Cipher._mode_ecb.EcbMode.encrypt",
+              "tooltip": [
+                "Crypto.Cipher._mode_ecb.EcbMode.encrypt"
+              ],
+              "crypto_properties": {
+                "library": "Crypto",
+                "name": "Crypto.Cipher._mode_ecb.EcbMode.encrypt",
+                "primitive": "block-cipher",
+                "assetType": "algorithm",
+                "cryptoFunction": "encrypt",
+                "mode": "ecb"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "3",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of insecure cipher mode ECB (Electronic Codebook).",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/api/routes.py",
+                          "line": 34,
+                          "startColumn": 19,
+                          "endColumn": 26
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/api/routes.py",
+              "call_line": 34,
+              "start": 19,
+              "end": 26,
+              "startScoped": 19,
+              "endScoped": 26,
+              "lineHash": "6548619ccc51abb11e583d72eec700b42d1a64a0ecb02812bb4b8eefadfd73e6",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "title": "hashlib.md5",
+              "tooltip": [
+                "hashlib.md5"
+              ],
+              "crypto_properties": {
+                "library": "hashlib",
+                "name": "hashlib.md5",
+                "primitive": "hash",
+                "variant": "MD5",
+                "oid": "1.2.840.113549.2.5",
+                "digestSize": "128",
+                "assetType": "algorithm",
+                "blockSize": "512",
+                "algorithmFamily": "MD5"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "2",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of broken or risky cryptographic algorithm: MD5",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "MD5",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/api/routes.py",
+                          "line": 42,
+                          "startColumn": 20,
+                          "endColumn": 23
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "vulnerabilityId": "12",
+                  "classification": "cwe328",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/328.html",
+                  "debugMessage": "Use of weak hash algorithm: MD5",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "MD5",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/api/routes.py",
+                          "line": 42,
+                          "startColumn": 20,
+                          "endColumn": 23
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/api/routes.py",
+              "call_line": 42,
+              "start": 20,
+              "end": 23,
+              "startScoped": 20,
+              "endScoped": 23,
+              "lineHash": "668c862eb97c9de4474c0e6b7f730506234180686df293a0f4df3bf69883cf9b",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 non-compliant",
+                  "isUnCompliant": true,
+                  "message": "Use of non-approved hash algorithm MD5"
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            },
+            {
+              "id": 5,
+              "title": "hashlib.hash.hexdigest",
+              "tooltip": [
+                "hashlib.hash.hexdigest"
+              ],
+              "crypto_properties": {
+                "library": "hashlib",
+                "name": "hashlib.hash.hexdigest",
+                "assetType": "algorithm",
+                "cryptoFunction": "digest"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "vulnpython/api/routes.py",
+              "call_line": 42,
+              "start": 43,
+              "end": 52,
+              "startScoped": 43,
+              "endScoped": 52,
+              "lineHash": "668c862eb97c9de4474c0e6b7f730506234180686df293a0f4df3bf69883cf9b",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "d502aa05-325a-4a43-a3f4-5153441c410f",
+          "name": "tokens.py",
+          "full_name": "vulnpython/utils/tokens.py",
+          "num_artifacts": 1,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "cryptography.hazmat.primitives.asymmetric.padding.PKCS1v15",
+              "tooltip": [
+                "cryptography.hazmat.primitives.asymmetric.padding.PKCS1v15"
+              ],
+              "crypto_properties": {
+                "library": "cryptography",
+                "name": "cryptography.hazmat.primitives.asymmetric.padding.PKCS1v15",
+                "variant": "RSA-PKCS1-1.5",
+                "assetType": "algorithm",
+                "padding": "pkcs1v15"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "4",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of non-quantum-resistant public-key algorithms (must be ML-KEM, ML-DSA, SLH-DSA): RSA-PKCS1-1.5",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RSA-PKCS1-1.5",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/utils/tokens.py",
+                          "line": 15,
+                          "startColumn": 22,
+                          "endColumn": 30
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/utils/tokens.py",
+              "call_line": 15,
+              "start": 22,
+              "end": 30,
+              "startScoped": 22,
+              "endScoped": 30,
+              "lineHash": "0208c770d0187317d2a68043cf9c8d4771426cac6f378fd0fa55b9771608c93a",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The asset primitive was not set, which does not allow further categorization."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "35e6b283-1b08-4b92-8c2d-508b437a3267",
+          "name": "cipher.py",
+          "full_name": "vulnpython/crypto/cipher.py",
+          "num_artifacts": 5,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "hashlib.sha1",
+              "tooltip": [
+                "hashlib.sha1"
+              ],
+              "crypto_properties": {
+                "library": "hashlib",
+                "name": "hashlib.sha1",
+                "primitive": "hash",
+                "variant": "SHA-1",
+                "oid": "1.3.14.3.2.18",
+                "digestSize": "160",
+                "assetType": "algorithm",
+                "blockSize": "512",
+                "algorithmFamily": "SHA-1"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "2",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of broken or risky cryptographic algorithm: SHA-1",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "SHA-1",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/crypto/cipher.py",
+                          "line": 13,
+                          "startColumn": 17,
+                          "endColumn": 21
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "vulnerabilityId": "12",
+                  "classification": "cwe328",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/328.html",
+                  "debugMessage": "Use of weak hash algorithm: SHA-1",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "SHA-1",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/crypto/cipher.py",
+                          "line": 13,
+                          "startColumn": 17,
+                          "endColumn": 21
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/crypto/cipher.py",
+              "call_line": 13,
+              "start": 17,
+              "end": 21,
+              "startScoped": 17,
+              "endScoped": 21,
+              "lineHash": "144804666982f12b0766079ae80b4eddde343054b437073e54e621b93ac5b32a",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 compliant",
+                  "isUnCompliant": false,
+                  "message": "Use of FIPS approved message digest algorithm SHA-1."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "hashlib.hash.update",
+              "tooltip": [
+                "hashlib.hash.update"
+              ],
+              "crypto_properties": {
+                "library": "hashlib",
+                "name": "hashlib.hash.update",
+                "assetType": "algorithm"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "vulnpython/crypto/cipher.py",
+              "call_line": 16,
+              "start": 15,
+              "end": 21,
+              "startScoped": 15,
+              "endScoped": 21,
+              "lineHash": "5ced6606d28e8c158e9737b251c966b5d1aa88ddcd74920901927c9e2bab49fb",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "hashlib.hash.hexdigest",
+              "tooltip": [
+                "hashlib.hash.hexdigest"
+              ],
+              "crypto_properties": {
+                "library": "hashlib",
+                "name": "hashlib.hash.hexdigest",
+                "assetType": "algorithm",
+                "cryptoFunction": "digest"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "vulnpython/crypto/cipher.py",
+              "call_line": 17,
+              "start": 14,
+              "end": 23,
+              "startScoped": 14,
+              "endScoped": 23,
+              "lineHash": "28a1c99200b09ed2cce036577e02d23287521a3d36d0ced511cb0695221b4256",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "cryptography.hazmat.primitives.asymmetric.padding.PKCS1v15",
+              "tooltip": [
+                "cryptography.hazmat.primitives.asymmetric.padding.PKCS1v15"
+              ],
+              "crypto_properties": {
+                "library": "cryptography",
+                "name": "cryptography.hazmat.primitives.asymmetric.padding.PKCS1v15",
+                "variant": "RSA-PKCS1-1.5",
+                "assetType": "algorithm",
+                "padding": "pkcs1v15"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "4",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of non-quantum-resistant public-key algorithms (must be ML-KEM, ML-DSA, SLH-DSA): RSA-PKCS1-1.5",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RSA-PKCS1-1.5",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/crypto/cipher.py",
+                          "line": 26,
+                          "startColumn": 45,
+                          "endColumn": 53
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/crypto/cipher.py",
+              "call_line": 26,
+              "start": 45,
+              "end": 53,
+              "startScoped": 45,
+              "endScoped": 53,
+              "lineHash": "964eda39197642db08eb1ddc8e2bf7d4334a6ce4739e2aeb43828dddc7a0d60e",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The asset primitive was not set, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "title": "cryptography.hazmat.primitives.hashes.SHA1",
+              "tooltip": [
+                "cryptography.hazmat.primitives.hashes.SHA1"
+              ],
+              "crypto_properties": {
+                "library": "cryptography",
+                "name": "cryptography.hazmat.primitives.hashes.SHA1",
+                "primitive": "hash",
+                "variant": "SHA-1",
+                "oid": "1.3.14.3.2.18",
+                "digestSize": "160",
+                "assetType": "algorithm",
+                "blockSize": "512",
+                "algorithmFamily": "SHA-1"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "2",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of broken or risky cryptographic algorithm: SHA-1",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "SHA-1",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/crypto/cipher.py",
+                          "line": 26,
+                          "startColumn": 64,
+                          "endColumn": 68
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "vulnerabilityId": "12",
+                  "classification": "cwe328",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/328.html",
+                  "debugMessage": "Use of weak hash algorithm: SHA-1",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "SHA-1",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/crypto/cipher.py",
+                          "line": 26,
+                          "startColumn": 64,
+                          "endColumn": 68
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/crypto/cipher.py",
+              "call_line": 26,
+              "start": 64,
+              "end": 68,
+              "startScoped": 64,
+              "endScoped": 68,
+              "lineHash": "964eda39197642db08eb1ddc8e2bf7d4334a6ce4739e2aeb43828dddc7a0d60e",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 compliant",
+                  "isUnCompliant": false,
+                  "message": "Use of FIPS approved message digest algorithm SHA-1."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "f169795d-655a-487e-aac1-e19e387f74b5",
+          "name": "user.py",
+          "full_name": "vulnpython/services/user.py",
+          "num_artifacts": 2,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "Crypto.Cipher.AES.new",
+              "tooltip": [
+                "Crypto.Cipher.AES.new"
+              ],
+              "crypto_properties": {
+                "library": "Crypto",
+                "name": "Crypto.Cipher.AES.new",
+                "variant": "AES",
+                "assetType": "algorithm"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "3",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use a secure cipher mode. For AES, the weakest modes are CBC (Cipher Block Chaining) and ECB (Electronic Codebook), as they are either vulnerable to padding oracles or do not provide authentication mechanisms.",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "AES",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/services/user.py",
+                          "line": 16,
+                          "startColumn": 18,
+                          "endColumn": 21
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/services/user.py",
+              "call_line": 16,
+              "start": 18,
+              "end": 21,
+              "startScoped": 18,
+              "endScoped": 21,
+              "lineHash": "5478b0117c27e5c5ef3c953d34ee07e7b76a801b6de4df3aa566a9bba340030b",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The asset primitive was not set, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "Crypto.Cipher._mode_cbc.CbcMode.encrypt",
+              "tooltip": [
+                "Crypto.Cipher._mode_cbc.CbcMode.encrypt"
+              ],
+              "crypto_properties": {
+                "library": "Crypto",
+                "name": "Crypto.Cipher._mode_cbc.CbcMode.encrypt",
+                "primitive": "block-cipher",
+                "assetType": "algorithm",
+                "cryptoFunction": "encrypt",
+                "mode": "cbc"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "20",
+                  "classification": "cwe1204",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/1204.html",
+                  "debugMessage": "Use a dynamically-generated, random initialization vector (IV).",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "primitive",
+                      "value": "block-cipher",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/services/user.py",
+                          "line": 18,
+                          "startColumn": 19,
+                          "endColumn": 26
+                        }
+                      }
+                    },
+                    {
+                      "type": "mode",
+                      "value": "cbc",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/services/user.py",
+                          "line": 18,
+                          "startColumn": 19,
+                          "endColumn": 26
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/services/user.py",
+              "call_line": 18,
+              "start": 19,
+              "end": 26,
+              "startScoped": 19,
+              "endScoped": 26,
+              "lineHash": "55cdbe0d755144f525da63cea336a7001975f03134814787a92ea5ca5996a589",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "aeacb605-b16b-46b9-ae10-e50dd65bf514",
+          "name": "settings.py",
+          "full_name": "vulnpython/config/settings.py",
+          "num_artifacts": 1,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "hashlib.pbkdf2_hmac",
+              "tooltip": [
+                "hashlib.pbkdf2_hmac"
+              ],
+              "crypto_properties": {
+                "library": "hashlib",
+                "name": "hashlib.pbkdf2_hmac",
+                "primitive": "kdf",
+                "variant": "PBKDF2",
+                "assetType": "algorithm",
+                "cryptoFunction": "keyderive",
+                "algorithmFamily": "PBKDF2"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "vulnpython/config/settings.py",
+              "call_line": 39,
+              "start": 20,
+              "end": 31,
+              "startScoped": 20,
+              "endScoped": 31,
+              "lineHash": "ab9e3cc10f26dea95016c791ea5153e54e61dc719901a862ccb1391c750dda27",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 compliant",
+                  "isUnCompliant": false,
+                  "message": "Use of PBKDF2 is FIPS 140-3 compliant"
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "33dae8ee-6114-46ec-b7e9-ab7a3e3508ff",
+          "name": "auth.py",
+          "full_name": "vulnpython/services/auth.py",
+          "num_artifacts": 6,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "Crypto.Cipher.AES.new",
+              "tooltip": [
+                "Crypto.Cipher.AES.new"
+              ],
+              "crypto_properties": {
+                "library": "Crypto",
+                "name": "Crypto.Cipher.AES.new",
+                "variant": "AES",
+                "assetType": "algorithm"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "3",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use a secure cipher mode. For AES, the weakest modes are CBC (Cipher Block Chaining) and ECB (Electronic Codebook), as they are either vulnerable to padding oracles or do not provide authentication mechanisms.",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "AES",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/services/auth.py",
+                          "line": 15,
+                          "startColumn": 18,
+                          "endColumn": 21
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/services/auth.py",
+              "call_line": 15,
+              "start": 18,
+              "end": 21,
+              "startScoped": 18,
+              "endScoped": 21,
+              "lineHash": "82ddb6afb49ac1393645f07f12db1ec3da462dd923002b695373e72ddc70baf1",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The asset primitive was not set, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "Crypto.Cipher._mode_ecb.EcbMode.encrypt",
+              "tooltip": [
+                "Crypto.Cipher._mode_ecb.EcbMode.encrypt"
+              ],
+              "crypto_properties": {
+                "library": "Crypto",
+                "name": "Crypto.Cipher._mode_ecb.EcbMode.encrypt",
+                "primitive": "block-cipher",
+                "assetType": "algorithm",
+                "cryptoFunction": "encrypt",
+                "mode": "ecb"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "3",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of insecure cipher mode ECB (Electronic Codebook).",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/services/auth.py",
+                          "line": 17,
+                          "startColumn": 36,
+                          "endColumn": 43
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/services/auth.py",
+              "call_line": 17,
+              "start": 36,
+              "end": 43,
+              "startScoped": 36,
+              "endScoped": 43,
+              "lineHash": "004d5988dcad466484a0937bc5e31ed41dbcfa3e8673118e04da7a7ee99a42cc",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "cryptography.hazmat.primitives.asymmetric.ec.generate_private_key",
+              "tooltip": [
+                "cryptography.hazmat.primitives.asymmetric.ec.generate_private_key"
+              ],
+              "crypto_properties": {
+                "library": "cryptography",
+                "name": "cryptography.hazmat.primitives.asymmetric.ec.generate_private_key",
+                "primitive": "pke",
+                "assetType": "algorithm",
+                "cryptoFunction": "keygen"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "vulnpython/services/auth.py",
+              "call_line": 27,
+              "start": 17,
+              "end": 37,
+              "startScoped": 17,
+              "endScoped": 37,
+              "lineHash": "a74186d192e89c28bdd22ddecb4284bc4e36f187586408837733614e572bddc3",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "title": "cryptography.hazmat.primitives.asymmetric.ec.SECP256R1",
+              "tooltip": [
+                "cryptography.hazmat.primitives.asymmetric.ec.SECP256R1"
+              ],
+              "crypto_properties": {
+                "library": "cryptography",
+                "name": "cryptography.hazmat.primitives.asymmetric.ec.SECP256R1",
+                "oid": "1.2.840.10045.3.1.7",
+                "assetType": "algorithm",
+                "privateKeySize": "256",
+                "publicKeySize": "256",
+                "ellipticCurve": "secg/secp256r1"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "vulnpython/services/auth.py",
+              "call_line": 27,
+              "start": 38,
+              "end": 47,
+              "startScoped": 38,
+              "endScoped": 47,
+              "lineHash": "a74186d192e89c28bdd22ddecb4284bc4e36f187586408837733614e572bddc3",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "title": "cryptography.hazmat.primitives.asymmetric.ec.EllipticCurvePrivateKey.exchange",
+              "tooltip": [
+                "cryptography.hazmat.primitives.asymmetric.ec.EllipticCurvePrivateKey.exchange"
+              ],
+              "crypto_properties": {
+                "library": "cryptography",
+                "name": "cryptography.hazmat.primitives.asymmetric.ec.EllipticCurvePrivateKey.exchange",
+                "primitive": "key-agree",
+                "assetType": "algorithm",
+                "cryptoFunction": "keyagree"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "vulnpython/services/auth.py",
+              "call_line": 28,
+              "start": 22,
+              "end": 30,
+              "startScoped": 22,
+              "endScoped": 30,
+              "lineHash": "cf4d00fb56be6880389c275cc5600388c059dcad352ef65960eb7fb20abc812a",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            },
+            {
+              "id": 5,
+              "title": "cryptography.hazmat.primitives.asymmetric.ec.ECDH",
+              "tooltip": [
+                "cryptography.hazmat.primitives.asymmetric.ec.ECDH"
+              ],
+              "crypto_properties": {
+                "library": "cryptography",
+                "name": "cryptography.hazmat.primitives.asymmetric.ec.ECDH",
+                "primitive": "key-agree",
+                "variant": "ECDH",
+                "oid": "1.3.132.1.12",
+                "assetType": "algorithm",
+                "algorithmFamily": "ECDH"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "4",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of non-quantum-resistant public-key algorithms (must be ML-KEM, ML-DSA, SLH-DSA): ECDH",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "ECDH",
+                      "context": {
+                        "location": {
+                          "fileName": "vulnpython/services/auth.py",
+                          "line": 28,
+                          "startColumn": 31,
+                          "endColumn": 35
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "vulnpython/services/auth.py",
+              "call_line": 28,
+              "start": 31,
+              "end": 35,
+              "startScoped": 31,
+              "endScoped": 35,
+              "lineHash": "cf4d00fb56be6880389c275cc5600388c059dcad352ef65960eb7fb20abc812a",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 capable",
+                  "isUnCompliant": true,
+                  "message": "Use of key agreement algorithm ECDH is FIPS compliant, provided approved elliptic curves [B-233, B-283, B-409, B-571, K-233, K283, K-409, K-571, P-224, P-256, P-384, P-521] are used."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Quantum Safe",
+                  "isUnCompliant": true,
+                  "message": "The asset has an asymmetric primitive and does not match with the Quantum Safe whitelists of OIDs and algorithms."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

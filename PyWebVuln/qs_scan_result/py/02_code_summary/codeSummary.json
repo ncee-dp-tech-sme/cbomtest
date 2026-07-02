@@ -1,0 +1,777 @@
+[
+  {
+    "variables": [],
+    "functions": [],
+    "classes": [],
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/crypto/keys.py",
+    "methods": [
+      {
+        "methodName": "sign_request",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "hmac.HMAC",
+            "fullyQualifiedName": "hmac.new",
+            "payload": "new",
+            "lineNumber": 15,
+            "start": 17,
+            "end": 20
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "hmac.HMAC.hexdigest",
+            "payload": "hexdigest",
+            "lineNumber": 15,
+            "start": 51,
+            "end": 60
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  },
+  {
+    "variables": [],
+    "functions": [],
+    "classes": [],
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/utils/hashing.py",
+    "methods": [
+      {
+        "methodName": "generate_device_keypair",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "cryptography.hazmat.primitives.asymmetric.rsa.RSAPrivateKey",
+            "fullyQualifiedName": "cryptography.hazmat.primitives.asymmetric.rsa.generate_private_key",
+            "payload": "generate_private_key",
+            "lineNumber": 12,
+            "start": 16,
+            "end": 36
+          }
+        ]
+      },
+      {
+        "methodName": "make_session_id",
+        "variables": [
+          {
+            "name": "rng",
+            "type": "Unresolved",
+            "lineNumber": 24,
+            "start": 5,
+            "end": 8,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "random.Random",
+            "payload": "Random",
+            "lineNumber": 24,
+            "start": 18,
+            "end": 24
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved",
+            "payload": "int",
+            "lineNumber": 24,
+            "start": 25,
+            "end": 28
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "time.time",
+            "payload": "time",
+            "lineNumber": 24,
+            "start": 34,
+            "end": 38
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved",
+            "payload": "hex",
+            "lineNumber": 25,
+            "start": 12,
+            "end": 15
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "rng.getrandbits",
+            "payload": "getrandbits",
+            "lineNumber": 25,
+            "start": 20,
+            "end": 31
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  },
+  {
+    "variables": [
+      {
+        "name": "METRICS_ENCRYPTION_KEY",
+        "type": "Unresolved",
+        "lineNumber": 22,
+        "start": 1,
+        "end": 23,
+        "isConstructor": false
+      }
+    ],
+    "functions": [],
+    "classes": [],
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/api/routes.py",
+    "methods": [
+      {
+        "methodName": "encrypt_session",
+        "variables": [
+          {
+            "name": "iv",
+            "type": "Unresolved",
+            "lineNumber": 14,
+            "start": 5,
+            "end": 7,
+            "isConstructor": false
+          },
+          {
+            "name": "cipher",
+            "type": "Crypto.Cipher._mode_cbc.CbcMode",
+            "lineNumber": 15,
+            "start": 5,
+            "end": 11,
+            "isConstructor": false
+          },
+          {
+            "name": "padded",
+            "type": "Unresolved",
+            "lineNumber": 16,
+            "start": 5,
+            "end": 11,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "os.urandom",
+            "payload": "urandom",
+            "lineNumber": 14,
+            "start": 13,
+            "end": 20
+          },
+          {
+            "returnType": "Crypto.Cipher._mode_cbc.CbcMode",
+            "fullyQualifiedName": "Crypto.Cipher.AES.new",
+            "payload": "new",
+            "lineNumber": 15,
+            "start": 18,
+            "end": 21
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved",
+            "payload": "len",
+            "lineNumber": 16,
+            "start": 37,
+            "end": 40
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Crypto.Cipher._mode_cbc.CbcMode.encrypt",
+            "payload": "encrypt",
+            "lineNumber": 17,
+            "start": 24,
+            "end": 31
+          }
+        ]
+      },
+      {
+        "methodName": "encrypt_legacy",
+        "variables": [
+          {
+            "name": "cipher",
+            "type": "Crypto.Cipher._mode_ecb.EcbMode",
+            "lineNumber": 31,
+            "start": 5,
+            "end": 11,
+            "isConstructor": false
+          },
+          {
+            "name": "pad_len",
+            "type": "Unresolved",
+            "lineNumber": 32,
+            "start": 5,
+            "end": 12,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Crypto.Cipher._mode_ecb.EcbMode",
+            "fullyQualifiedName": "Crypto.Cipher.Blowfish.new",
+            "payload": "new",
+            "lineNumber": 31,
+            "start": 17,
+            "end": 20
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved",
+            "payload": "len",
+            "lineNumber": 32,
+            "start": 31,
+            "end": 34
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved",
+            "payload": "bytes",
+            "lineNumber": 33,
+            "start": 13,
+            "end": 18
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Crypto.Cipher._mode_ecb.EcbMode.encrypt",
+            "payload": "encrypt",
+            "lineNumber": 34,
+            "start": 19,
+            "end": 26
+          }
+        ]
+      },
+      {
+        "methodName": "hash_password",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "hashlib.hash",
+            "fullyQualifiedName": "hashlib.md5",
+            "payload": "md5",
+            "lineNumber": 42,
+            "start": 20,
+            "end": 23
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "hashlib.hash.hexdigest",
+            "payload": "hexdigest",
+            "lineNumber": 42,
+            "start": 43,
+            "end": 52
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved",
+            "payload": "encode",
+            "lineNumber": 42,
+            "start": 33,
+            "end": 39
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  },
+  {
+    "variables": [],
+    "functions": [],
+    "classes": [],
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/utils/tokens.py",
+    "methods": [
+      {
+        "methodName": "wrap_key",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved",
+            "payload": "encrypt",
+            "lineNumber": 13,
+            "start": 33,
+            "end": 40
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "cryptography.hazmat.primitives.asymmetric.padding.PKCS1v15",
+            "payload": "PKCS1v15",
+            "lineNumber": 15,
+            "start": 22,
+            "end": 30
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  },
+  {
+    "variables": [
+      {
+        "name": "_DEV_PRIVATE_KEY_PEM",
+        "type": "Unresolved",
+        "lineNumber": 31,
+        "start": 1,
+        "end": 21,
+        "isConstructor": false
+      }
+    ],
+    "functions": [],
+    "classes": [],
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/crypto/cipher.py",
+    "methods": [
+      {
+        "methodName": "file_fingerprint",
+        "variables": [
+          {
+            "name": "h",
+            "type": "hashlib.hash",
+            "lineNumber": 13,
+            "start": 5,
+            "end": 6,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "hashlib.hash",
+            "fullyQualifiedName": "hashlib.sha1",
+            "payload": "sha1",
+            "lineNumber": 13,
+            "start": 17,
+            "end": 21
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "hashlib.hash.update",
+            "payload": "update",
+            "lineNumber": 16,
+            "start": 15,
+            "end": 21
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "hashlib.hash.hexdigest",
+            "payload": "hexdigest",
+            "lineNumber": 17,
+            "start": 14,
+            "end": 23
+          }
+        ]
+      },
+      {
+        "methodName": "sign_audit_record",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved",
+            "payload": "sign",
+            "lineNumber": 26,
+            "start": 24,
+            "end": 28
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "cryptography.hazmat.primitives.asymmetric.padding.PKCS1v15",
+            "payload": "PKCS1v15",
+            "lineNumber": 26,
+            "start": 45,
+            "end": 53
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "cryptography.hazmat.primitives.hashes.SHA1",
+            "payload": "SHA1",
+            "lineNumber": 26,
+            "start": 64,
+            "end": 68
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  },
+  {
+    "variables": [
+      {
+        "name": "_STATIC_IV",
+        "type": "Unresolved",
+        "lineNumber": 13,
+        "start": 1,
+        "end": 11,
+        "isConstructor": false
+      }
+    ],
+    "functions": [
+      {
+        "returnType": "Unresolved",
+        "fullyQualifiedName": "binascii.unhexlify",
+        "payload": "unhexlify",
+        "lineNumber": 13,
+        "start": 23,
+        "end": 32
+      }
+    ],
+    "classes": [],
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/services/user.py",
+    "methods": [
+      {
+        "methodName": "encrypt_with_static_iv",
+        "variables": [
+          {
+            "name": "cipher",
+            "type": "Crypto.Cipher._mode_cbc.CbcMode",
+            "lineNumber": 16,
+            "start": 5,
+            "end": 11,
+            "isConstructor": false
+          },
+          {
+            "name": "padded",
+            "type": "Unresolved",
+            "lineNumber": 17,
+            "start": 5,
+            "end": 11,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Crypto.Cipher._mode_cbc.CbcMode",
+            "fullyQualifiedName": "Crypto.Cipher.AES.new",
+            "payload": "new",
+            "lineNumber": 16,
+            "start": 18,
+            "end": 21
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved",
+            "payload": "len",
+            "lineNumber": 17,
+            "start": 37,
+            "end": 40
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Crypto.Cipher._mode_cbc.CbcMode.encrypt",
+            "payload": "encrypt",
+            "lineNumber": 18,
+            "start": 19,
+            "end": 26
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  },
+  {
+    "variables": [
+      {
+        "name": "APP_NAME",
+        "type": "Unresolved",
+        "lineNumber": 7,
+        "start": 1,
+        "end": 9,
+        "isConstructor": false
+      },
+      {
+        "name": "APP_VERSION",
+        "type": "Unresolved",
+        "lineNumber": 8,
+        "start": 1,
+        "end": 12,
+        "isConstructor": false
+      },
+      {
+        "name": "DEBUG",
+        "type": "Unresolved",
+        "lineNumber": 9,
+        "start": 1,
+        "end": 6,
+        "isConstructor": false
+      },
+      {
+        "name": "DATABASE_URL",
+        "type": "Unresolved",
+        "lineNumber": 12,
+        "start": 1,
+        "end": 13,
+        "isConstructor": false
+      },
+      {
+        "name": "SECRET_KEY",
+        "type": "Unresolved",
+        "lineNumber": 15,
+        "start": 1,
+        "end": 11,
+        "isConstructor": false
+      },
+      {
+        "name": "HASH_ALGORITHM",
+        "type": "Unresolved",
+        "lineNumber": 16,
+        "start": 1,
+        "end": 15,
+        "isConstructor": false
+      },
+      {
+        "name": "TOKEN_ALGORITHM",
+        "type": "Unresolved",
+        "lineNumber": 17,
+        "start": 1,
+        "end": 16,
+        "isConstructor": false
+      },
+      {
+        "name": "PBKDF2_ITERATIONS",
+        "type": "Unresolved",
+        "lineNumber": 18,
+        "start": 1,
+        "end": 18,
+        "isConstructor": false
+      },
+      {
+        "name": "MIN_TLS_VERSION",
+        "type": "Unresolved",
+        "lineNumber": 19,
+        "start": 1,
+        "end": 16,
+        "isConstructor": false
+      },
+      {
+        "name": "DB_CONFIG",
+        "type": "Unresolved",
+        "lineNumber": 24,
+        "start": 1,
+        "end": 10,
+        "isConstructor": false
+      }
+    ],
+    "functions": [
+      {
+        "returnType": "Unresolved",
+        "fullyQualifiedName": "urllib.request",
+        "lineNumber": 50,
+        "start": 17,
+        "end": 24
+      }
+    ],
+    "classes": [],
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/config/settings.py",
+    "methods": [
+      {
+        "methodName": "derive_app_key",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "urllib.request",
+            "lineNumber": 50,
+            "start": 17,
+            "end": 24
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "hashlib.pbkdf2_hmac",
+            "payload": "pbkdf2_hmac",
+            "lineNumber": 39,
+            "start": 20,
+            "end": 31
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved",
+            "payload": "encode",
+            "lineNumber": 39,
+            "start": 51,
+            "end": 57
+          }
+        ]
+      },
+      {
+        "methodName": "fetch_config",
+        "variables": [
+          {
+            "name": "ctx",
+            "type": "Unresolved",
+            "lineNumber": 47,
+            "start": 5,
+            "end": 8,
+            "isConstructor": false
+          },
+          {
+            "name": "ctx.check_hostname",
+            "type": "Unresolved",
+            "lineNumber": 48,
+            "start": 5,
+            "end": 8,
+            "isConstructor": false
+          },
+          {
+            "name": "ctx.verify_mode",
+            "type": "Unresolved",
+            "lineNumber": 49,
+            "start": 5,
+            "end": 8,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "urllib.request",
+            "lineNumber": 50,
+            "start": 17,
+            "end": 24
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "ssl.create_default_context",
+            "payload": "create_default_context",
+            "lineNumber": 47,
+            "start": 15,
+            "end": 37
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved.read",
+            "payload": "read",
+            "lineNumber": 51,
+            "start": 21,
+            "end": 25
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  },
+  {
+    "variables": [],
+    "functions": [],
+    "classes": [],
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/PyWebVuln/pywebvuln/services/auth.py",
+    "methods": [
+      {
+        "methodName": "encrypt_config",
+        "variables": [
+          {
+            "name": "cipher",
+            "type": "Crypto.Cipher._mode_ecb.EcbMode",
+            "lineNumber": 15,
+            "start": 5,
+            "end": 11,
+            "isConstructor": false
+          },
+          {
+            "name": "padded",
+            "type": "Unresolved",
+            "lineNumber": 16,
+            "start": 5,
+            "end": 11,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Crypto.Cipher._mode_ecb.EcbMode",
+            "fullyQualifiedName": "Crypto.Cipher.AES.new",
+            "payload": "new",
+            "lineNumber": 15,
+            "start": 18,
+            "end": 21
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Unresolved",
+            "payload": "len",
+            "lineNumber": 16,
+            "start": 37,
+            "end": 40
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "base64.b64encode",
+            "payload": "b64encode",
+            "lineNumber": 17,
+            "start": 19,
+            "end": 28
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "base64.b64encode.decode",
+            "payload": "decode",
+            "lineNumber": 17,
+            "start": 53,
+            "end": 59
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "Crypto.Cipher._mode_ecb.EcbMode.encrypt",
+            "payload": "encrypt",
+            "lineNumber": 17,
+            "start": 36,
+            "end": 43
+          }
+        ]
+      },
+      {
+        "methodName": "ecdh_shared_secret",
+        "variables": [
+          {
+            "name": "ephemeral",
+            "type": "cryptography.hazmat.primitives.asymmetric.ec.EllipticCurvePrivateKey",
+            "lineNumber": 27,
+            "start": 5,
+            "end": 14,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "cryptography.hazmat.primitives.asymmetric.ec.EllipticCurvePrivateKey",
+            "fullyQualifiedName": "cryptography.hazmat.primitives.asymmetric.ec.generate_private_key",
+            "payload": "generate_private_key",
+            "lineNumber": 27,
+            "start": 17,
+            "end": 37
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "cryptography.hazmat.primitives.asymmetric.ec.SECP256R1",
+            "payload": "SECP256R1",
+            "lineNumber": 27,
+            "start": 38,
+            "end": 47
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "cryptography.hazmat.primitives.asymmetric.ec.EllipticCurvePrivateKey.exchange",
+            "payload": "exchange",
+            "lineNumber": 28,
+            "start": 22,
+            "end": 30
+          },
+          {
+            "returnType": "cryptography.hazmat.primitives.asymmetric.ec.ECDH",
+            "fullyQualifiedName": "cryptography.hazmat.primitives.asymmetric.ec.ECDH",
+            "payload": "ECDH",
+            "lineNumber": 28,
+            "start": 31,
+            "end": 35
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  }
+]

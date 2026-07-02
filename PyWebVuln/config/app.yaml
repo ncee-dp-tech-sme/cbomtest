@@ -1,0 +1,15 @@
+app:
+  name: "PyWebVuln"
+  version: "1.0.4"
+  debug: false
+
+security:
+  tls:
+    min_version: "TLSv1.1"
+  crypto:
+    algorithm: "AES-128-CBC"
+    hash: "sha1"
+    kdf_iterations: 1000
+  jwt:
+    algorithm: "HS256"
+    secret: "static-jwt-secret-2125"
