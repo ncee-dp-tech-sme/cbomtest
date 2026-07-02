@@ -1,8 +1,10 @@
 # generate_vulnerable_app.py
 
-A demo tool that interactively generates realistic multi-file Java or Python applications with deliberately introduced cryptographic weaknesses, for showcasing the value of **Guardium Quantum Safe Explorer**.
+A demo tool that interactively generates realistic multi-file Java or Python applications with deliberately introduced cryptographic weaknesses, for showcasing the value of **IBM Guardium Quantum Safe Explorer**.
+After running **IBM Guardium Quantum Safe Explorer** the results can be uploaded **IBM Guardium Cryptography Manager** after adding the required metadata,(gitUrl or repositoryUrl & repositoryId).
 
-> **Note:** This tool is exclusively for client demos and will never be used in production.
+> **Note:** This tool is exclusively for client demos and should NEVER be used in production.
+
 
 ---
 
@@ -85,3 +87,4 @@ Weaknesses are mapped to the rules defined in [`cbom-security.yaml`](cbom-securi
 - Python 3.8+ (standard library only — no external dependencies for the generator itself)
 - The generated **Java** app targets Java 17 / Maven 3.9+
 - The generated **Python** app lists its runtime dependencies in `requirements.txt`
+- Created by Erwin Friethoff, Senior Security Architect at IBM. Please reach out for questions or suggestions. 
