@@ -19,7 +19,7 @@
     "component" : {
       "type" : "application",
       "name" : "PyWebVuln",
-      "version" : "1.0.5"
+      "version" : "1.0.6"
     },
     "properties" : [
       {

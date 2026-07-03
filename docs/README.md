@@ -6,6 +6,7 @@ After running **IBM Guardium Quantum Safe Explorer** the results can be uploaded
 > **Note:** This tool is exclusively for client demos and should NEVER be used in production.
 
 
+Github Repository [`cbomtest`](https://github.com/ncee-dp-tech-sme/cbomtest)
 ---
 
 ## Usage
@@ -71,7 +72,7 @@ AppName/
 
 ## Weakness Catalogue
 
-Weaknesses are mapped to the rules defined in [`cbom-security.yaml`](cbom-security.yaml):
+Weaknesses are mapped to the rules defined in [`cbom-security.yaml`](../cbom-security.yaml):
 
 | Rule    | Category                              | Examples                                                                                     |
 |---------|---------------------------------------|----------------------------------------------------------------------------------------------|
