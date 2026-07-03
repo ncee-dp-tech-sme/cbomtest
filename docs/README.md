@@ -72,7 +72,7 @@ AppName/
 
 ## Weakness Catalogue
 
-Weaknesses are mapped to the rules defined in [`cbom-security.yaml`](../cbom-security.yaml):
+Weaknesses are mapped to the rules defined in [`cbom-security.yaml`](https://github.com/ncee-dp-tech-sme/cbomtest/blob/main/cbom-security.yaml):
 
 | Rule    | Category                              | Examples                                                                                     |
 |---------|---------------------------------------|----------------------------------------------------------------------------------------------|
