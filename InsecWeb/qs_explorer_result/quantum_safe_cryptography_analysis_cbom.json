@@ -4,7 +4,7 @@
   "serialNumber" : "urn:uuid:e3f8caac38bc4db59e851ffccb4ca258",
   "version" : 1,
   "metadata" : {
-    "timestamp" : "2026-07-02T22:42:05Z",
+    "timestamp" : "2026-07-03T22:42:05Z",
     "tools" : {
       "services" : [
         {
@@ -19,12 +19,12 @@
     "component" : {
       "type" : "application",
       "name" : "javavulnr",
-      "version" : "1.0.1"
+      "version" : "1.0.2"
     },
     "properties" : [
       {
         "name" : "language",
-        "value" : "java"
+        "value" : ".java"
       },
       {
         "name" : "gitUrl",
@@ -40,7 +40,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/util/HashUtilsjava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/util/HashUtils..java",
             "line" : 27,
             "offset" : 32,
             "additionalContext" : "getInstance(\"AES/CBC/PKCS5Padding\");lineHash=90a7c2b2af6c25512e4f9a789978376ce6215db7a810005fdcbbdb085756a64d;"
@@ -68,7 +68,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/service/UserServicejava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/service/UserService..java",
             "line" : 27,
             "offset" : 37,
             "additionalContext" : "SecretKeySpec(key,\"DES\");lineHash=ad2cbea5509cc57ecf839ba5c8d22ef730477375915e81a9f67063d7ce89f9f1;"
@@ -89,7 +89,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/api/ApiControllerjava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/api/ApiController.java",
             "line" : 39,
             "offset" : 23,
             "additionalContext" : "getInstance(\"HmacSHA1\");lineHash=c5f3f21fd0f98ecbca96f76c88703e43e9d7b5e4e39afcacd00d32556efd3c0f;"
@@ -115,7 +115,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/api/ApiControllerjava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/api/ApiController.java",
             "line" : 40,
             "offset" : 22,
             "additionalContext" : "SecretKeySpec(WEBHOOK_SECRET.getBytes(),\"HmacSHA1\"...;lineHash=01e0808844ea064fdfd2858a80fdbb5a0fe3cd4a2b6f3ead856930a8d0d0f5a7;"
@@ -137,7 +137,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/crypto/CryptoUtiljava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/crypto/CryptoUtil.java",
             "line" : 36,
             "offset" : 53,
             "additionalContext" : "getInstance(\"PBKDF2WithHmacSHA1\");lineHash=47f4972f190963981780b30cdd9b6f1dcfd483bc68f75e67930de18ad7981108;"
@@ -163,7 +163,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/service/UserServicejava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/service/UserService.java",
             "line" : 29,
             "offset" : 55,
             "additionalContext" : "IvParameterSpec(newbyte[8]);lineHash=daacd26f18ea5fcb7c6a680a1cbf8630adbdd6a6de3e0b4e4fe747ba5bee6133;"
@@ -185,7 +185,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/util/HashUtilsjava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/util/HashUtils.java",
             "line" : 28,
             "offset" : 51,
             "additionalContext" : "IvParameterSpec(DEFAULT_IV);lineHash=e3388dcb72ac9a324ca488aaa8d979b10f2fd0fce9c0a52e2c1f274c7d64bde8;"
@@ -207,7 +207,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/crypto/CryptoUtiljava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/crypto/CryptoUtil.java",
             "line" : 35,
             "offset" : 31,
             "additionalContext" : "PBEKeySpec(appId.toCharArray(),noSalt,10000,128);lineHash=f0ea1dbd1f3e08dd72cb99e6369b66b0079cf64ae9744a3c6ed3e6a398cde2e3;"
@@ -228,7 +228,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/service/UserServicejava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/service/UserService.java",
             "line" : 28,
             "offset" : 32,
             "additionalContext" : "getInstance(\"DES/CBC/PKCS5Padding\");lineHash=cea08397cabf80431367527e4f9261ac9a54ded7ed1392f3b50d9cfcae0e46a4;"
@@ -256,7 +256,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/service/AuthServicejava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/service/AuthService.java",
             "line" : 26,
             "offset" : 44,
             "additionalContext" : "getInstance(\"SHA-1\");lineHash=e44f718934a78d784a9238e28ff6f8e2101ceefa3c73053bd80c68d8bc5f9bfa;"
@@ -282,7 +282,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/util/HashUtilsjava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/util/HashUtils.java",
             "line" : 36,
             "offset" : 40,
             "additionalContext" : "getInstance(\"AES\");lineHash=7e463d20124346469e8d8d35560cc57929c0d4b540ca2a83b822545a3748c7fa;"
@@ -307,7 +307,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/crypto/CryptoUtiljava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/crypto/CryptoUtil.java",
             "line" : 35,
             "offset" : 31,
             "additionalContext" : "PBEKeySpec(appId.toCharArray(),noSalt,10000,128);lineHash=f0ea1dbd1f3e08dd72cb99e6369b66b0079cf64ae9744a3c6ed3e6a398cde2e3;"
@@ -328,7 +328,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/crypto/CryptoUtiljava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/crypto/CryptoUtil.java",
             "line" : 35,
             "offset" : 31,
             "additionalContext" : "PBEKeySpec(appId.toCharArray(),noSalt,10000,128);lineHash=f0ea1dbd1f3e08dd72cb99e6369b66b0079cf64ae9744a3c6ed3e6a398cde2e3;"
@@ -349,7 +349,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/crypto/CryptoUtiljava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/crypto/CryptoUtil.java",
             "line" : 25,
             "offset" : 42,
             "additionalContext" : "getInstance(\"MD5\");lineHash=04e2916df3d50544cbd2f45944ffab1594cf5fab91785de4121d8f4e3d23d8cb;"
@@ -375,7 +375,7 @@
       "evidence" : {
         "occurrences" : [
           {
-            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/config/SecurityConfigjava",
+            "location" : "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/javavulnr/src/main/java/com/example/javavulnr/config/SecurityConfig.java",
             "line" : 27,
             "offset" : 49,
             "additionalContext" : "getInstance(\"RSA\");lineHash=d143851e13591b51903d8799a5657a8665c06424b037b799f4bbb03a32a0949a;"
