@@ -88,4 +88,7 @@ Weaknesses are mapped to the rules defined in [`cbom-security.yaml`](https://git
 - Python 3.8+ (standard library only — no external dependencies for the generator itself)
 - The generated **Java** app targets Java 17 / Maven 3.9+
 - The generated **Python** app lists its runtime dependencies in `requirements.txt`
-- Created by Erwin Friethoff, Senior Security Architect at IBM. Please reach out for questions or suggestions. 
+- Created by Erwin Friethoff, Senior Security Architect at IBM. Please reach out for questions or suggestions.
+
+<script data-goatcounter="https://ncee-data-sme.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
