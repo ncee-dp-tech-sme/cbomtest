@@ -1,0 +1,12 @@
+security:
+  tls:
+    min-version: "TLSv1"
+    max-version: "TLSv1.3"
+  crypto:
+    default-algorithm: "AES/CBC/PKCS5Padding"
+    key-size: 128
+    hash-algorithm: "SHA-1"
+  jwt:
+    signing-algorithm: "HS256"
+    secret: "hardcoded-jwt-secret-1456"
+    expiry-seconds: 86400

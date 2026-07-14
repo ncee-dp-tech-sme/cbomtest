@@ -70,3 +70,5 @@ Desktop.ini
 
 # Zip / scan results
 *.zip
+**/qs_explorer_result/quantum_safe_cryptography_analysis_*.json
+**/qs_explorer_result/quantum_safe_api_discovery_*.json
