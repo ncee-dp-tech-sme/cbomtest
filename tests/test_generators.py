@@ -30,8 +30,8 @@ def _reload_gen():
 
 
 def _take(factories, n=6):
-    """Return the first n (Weakness, callable) pairs from a factory list."""
-    return list(factories[:n])
+    """Return the first n (Weakness, snippet_str) pairs from a factory list."""
+    return [(wk, fn()) for wk, fn in factories[:n]]
 
 
 # ---------------------------------------------------------------------------
@@ -75,7 +75,7 @@ def c_result(tmp_path):
     # Use only non-GSKit factories to avoid platform guard on macOS
     import generate_vulnerable_app as g
     factories = [
-        (wk, fn) for wk, fn in g.C_WEAKNESS_FACTORIES
+        (wk, fn()) for wk, fn in g.C_WEAKNESS_FACTORIES
         if "gskit" not in wk.description.lower()
     ][:6]
     result = g.generate_c_app(tmp_path / "mycapp", "MyCApp", "1.0.0", factories)

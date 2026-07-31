@@ -1640,7 +1640,7 @@ def generate_go_app(base_dir: Path, app_name: str, version: str,
         "crypto/tls.go": [],
         "crypto/pqc.go": [],
     }
-    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    snippets = list(weaknesses_to_inject)
     _distribute(snippets, file_map, pqc_key="crypto/pqc.go")
 
     injected: List[Weakness] = []
@@ -1684,7 +1684,7 @@ def generate_js_app(base_dir: Path, app_name: str, version: str,
         "src/jwt.js": [],
         "src/pqc.js": [],
     }
-    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    snippets = list(weaknesses_to_inject)
     _distribute(snippets, file_map, pqc_key="src/pqc.js")
 
     injected: List[Weakness] = []
@@ -1729,7 +1729,7 @@ def generate_csharp_app(base_dir: Path, app_name: str, version: str,
         "Crypto/Tls.cs": [],
         "Crypto/Pqc.cs": [],
     }
-    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    snippets = list(weaknesses_to_inject)
     _distribute(snippets, file_map, pqc_key="Crypto/Pqc.cs")
 
     injected: List[Weakness] = []
@@ -1787,7 +1787,7 @@ def generate_dart_app(base_dir: Path, app_name: str, version: str,
         "lib/src/cipher.dart": [],
         "lib/src/kdf.dart": [],
     }
-    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    snippets = list(weaknesses_to_inject)
     _distribute(snippets, file_map)
 
     injected: List[Weakness] = []
@@ -1834,7 +1834,7 @@ def generate_c_app(base_dir: Path, app_name: str, version: str,
         "src/tls.c": [],
         "src/pqc.c": [],
     }
-    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    snippets = list(weaknesses_to_inject)
     _distribute(snippets, file_map, pqc_key="src/pqc.c")
 
     injected: List[Weakness] = []
