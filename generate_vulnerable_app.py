@@ -10,6 +10,10 @@ All weaknesses are intentional; this tool is for demo/testing purposes only.
 Change history:
   2025-07-15  Initial version. Interactive generator for Java and Python apps
               with randomised cryptographic weakness injection across files.
+  2026-07-31  Phase 7: Added _write_readme calls to all five new language
+              generators (Go, JavaScript, C#, Dart, C/C++). Updated README
+              template to generate stack-specific prerequisites and build
+              instructions instead of hardcoded Java/Python text.
   2026-07-31  Added PQC algorithm discovery targets: Java/JCA (ML-KEM, ML-DSA),
               Java/BouncyCastle (ML-KEM, ML-DSA, SLH-DSA), Python/cryptography
               (ML-KEM, ML-DSA), Python/oqs (ML-KEM, ML-DSA, SLH-DSA, XMSS).
@@ -1671,6 +1675,7 @@ def generate_go_app(base_dir: Path, app_name: str, version: str,
 
         require golang.org/x/crypto v0.23.0
     """))
+    _write_readme(base_dir, app_name, version, description, "Go")
     return injected
 
 
@@ -1717,6 +1722,7 @@ def generate_js_app(base_dir: Path, app_name: str, version: str,
             "@noble/post-quantum": "^0.2.0",
         },
     }, indent=2) + "\n")
+    _write_readme(base_dir, app_name, version, description, "JavaScript / Node.js")
     return injected
 
 
@@ -1776,6 +1782,7 @@ def generate_csharp_app(base_dir: Path, app_name: str, version: str,
           </PropertyGroup>
         </Project>
     """))
+    _write_readme(base_dir, app_name, version, description, "C# / .NET 9")
     return injected
 
 
@@ -1817,6 +1824,7 @@ def generate_dart_app(base_dir: Path, app_name: str, version: str,
           cryptography: ^2.7.0
           pointycastle: ^3.9.0
     """))
+    _write_readme(base_dir, app_name, version, description, "Dart / Flutter")
     return injected
 
 
@@ -1862,6 +1870,7 @@ def generate_c_app(base_dir: Path, app_name: str, version: str,
         add_executable({class_name} src/hash.c src/cipher.c src/tls.c src/pqc.c)
         target_link_libraries({class_name} OpenSSL::SSL OpenSSL::Crypto)
     """))
+    _write_readme(base_dir, app_name, version, description, "C / OpenSSL")
     return injected
 
 
@@ -1874,8 +1883,46 @@ def _title(name: str) -> str:
     return "".join(w.capitalize() for w in name.replace("-", " ").replace("_", " ").split())
 
 
+# Build instructions keyed by stack label
+_STACK_INSTRUCTIONS = {
+    "Java / Spring Boot": (
+        "- Java 17+\n- Maven 3.9+",
+        "```bash\nmvn clean package\njava -jar target/{app_name}-{version}.jar\n```",
+    ),
+    "Python / Flask": (
+        "- Python 3.11+\n- pip",
+        "```bash\npip install -r requirements.txt\npython main.py\n```",
+    ),
+    "Go": (
+        "- Go 1.22+",
+        "```bash\ngo mod tidy\ngo build ./...\n```",
+    ),
+    "JavaScript / Node.js": (
+        "- Node.js 20+\n- npm",
+        "```bash\nnpm install\nnode src/index.js\n```",
+    ),
+    "C# / .NET 9": (
+        "- .NET 9 SDK",
+        "```bash\ndotnet build\ndotnet run\n```",
+    ),
+    "Dart / Flutter": (
+        "- Dart SDK 3.0+",
+        "```bash\ndart pub get\ndart run\n```",
+    ),
+    "C / OpenSSL": (
+        "- CMake 3.16+\n- OpenSSL development headers\n- GCC or Clang",
+        "```bash\ncmake -B build\ncmake --build build\n```",
+    ),
+}
+
+
 def _write_readme(base_dir: Path, app_name: str, version: str,
                   description: str, stack: str):
+    prereqs, build_run = _STACK_INSTRUCTIONS.get(
+        stack, ("- See project documentation", "Refer to project documentation.")
+    )
+    # Format any {app_name}/{version} placeholders in build instructions
+    build_run = build_run.format(app_name=app_name, version=version)
     (base_dir / "README.md").write_text(textwrap.dedent(f"""\
         # {app_name}
 
@@ -1892,22 +1939,11 @@ def _write_readme(base_dir: Path, app_name: str, version: str,
 
         ### Prerequisites
 
-        - Java 17+ (for Java projects) / Python 3.11+ (for Python projects)
-        - Maven 3.9+ (for Java projects) / pip (for Python projects)
+        {prereqs}
 
         ### Build & Run
 
-        **Java:**
-        ```bash
-        mvn clean package
-        java -jar target/{app_name}-{version}.jar
-        ```
-
-        **Python:**
-        ```bash
-        pip install -r requirements.txt
-        python main.py
-        ```
+        {build_run}
 
         ## Configuration
 
