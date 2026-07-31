@@ -16,7 +16,7 @@ python3 generate_vulnerable_app.py
 
 You will be prompted for:
 
-- **Language** — `java` or `python`
+- **Language** — `java`, `python`, `go`, `javascript`, `csharp`, `dart`, or `c`
 - **Application name** — used as the output directory name
 - **Version number** — e.g. `1.0.0`
 
@@ -24,11 +24,12 @@ You will be prompted for:
 
 ## Execution Flow
 
-1. Prompts for language (`java`/`python`), application name, and version
-2. Creates a named output directory with a realistic multi-module application tree
-3. Randomly selects **8–26 weaknesses** from 61 distinct weakness factories (33 Java, 28 Python)
-4. Distributes them naturally across 8 source files per language
+1. Prompts for language, application name, and version
+2. Creates a named output directory with a realistic multi-file application tree
+3. Randomly selects **8–26 weaknesses** from 143 distinct weakness factories (33 Java · 28 Python · 19 Go · 21 JavaScript · 18 C# · 7 Dart · 17 C/C++)
+4. Distributes them across source files using PQC-aware routing (PQC snippets always land in the dedicated `pqc.*` file)
 5. Prints a categorised summary with rule IDs (`CBS-001` through `CBS-004`)
+6. Prompts for `repositoryUrl` required for Guardium Cryptography Manager upload
 
 ---
 
@@ -67,6 +68,88 @@ AppName/
     └── utils/hashing.py · utils/tokens.py · config/settings.py
 ```
 
+### Go
+
+```
+AppName/
+├── go.mod                                (golang.org/x/crypto v0.23.0)
+└── crypto/
+    ├── hash.go
+    ├── cipher.go
+    ├── tls.go
+    └── pqc.go
+```
+
+### JavaScript / Node.js
+
+```
+AppName/
+├── package.json                          (jsonwebtoken, mlkem, @noble/post-quantum)
+└── src/
+    ├── hash.js
+    ├── cipher.js
+    ├── tls.js
+    ├── jwt.js
+    └── pqc.js
+```
+
+### C# / .NET
+
+```
+AppName/
+├── AppName.csproj                        (net9.0)
+└── Crypto/
+    ├── Hash.cs
+    ├── Cipher.cs
+    ├── Tls.cs
+    └── Pqc.cs
+```
+
+### Dart
+
+```
+AppName/
+├── pubspec.yaml                          (crypto ^3.0.0, cryptography ^2.7.0)
+└── lib/src/
+    ├── hash.dart
+    ├── cipher.dart
+    └── kdf.dart
+```
+
+### C / C++
+
+```
+AppName/
+├── CMakeLists.txt                        (OpenSSL required)
+└── src/
+    ├── hash.c
+    ├── cipher.c
+    ├── tls.c
+    └── pqc.c
+```
+
+---
+
+## Platform Compatibility
+
+All libraries are **code-generation targets only** — the generator emits source code and has no runtime dependency on any of them.
+
+| Language | Library | macOS | Windows | Linux | Notes |
+|---|---|---|---|---|---|
+| C/C++ | OpenSSL | ✅ | ⚠️ | ✅ | Windows needs vcpkg/MSVC installer |
+| C/C++ | Libgcrypt | ✅ | ⚠️ | ✅ | Windows via MSYS2/cygwin only |
+| C/C++ | Nettle | ✅ | ⚠️ | ✅ | Windows via MSYS2/MinGW |
+| C/C++ | Crypto++ | ✅ | ✅ | ✅ | NuGet + vcpkg on Windows |
+| C/C++ | **GSKit-crypto** | ❌ | ⚠️ | ✅ | **Platform guard enforced** — IBM product SDK, not available standalone on macOS |
+| C/C++ | liboqs | ✅ | ✅ | ✅ | CMake-based, fully cross-platform |
+| C# | .NET Cryptography | ✅ | ✅ | ✅ | PQC requires .NET 9+ |
+| Dart | cryptography | ✅ | ✅ | ✅ | Pure Dart |
+| Go | crypto + x/crypto | ✅ | ✅ | ✅ | No restrictions |
+| JS/TS | node:crypto | ✅ | ✅ | ✅ | Node 18+ built-in |
+| JS/TS | jsonwebtoken | ✅ | ✅ | ✅ | Pure JS npm package |
+
+The generator enforces platform restrictions at generation time via [`platform_guard.py`](../platform_guard.py). Attempting to generate a GSKit-crypto app on macOS raises a clear `[PLATFORM ERROR]` with remediation steps.
+
 ---
 
 ## Weakness Catalogue
@@ -99,6 +182,12 @@ The generator also injects **post-quantum cryptography (PQC) code** so that IBM 
 | ML-DSA (FIPS 204) | oqs | Python | `oqs.Signature("ML-DSA-...")` |
 | SLH-DSA (FIPS 205) | oqs | Python | `oqs.Signature("SLH-DSA-SHA2-...")` |
 | XMSS | oqs | Python | `oqs.Signature("XMSS-SHA2_10_256")` — stateful hash-based signature |
+| ML-KEM (FIPS 203) | dotnet-crypto | C# | `MLKem768.TryEncapsulate(...)` — .NET 9+ |
+| ML-DSA (FIPS 204) | dotnet-crypto | C# | `MLDsa44.GenerateKey(); key.SignData(msg)` — .NET 9+ |
+| SLH-DSA (FIPS 205) | dotnet-crypto | C# | `SlhDsaSha2_128s.GenerateKey(); key.SignData(msg)` — .NET 9+ |
+| ML-KEM (FIPS 203) | x/crypto | Go | `mlkem.GenerateKey768(rand.Reader)` — golang.org/x/crypto v0.23.0+ |
+| ML-KEM (FIPS 203) | mlkem-npm | JavaScript | `MlKem768.generateKeyPair()` — `mlkem` npm package |
+| ML-DSA (FIPS 204) | mldsa-npm | JavaScript | `ml_dsa44.keygen()` — `@noble/post-quantum` npm package |
 
 ### Extended CWE rules (CBS-005 – CBS-012)
 
@@ -126,8 +215,14 @@ The following rules were added from `cwe.yaml` to cover additional CWE mappings 
 ## Requirements
 
 - Python 3.8+ (standard library only — no external dependencies for the generator itself)
-- The generated **Java** app targets Java 17 / Maven 3.9+; BouncyCastle PQC snippets require Java 17+ with `bcprov-jdk18on` on the classpath; all required JDK imports (`java.util.Random`, etc.) are included in every generated file
+- The generated **Java** app targets Java 17 / Maven 3.9+; BouncyCastle PQC snippets require Java 17+ with `bcprov-jdk18on` on the classpath
 - The generated **Python** app lists its runtime dependencies in `requirements.txt`; PQC snippets require `cryptography >= 44.0.0` and/or `liboqs-python >= 0.10.0`
+- The generated **Go** app requires Go 1.22+ and `golang.org/x/crypto v0.23.0+`
+- The generated **JavaScript** app requires Node 18+ and the npm packages listed in `package.json`
+- The generated **C#** app targets .NET 9 (PQC APIs require .NET 9+)
+- The generated **Dart** app requires Dart SDK ≥ 3.0.0
+- The generated **C/C++** app requires OpenSSL development headers (+ optional GSKit/Libgcrypt/Nettle)
+- **Temp file strategy:** intermediate files are written to `.gen-tmp/` at the project root (auto-added to `.gitignore`) and removed after generation completes
 - Created by Erwin Friethoff, Senior Security Architect at IBM. Please reach out for questions or suggestions.
 
 <script data-goatcounter="https://ncee-data-sme.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

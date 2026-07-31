@@ -18,15 +18,28 @@ Change history:
  2026-07-31  Fix: added `import java.util.Random;` to the common Java import
               block in `_java_file()` so the CBS-003 insecure-PRNG snippet
               (which uses `java.util.Random`) compiles in every target class.
+  2026-08-01  Phase 2: Added local temp file strategy helpers (_make_temp_dir,
+              _ensure_gitignore_entry) for project-local, git-ignored temp
+              directories during multi-language app generation.
+  2026-08-01  Phase 3: Added snippet factories for Go (19), JavaScript (21),
+              C# (18), Dart (7), C/C++ (17) — all CBS-001..004 + PQC patterns.
+  2026-08-01  Phase 4: Added generator functions for all 5 new languages with
+              build file templates, snippet distribution, and GSKit platform guard.
+  2026-08-01  Phase 5: Extended main() with FACTORY_POOL_MAP and GENERATOR_MAP;
+              language prompt now supports java/python/go/javascript/csharp/dart/c.
 """
 
 import os
 import random
+import shutil
 import sys
 import textwrap
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, List, Tuple
+
+import platform_guard
 
 # ---------------------------------------------------------------------------
 # Weakness catalogue
@@ -44,6 +57,33 @@ class Weakness:
 
 def _wk(category: str, description: str, tag: str = "") -> Weakness:
     return Weakness(category=category, description=description, tag=tag)
+
+
+# ---------------------------------------------------------------------------
+# Local temp file strategy
+# ---------------------------------------------------------------------------
+
+# Create a project-local, timestamped temp directory under .gen-tmp/.
+# Never uses OS-managed temp locations (no tempfile, $TMPDIR, %TEMP%).
+def _make_temp_dir(lang: str, app_name: str) -> Path:
+    project_root = Path(__file__).parent
+    tmp_root = project_root / ".gen-tmp"
+    tmp_root.mkdir(exist_ok=True)
+    safe_name = app_name[:20]
+    run_dir = tmp_root / f"{int(time.time())}-{lang}-{safe_name}"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    return run_dir
+
+
+# Add an entry to .gitignore at project root if it is not already present.
+def _ensure_gitignore_entry(project_root: Path, entry: str) -> None:
+    gi = project_root / ".gitignore"
+    if gi.exists():
+        if entry not in gi.read_text():
+            with gi.open("a") as f:
+                f.write(f"\n{entry}\n")
+    else:
+        gi.write_text(f"{entry}\n")
 
 
 # ---------------------------------------------------------------------------
@@ -1564,6 +1604,258 @@ def generate_python_app(base_dir: Path, app_name: str, version: str,
 
 
 # ---------------------------------------------------------------------------
+# Multi-language generator helpers
+# ---------------------------------------------------------------------------
+
+# Round-robin distribute (Weakness, snippet_str) pairs across file_map buckets.
+# PQC snippets (ML-KEM / ML-DSA / SLH-DSA) always land in the designated pqc bucket.
+def _distribute(snippets, file_map, pqc_key=None):
+    keys = list(file_map.keys())
+    pqc_terms = ("ml-kem", "ml-dsa", "slh-dsa")
+    rr_idx = 0
+    for wk, snippet in snippets:
+        desc_lower = wk.description.lower()
+        if pqc_key and any(t in desc_lower for t in pqc_terms):
+            file_map[pqc_key].append((wk, snippet))
+        else:
+            file_map[keys[rr_idx % len(keys)]].append((wk, snippet))
+            rr_idx += 1
+
+
+# ---- Go application ----
+
+def generate_go_app(base_dir: Path, app_name: str, version: str,
+                    weaknesses_to_inject: List[Tuple[Weakness, Callable[[], str]]]) -> List[Weakness]:
+    """Build the Go application tree and inject weaknesses."""
+    if base_dir.exists():
+        return []
+
+    app_lower = app_name.lower().replace("-", "").replace("_", "")
+    crypto_dir = base_dir / "crypto"
+    crypto_dir.mkdir(parents=True, exist_ok=True)
+
+    file_map = {
+        "crypto/hash.go": [],
+        "crypto/cipher.go": [],
+        "crypto/tls.go": [],
+        "crypto/pqc.go": [],
+    }
+    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    _distribute(snippets, file_map, pqc_key="crypto/pqc.go")
+
+    injected: List[Weakness] = []
+    for rel_path, entries in file_map.items():
+        parts = [
+            "package crypto",
+            "",
+        ]
+        for wk, snip in entries:
+            parts.append("")
+            parts.append(snip.strip())
+            injected.append(wk)
+        (base_dir / rel_path).write_text("\n".join(parts) + "\n")
+
+    (base_dir / "go.mod").write_text(textwrap.dedent(f"""\
+        module github.com/example/{app_lower}
+
+        go 1.22
+
+        require golang.org/x/crypto v0.23.0
+    """))
+    return injected
+
+
+# ---- JavaScript application ----
+
+def generate_js_app(base_dir: Path, app_name: str, version: str,
+                    weaknesses_to_inject: List[Tuple[Weakness, Callable[[], str]]]) -> List[Weakness]:
+    """Build the JavaScript application tree and inject weaknesses."""
+    if base_dir.exists():
+        return []
+
+    app_lower = app_name.lower().replace("-", "_").replace(" ", "_")
+    src_dir = base_dir / "src"
+    src_dir.mkdir(parents=True, exist_ok=True)
+
+    file_map = {
+        "src/hash.js": [],
+        "src/cipher.js": [],
+        "src/tls.js": [],
+        "src/jwt.js": [],
+        "src/pqc.js": [],
+    }
+    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    _distribute(snippets, file_map, pqc_key="src/pqc.js")
+
+    injected: List[Weakness] = []
+    for rel_path, entries in file_map.items():
+        parts = []
+        for wk, snip in entries:
+            parts.append(snip.strip())
+            injected.append(wk)
+        (base_dir / rel_path).write_text("\n\n".join(parts) + "\n")
+
+    app_name_lower = app_name.lower().replace(" ", "-")
+    import json
+    (base_dir / "package.json").write_text(json.dumps({
+        "name": app_name_lower,
+        "version": version,
+        "description": "Demo application",
+        "main": "src/index.js",
+        "dependencies": {
+            "jsonwebtoken": "^9.0.0",
+            "mlkem": "^1.0.0",
+            "@noble/post-quantum": "^0.2.0",
+        },
+    }, indent=2) + "\n")
+    return injected
+
+
+# ---- C# application ----
+
+def generate_csharp_app(base_dir: Path, app_name: str, version: str,
+                        weaknesses_to_inject: List[Tuple[Weakness, Callable[[], str]]]) -> List[Weakness]:
+    """Build the C# application tree and inject weaknesses."""
+    if base_dir.exists():
+        return []
+
+    class_name = _title(app_name)
+    crypto_dir = base_dir / "Crypto"
+    crypto_dir.mkdir(parents=True, exist_ok=True)
+
+    file_map = {
+        "Crypto/Hash.cs": [],
+        "Crypto/Cipher.cs": [],
+        "Crypto/Tls.cs": [],
+        "Crypto/Pqc.cs": [],
+    }
+    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    _distribute(snippets, file_map, pqc_key="Crypto/Pqc.cs")
+
+    injected: List[Weakness] = []
+    for rel_path, entries in file_map.items():
+        using_lines = []
+        body_lines = []
+        for wk, snip in entries:
+            for line in snip.strip().splitlines():
+                if line.startswith("using "):
+                    if line not in using_lines:
+                        using_lines.append(line)
+                else:
+                    body_lines.append("    " + line if line.strip() else "")
+            body_lines.append("")
+            injected.append(wk)
+
+        parts = [f"// {class_name} — demo application"]
+        if using_lines:
+            parts.extend(using_lines)
+        parts += [
+            f"namespace {class_name}.Crypto;",
+            "",
+            "public static partial class CryptoHelpers",
+            "{",
+        ]
+        parts.extend(body_lines)
+        parts.append("}")
+        (base_dir / rel_path).write_text("\n".join(parts) + "\n")
+
+    (base_dir / f"{class_name}.csproj").write_text(textwrap.dedent(f"""\
+        <Project Sdk="Microsoft.NET.Sdk">
+          <PropertyGroup>
+            <OutputType>Exe</OutputType>
+            <TargetFramework>net9.0</TargetFramework>
+          </PropertyGroup>
+        </Project>
+    """))
+    return injected
+
+
+# ---- Dart application ----
+
+def generate_dart_app(base_dir: Path, app_name: str, version: str,
+                      weaknesses_to_inject: List[Tuple[Weakness, Callable[[], str]]]) -> List[Weakness]:
+    """Build the Dart application tree and inject weaknesses."""
+    if base_dir.exists():
+        return []
+
+    app_lower = app_name.lower().replace("-", "_").replace(" ", "_")
+    lib_src = base_dir / "lib" / "src"
+    lib_src.mkdir(parents=True, exist_ok=True)
+
+    file_map = {
+        "lib/src/hash.dart": [],
+        "lib/src/cipher.dart": [],
+        "lib/src/kdf.dart": [],
+    }
+    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    _distribute(snippets, file_map)
+
+    injected: List[Weakness] = []
+    for rel_path, entries in file_map.items():
+        parts = []
+        for wk, snip in entries:
+            parts.append(snip.strip())
+            injected.append(wk)
+        (base_dir / rel_path).write_text("\n\n".join(parts) + "\n")
+
+    (base_dir / "pubspec.yaml").write_text(textwrap.dedent(f"""\
+        name: {app_lower}
+        version: {version}
+        environment:
+          sdk: ">=3.0.0 <4.0.0"
+        dependencies:
+          crypto: ^3.0.0
+          cryptography: ^2.7.0
+    """))
+    return injected
+
+
+# ---- C/C++ application ----
+
+def generate_c_app(base_dir: Path, app_name: str, version: str,
+                   weaknesses_to_inject: List[Tuple[Weakness, Callable[[], str]]]) -> List[Weakness]:
+    """Build the C/C++ application tree and inject weaknesses. Raises PlatformError for GSKit-crypto on macOS."""
+    # Check GSKit-crypto platform guard before touching the filesystem
+    for wk, _ in weaknesses_to_inject:
+        if "gskit" in wk.description.lower():
+            platform_guard.assert_supported("c", "gskit-crypto")
+            break
+
+    if base_dir.exists():
+        return []
+
+    src_dir = base_dir / "src"
+    src_dir.mkdir(parents=True, exist_ok=True)
+
+    class_name = _title(app_name)
+    file_map = {
+        "src/hash.c": [],
+        "src/cipher.c": [],
+        "src/tls.c": [],
+        "src/pqc.c": [],
+    }
+    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    _distribute(snippets, file_map, pqc_key="src/pqc.c")
+
+    injected: List[Weakness] = []
+    for rel_path, entries in file_map.items():
+        parts = []
+        for wk, snip in entries:
+            parts.append(snip.strip())
+            injected.append(wk)
+        (base_dir / rel_path).write_text("\n\n".join(parts) + "\n")
+
+    (base_dir / "CMakeLists.txt").write_text(textwrap.dedent(f"""\
+        cmake_minimum_required(VERSION 3.16)
+        project({class_name} VERSION {version})
+        find_package(OpenSSL REQUIRED)
+        add_executable({class_name} src/hash.c src/cipher.c src/tls.c src/pqc.c)
+        target_link_libraries({class_name} OpenSSL::SSL OpenSSL::Crypto)
+    """))
+    return injected
+
+
+# ---------------------------------------------------------------------------
 # Shared helpers
 # ---------------------------------------------------------------------------
 
@@ -1646,12 +1938,48 @@ def prompt_non_empty(prompt: str) -> str:
 
 
 def main():
+    # Maps are resolved at call-time so all factory lists are already populated.
+    FACTORY_POOL_MAP = {
+        "java":       JAVA_WEAKNESS_FACTORIES,
+        "python":     PYTHON_WEAKNESS_FACTORIES,
+        "go":         GO_WEAKNESS_FACTORIES,
+        "javascript": JS_WEAKNESS_FACTORIES,
+        "csharp":     CSHARP_WEAKNESS_FACTORIES,
+        "dart":       DART_WEAKNESS_FACTORIES,
+        "c":          C_WEAKNESS_FACTORIES,
+    }
+    GENERATOR_MAP = {
+        "java":       generate_java_app,
+        "python":     generate_python_app,
+        "go":         generate_go_app,
+        "javascript": generate_js_app,
+        "csharp":     generate_csharp_app,
+        "dart":       generate_dart_app,
+        "c":          generate_c_app,
+    }
+    LANG_LABELS = {
+        "java": "Java / Spring Boot",
+        "python": "Python / Flask",
+        "go": "Go",
+        "javascript": "JavaScript / Node.js",
+        "csharp": "C# / .NET",
+        "dart": "Dart",
+        "c": "C / C++",
+    }
+
     print("=" * 60)
     print("  Vulnerable App Generator — Guardium QSE Demo Tool")
     print("=" * 60)
     print()
+    print("  Supported languages:")
+    for key, label in LANG_LABELS.items():
+        print(f"    {key:<12}  {label}")
+    print()
 
-    lang = prompt_choice("Language [java/python]: ", ["java", "python"])
+    lang = prompt_choice(
+        "Language [java/python/go/javascript/csharp/dart/c]: ",
+        list(FACTORY_POOL_MAP.keys()),
+    )
     app_name = prompt_non_empty("Application name: ")
     version = prompt_non_empty("Version (e.g. 1.0.0): ")
 
@@ -1668,13 +1996,11 @@ def main():
             print("Aborted.")
             sys.exit(0)
 
+    factory_pool = FACTORY_POOL_MAP[lang]
     target_count = random.randint(8, 26)
-    print(f"\n  Generating {lang.upper()} application '{app_name}' v{version}...")
+    print(f"\n  Generating {LANG_LABELS[lang]} application '{app_name}' v{version}...")
     print(f"  Target weakness count: {target_count}")
     print()
-
-    # Draw weaknesses from the relevant pool
-    factory_pool = JAVA_WEAKNESS_FACTORIES if lang == "java" else PYTHON_WEAKNESS_FACTORIES
 
     # Build weighted sample: allow repetition with different random state
     selected: List[Tuple[Weakness, str]] = []
@@ -1689,10 +2015,7 @@ def main():
             selected.append((_wk(wk_def.category, wk_def.description, wk_def.tag), factory()))
 
     # Generate the application
-    if lang == "java":
-        injected = generate_java_app(base_dir, safe_name, version, selected)
-    else:
-        injected = generate_python_app(base_dir, safe_name, version, selected)
+    injected = GENERATOR_MAP[lang](base_dir, safe_name, version, selected)
 
     # Summarise
     from collections import Counter
@@ -1700,6 +2023,7 @@ def main():
 
     print(f"\n{'=' * 60}")
     print(f"  Generation complete: {base_dir.resolve()}")
+    print(f"  Language: {LANG_LABELS[lang]}")
     print(f"  Total cryptographic weaknesses injected: {len(injected)}")
     print(f"{'=' * 60}")
     print("  Weakness breakdown by category:")
@@ -1729,6 +2053,1429 @@ def main():
     print("  Use this value in the 'repositoryUrl' field of your CBOM")
     print("  or API upload payload before submitting to Guardium.")
     print("=" * 60)
+
+
+
+
+# ===========================================================================
+# Go snippet factories
+# ===========================================================================
+
+GO_WEAKNESS_FACTORIES: List[Tuple[Weakness, Callable[[], str]]] = []
+
+def _gw(category, description, tag=""):
+    """Decorator: registers a Go weakness factory."""
+    wk = _wk(category, description, tag)
+    def decorator(fn):
+        GO_WEAKNESS_FACTORIES.append((wk, fn))
+        return fn
+    return decorator
+
+
+# CBS-001: MD5
+@_gw("Weak algorithm", "MD5 hash via crypto/md5", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        import (
+            "crypto/md5"
+            "fmt"
+        )
+
+        // computeFingerprint returns a hex MD5 fingerprint for cache keying.
+        func computeFingerprint(data []byte) string {
+            sum := md5.Sum(data)
+            return fmt.Sprintf("%x", sum)
+        }
+    """)
+
+
+# CBS-001: SHA-1
+@_gw("Weak algorithm", "SHA-1 hash via crypto/sha1", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        import (
+            "crypto/sha1"
+            "fmt"
+        )
+
+        // hashContent returns a SHA-1 digest used for legacy checksum validation.
+        func hashContent(data []byte) string {
+            sum := sha1.Sum(data)
+            return fmt.Sprintf("%x", sum)
+        }
+    """)
+
+
+# CBS-001: DES-CBC
+@_gw("Weak algorithm", "DES-CBC encryption via crypto/des", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        import (
+            "crypto/cipher"
+            "crypto/des"
+        )
+
+        // encryptDES encrypts payload using DES-CBC for backward-compatible storage.
+        func encryptDES(key, iv, plaintext []byte) ([]byte, error) {
+            block, err := des.NewCipher(key)
+            if err != nil {
+                return nil, err
+            }
+            dst := make([]byte, len(plaintext))
+            cipher.NewCBCEncrypter(block, iv).CryptBlocks(dst, plaintext)
+            return dst, nil
+        }
+    """)
+
+
+# CBS-001: RC4
+@_gw("Weak algorithm", "RC4 stream cipher via crypto/rc4", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        import "crypto/rc4"
+
+        // streamEncrypt applies RC4 to data for lightweight obfuscation.
+        func streamEncrypt(key, data []byte) ([]byte, error) {
+            c, err := rc4.NewCipher(key)
+            if err != nil {
+                return nil, err
+            }
+            dst := make([]byte, len(data))
+            c.XORKeyStream(dst, data)
+            return dst, nil
+        }
+    """)
+
+
+# CBS-001: MD4 (x/crypto)
+@_gw("Weak algorithm", "MD4 hash via golang.org/x/crypto/md4", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        import (
+            "fmt"
+            "golang.org/x/crypto/md4"
+        )
+
+        // legacyChecksum computes an MD4 digest for protocol compatibility.
+        func legacyChecksum(data []byte) string {
+            h := md4.New()
+            h.Write(data)
+            return fmt.Sprintf("%x", h.Sum(nil))
+        }
+    """)
+
+
+# CBS-001: RIPEMD-160
+@_gw("Weak algorithm", "RIPEMD-160 via golang.org/x/crypto/ripemd160", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        import (
+            "fmt"
+            "golang.org/x/crypto/ripemd160"
+        )
+
+        // ripemdDigest produces a RIPEMD-160 hash for address derivation.
+        func ripemdDigest(data []byte) string {
+            h := ripemd160.New()
+            h.Write(data)
+            return fmt.Sprintf("%x", h.Sum(nil))
+        }
+    """)
+
+
+# CBS-002: AES-ECB (direct block.Encrypt without mode)
+@_gw("Insecure cipher mode", "AES-ECB via direct block.Encrypt", "CBS-002")
+def _():
+    return textwrap.dedent("""\
+        import "crypto/aes"
+
+        // encryptBlock encrypts a single 16-byte block directly (ECB equivalent).
+        func encryptBlock(key, plaintext []byte) ([]byte, error) {
+            block, err := aes.NewCipher(key)
+            if err != nil {
+                return nil, err
+            }
+            dst := make([]byte, aes.BlockSize)
+            block.Encrypt(dst, plaintext[:aes.BlockSize])
+            return dst, nil
+        }
+    """)
+
+
+# CBS-002: AES-CBC without MAC
+@_gw("Insecure cipher mode", "AES-CBC without HMAC authentication", "CBS-002")
+def _():
+    return textwrap.dedent("""\
+        import (
+            "crypto/aes"
+            "crypto/cipher"
+        )
+
+        // encryptCBC encrypts data with AES-CBC but applies no MAC.
+        func encryptCBC(key, iv, plaintext []byte) ([]byte, error) {
+            block, err := aes.NewCipher(key)
+            if err != nil {
+                return nil, err
+            }
+            dst := make([]byte, len(plaintext))
+            cipher.NewCBCEncrypter(block, iv).CryptBlocks(dst, plaintext)
+            return dst, nil
+        }
+    """)
+
+
+# CBS-002: Static IV
+@_gw("Static IV", "Hardcoded static AES IV", "CBS-002")
+def _():
+    iv_bytes = ", ".join(f"0x{random.randint(0,255):02x}" for _ in range(16))
+    return textwrap.dedent(f"""\
+        import (
+            "crypto/aes"
+            "crypto/cipher"
+        )
+
+        // defaultIV is reused across all encryption calls for consistency.
+        var defaultIV = []byte{{{iv_bytes}}}
+
+        func encryptWithStaticIV(key, plaintext []byte) ([]byte, error) {{
+            block, err := aes.NewCipher(key)
+            if err != nil {{
+                return nil, err
+            }}
+            dst := make([]byte, len(plaintext))
+            cipher.NewCBCEncrypter(block, defaultIV).CryptBlocks(dst, plaintext)
+            return dst, nil
+        }}
+    """)
+
+
+# CBS-003: RSA-1024
+@_gw("Weak key size", "RSA-1024 key generation", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        import (
+            "crypto/rand"
+            "crypto/rsa"
+        )
+
+        // generateServiceKey creates an RSA signing key for the internal API.
+        func generateServiceKey() (*rsa.PrivateKey, error) {
+            return rsa.GenerateKey(rand.Reader, 1024)
+        }
+    """)
+
+
+# CBS-003: Insecure PRNG (math/rand)
+@_gw("Insecure PRNG", "math/rand used for token generation", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        import (
+            "fmt"
+            "math/rand"
+        )
+
+        // generateToken produces a numeric session token.
+        func generateToken() string {
+            return fmt.Sprintf("%016d", rand.Int63())
+        }
+    """)
+
+
+# CBS-003: Hardcoded HMAC key
+@_gw("Hardcoded secret", "Hardcoded HMAC-SHA256 key", "CBS-003")
+def _():
+    key_bytes = ", ".join(f"0x{random.randint(0,255):02x}" for _ in range(32))
+    return textwrap.dedent(f"""\
+        import (
+            "crypto/hmac"
+            "crypto/sha256"
+            "fmt"
+        )
+
+        // signingKey is the shared HMAC secret for webhook validation.
+        var signingKey = []byte{{{key_bytes}}}
+
+        func signPayload(data []byte) string {{
+            mac := hmac.New(sha256.New, signingKey)
+            mac.Write(data)
+            return fmt.Sprintf("%x", mac.Sum(nil))
+        }}
+    """)
+
+
+# CBS-003: PBKDF2 low iterations
+@_gw("Weak key derivation", "PBKDF2 with only 100 iterations", "CBS-003")
+def _():
+    iters = random.randint(100, 200)
+    return textwrap.dedent(f"""\
+        import (
+            "crypto/sha1"
+            "golang.org/x/crypto/pbkdf2"
+        )
+
+        // deriveKey stretches a passphrase for database credential encryption.
+        func deriveKey(password, salt []byte) []byte {{
+            return pbkdf2.Key(password, salt, {iters}, 16, sha1.New)
+        }}
+    """)
+
+
+# CBS-003: ECDH P-256 (quantum-vulnerable)
+@_gw("Quantum-vulnerable key exchange", "ECDH P-256 key exchange", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        import (
+            "crypto/ecdh"
+            "crypto/rand"
+        )
+
+        // generateECDHKey creates a P-256 ephemeral key for session establishment.
+        func generateECDHKey() (*ecdh.PrivateKey, error) {
+            return ecdh.P256().GenerateKey(rand.Reader)
+        }
+    """)
+
+
+# CBS-003: bcrypt low cost
+@_gw("Weak key derivation", "bcrypt with cost factor 4", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        import "golang.org/x/crypto/bcrypt"
+
+        // hashPassword stores a user password with bcrypt at minimum cost.
+        func hashPassword(password []byte) ([]byte, error) {
+            return bcrypt.GenerateFromPassword(password, 4)
+        }
+    """)
+
+
+# CBS-003: Blowfish ECB-equivalent
+@_gw("Weak algorithm", "Blowfish direct block encrypt (ECB-equivalent)", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        import "golang.org/x/crypto/blowfish"
+
+        // encryptBlowfish applies a single Blowfish block cipher operation.
+        func encryptBlowfish(key, plaintext []byte) ([]byte, error) {
+            c, err := blowfish.NewCipher(key)
+            if err != nil {
+                return nil, err
+            }
+            dst := make([]byte, blowfish.BlockSize)
+            c.Encrypt(dst, plaintext[:blowfish.BlockSize])
+            return dst, nil
+        }
+    """)
+
+
+# CBS-004: TLS 1.0
+@_gw("Insecure TLS", "TLS 1.0 minimum version", "CBS-004")
+def _():
+    return textwrap.dedent("""\
+        import (
+            "crypto/tls"
+            "net/http"
+        )
+
+        // newLegacyClient creates an HTTP client that allows TLS 1.0 connections.
+        func newLegacyClient() *http.Client {
+            return &http.Client{
+                Transport: &http.Transport{
+                    TLSClientConfig: &tls.Config{
+                        MinVersion: tls.VersionTLS10,
+                    },
+                },
+            }
+        }
+    """)
+
+
+# CBS-004: InsecureSkipVerify
+@_gw("Insecure TLS", "InsecureSkipVerify disables certificate validation", "CBS-004")
+def _():
+    return textwrap.dedent("""\
+        import (
+            "crypto/tls"
+            "net/http"
+        )
+
+        // newInternalClient skips TLS verification for internal service calls.
+        func newInternalClient() *http.Client {
+            return &http.Client{
+                Transport: &http.Transport{
+                    TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+                },
+            }
+        }
+    """)
+
+
+# PQC Discovery: ML-KEM-768 via golang.org/x/crypto/mlkem
+@_gw("PQC algorithm", "ML-KEM-768 key encapsulation", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        // Algorithm: ML-KEM  Library: x/crypto  Language: Go
+        import (
+            "crypto/rand"
+            "golang.org/x/crypto/mlkem"
+        )
+
+        // mlkemEncapsulate performs ML-KEM-768 key encapsulation.
+        func mlkemEncapsulate() ([]byte, error) {
+            dk, err := mlkem.GenerateKey768(rand.Reader)
+            if err != nil {
+                return nil, err
+            }
+            ek := dk.EncapsulationKey()
+            ciphertext, sharedKey, err := ek.Encapsulate()
+            _ = ciphertext
+            return sharedKey, err
+        }
+    """)
+
+
+# ===========================================================================
+# JavaScript / TypeScript snippet factories
+# ===========================================================================
+
+JS_WEAKNESS_FACTORIES: List[Tuple[Weakness, Callable[[], str]]] = []
+
+def _jsw(category, description, tag=""):
+    """Decorator: registers a JavaScript/TypeScript weakness factory."""
+    wk = _wk(category, description, tag)
+    def decorator(fn):
+        JS_WEAKNESS_FACTORIES.append((wk, fn))
+        return fn
+    return decorator
+
+
+# CBS-001: MD5
+@_jsw("Weak algorithm", "MD5 hash via node:crypto", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        const crypto = require('node:crypto');
+
+        // computeFingerprint returns a hex MD5 fingerprint for cache keying.
+        function computeFingerprint(data) {
+            return crypto.createHash('md5').update(data).digest('hex');
+        }
+    """)
+
+
+# CBS-001: SHA-1
+@_jsw("Weak algorithm", "SHA-1 hash via node:crypto", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        const crypto = require('node:crypto');
+
+        // hashContent returns a SHA-1 digest for legacy checksum validation.
+        function hashContent(data) {
+            return crypto.createHash('sha1').update(data).digest('hex');
+        }
+    """)
+
+
+# CBS-001: DES-CBC
+@_jsw("Weak algorithm", "DES-CBC encryption via node:crypto", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        const crypto = require('node:crypto');
+
+        // encryptDES encrypts payload using DES-CBC for backward-compatible storage.
+        function encryptDES(key, iv, plaintext) {
+            const cipher = crypto.createCipheriv('des-cbc', key, iv);
+            return Buffer.concat([cipher.update(plaintext), cipher.final()]);
+        }
+    """)
+
+
+# CBS-001: RC4
+@_jsw("Weak algorithm", "RC4 stream cipher via node:crypto", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        const crypto = require('node:crypto');
+
+        // streamEncrypt applies RC4 for lightweight payload obfuscation.
+        function streamEncrypt(key, data) {
+            const cipher = crypto.createCipheriv('rc4', key, '');
+            return Buffer.concat([cipher.update(data), cipher.final()]);
+        }
+    """)
+
+
+# CBS-001: HMAC-MD5
+@_jsw("Weak algorithm", "HMAC-MD5 via node:crypto", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        const crypto = require('node:crypto');
+
+        // signRequest signs API payloads with HMAC-MD5 for partner integrations.
+        function signRequest(payload, secret) {
+            return crypto.createHmac('md5', secret).update(payload).digest('hex');
+        }
+    """)
+
+
+# CBS-001: HMAC-SHA1
+@_jsw("Weak algorithm", "HMAC-SHA1 via node:crypto", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        const crypto = require('node:crypto');
+
+        // signWebhook signs webhook bodies with HMAC-SHA1 for delivery verification.
+        function signWebhook(body, secret) {
+            return crypto.createHmac('sha1', secret).update(body).digest('hex');
+        }
+    """)
+
+
+# CBS-002: AES-128-ECB
+@_jsw("Insecure cipher mode", "AES-128-ECB via node:crypto", "CBS-002")
+def _():
+    return textwrap.dedent("""\
+        const crypto = require('node:crypto');
+
+        // encryptConfig encrypts a configuration blob using AES-ECB.
+        function encryptConfig(key, plaintext) {
+            const cipher = crypto.createCipheriv('aes-128-ecb', key, '');
+            return Buffer.concat([cipher.update(plaintext), cipher.final()]);
+        }
+    """)
+
+
+# CBS-002: AES-128-CBC without MAC
+@_jsw("Insecure cipher mode", "AES-128-CBC without MAC via node:crypto", "CBS-002")
+def _():
+    return textwrap.dedent("""\
+        const crypto = require('node:crypto');
+
+        // encryptSession encrypts session data with AES-CBC but no MAC.
+        function encryptSession(key, iv, plaintext) {
+            const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
+            return Buffer.concat([cipher.update(plaintext), cipher.final()]);
+        }
+    """)
+
+
+# CBS-002: Static IV
+@_jsw("Static IV", "Hardcoded all-zero AES IV", "CBS-002")
+def _():
+    return textwrap.dedent("""\
+        const crypto = require('node:crypto');
+
+        // IV reused across all encryption calls for reproducibility.
+        const IV = Buffer.alloc(16, 0);
+
+        function encryptWithStaticIV(key, plaintext) {
+            const cipher = crypto.createCipheriv('aes-128-cbc', key, IV);
+            return Buffer.concat([cipher.update(plaintext), cipher.final()]);
+        }
+    """)
+
+
+# CBS-003: Insecure PRNG
+@_jsw("Insecure PRNG", "Math.random() used for token generation", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        // generateToken produces a reset token using a non-cryptographic PRNG.
+        function generateToken(length = 24) {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+        }
+    """)
+
+
+# CBS-003: Hardcoded AES key
+@_jsw("Hardcoded secret", "Hardcoded AES-128 key", "CBS-003")
+def _():
+    key_hex = "".join(f"{random.randint(0,255):02x}" for _ in range(16))
+    return textwrap.dedent(f"""\
+        const crypto = require('node:crypto');
+
+        // Symmetric key for internal metrics payload encryption.
+        const KEY = Buffer.from('{key_hex}', 'hex');
+
+        function encryptMetrics(plaintext) {{
+            const iv = Buffer.alloc(16, 0);
+            const cipher = crypto.createCipheriv('aes-128-cbc', KEY, iv);
+            return Buffer.concat([cipher.update(plaintext), cipher.final()]);
+        }}
+    """)
+
+
+# CBS-003: PBKDF2 low iterations
+@_jsw("Weak key derivation", "PBKDF2 with 100 iterations via node:crypto", "CBS-003")
+def _():
+    iters = random.randint(100, 200)
+    return textwrap.dedent(f"""\
+        const crypto = require('node:crypto');
+
+        // deriveKey stretches a passphrase for database credential encryption.
+        function deriveKey(password, salt) {{
+            return crypto.pbkdf2Sync(password, salt, {iters}, 16, 'sha1');
+        }}
+    """)
+
+
+# CBS-003: RSA-1024
+@_jsw("Weak key size", "RSA-1024 key generation via node:crypto", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        const crypto = require('node:crypto');
+
+        // generateServiceKey creates an RSA signing key for the internal API.
+        function generateServiceKey() {
+            return crypto.generateKeyPairSync('rsa', { modulusLength: 1024 });
+        }
+    """)
+
+
+# CBS-004: TLS minVersion TLSv1
+@_jsw("Insecure TLS", "TLS 1.0 minimum version via node:tls", "CBS-004")
+def _():
+    return textwrap.dedent("""\
+        const tls = require('node:tls');
+
+        // createLegacyServer starts a TLS server that accepts TLS 1.0 connections.
+        function createLegacyServer(options) {
+            return tls.createServer({ ...options, minVersion: 'TLSv1' });
+        }
+    """)
+
+
+# CBS-004: rejectUnauthorized false
+@_jsw("Insecure TLS", "rejectUnauthorized:false disables cert validation", "CBS-004")
+def _():
+    return textwrap.dedent("""\
+        const https = require('node:https');
+
+        // fetchInternal bypasses TLS verification for internal service endpoints.
+        function fetchInternal(url, callback) {
+            https.request(url, { rejectUnauthorized: false }, callback).end();
+        }
+    """)
+
+
+# CBS-003: Hardcoded JWT secret (jsonwebtoken)
+@_jsw("Hardcoded secret", "Hardcoded JWT secret in jwt.sign()", "CBS-003")
+def _():
+    secret = "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", k=32))
+    return textwrap.dedent(f"""\
+        const jwt = require('jsonwebtoken');
+
+        // issueToken signs a user session token with a hardcoded secret.
+        function issueToken(payload) {{
+            return jwt.sign(payload, '{secret}', {{ algorithm: 'HS256' }});
+        }}
+    """)
+
+
+# CBS-001: HMAC-SHA1 JWT algorithm
+@_jsw("Weak algorithm", "HS1 (HMAC-SHA1) JWT algorithm", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        const jwt = require('jsonwebtoken');
+
+        // issueCompatToken signs a token using HS1 for legacy client compatibility.
+        function issueCompatToken(payload, key) {
+            return jwt.sign(payload, key, { algorithm: 'HS1' });
+        }
+    """)
+
+
+# CBS-003: JWT with no expiry
+@_jsw("Hardcoded secret", "JWT signed with no expiry", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        const jwt = require('jsonwebtoken');
+
+        // issueServiceToken creates a long-lived token for service-to-service auth.
+        function issueServiceToken(payload, secret) {
+            return jwt.sign(payload, secret);
+        }
+    """)
+
+
+# CBS-004: JWT verify ignoring expiry
+@_jsw("Insecure TLS", "jwt.verify with ignoreExpiration:true", "CBS-004")
+def _():
+    return textwrap.dedent("""\
+        const jwt = require('jsonwebtoken');
+
+        // decodeToken validates a JWT but ignores expiration for debugging.
+        function decodeToken(token, secret) {
+            return jwt.verify(token, secret, { ignoreExpiration: true });
+        }
+    """)
+
+
+# PQC Discovery: ML-KEM via mlkem npm
+@_jsw("PQC algorithm", "ML-KEM-768 key encapsulation via mlkem", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        // Algorithm: ML-KEM  Library: mlkem-npm  Language: JavaScript
+        const { MlKem768 } = require('mlkem');
+
+        // mlkemEncapsulate performs ML-KEM-768 key encapsulation.
+        async function mlkemEncapsulate() {
+            const [ek, dk] = await MlKem768.generateKeyPair();
+            const [ciphertext, sharedKey] = await MlKem768.encap(ek);
+            return { ciphertext, sharedKey };
+        }
+    """)
+
+
+# PQC Discovery: ML-DSA via @noble/post-quantum
+@_jsw("PQC algorithm", "ML-DSA-44 signing via @noble/post-quantum", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        // Algorithm: ML-DSA  Library: mldsa-npm  Language: JavaScript
+        const { ml_dsa44 } = require('@noble/post-quantum/ml-dsa');
+
+        // mldsaSign generates a key pair and signs a message with ML-DSA-44.
+        function mldsaSign(message) {
+            const keys = ml_dsa44.keygen();
+            return ml_dsa44.sign(keys.secretKey, message);
+        }
+    """)
+
+
+
+# ===========================================================================
+# C# snippet factories
+# ===========================================================================
+
+CSHARP_WEAKNESS_FACTORIES: List[Tuple[Weakness, Callable[[], str]]] = []
+
+def _csw(category, description, tag=""):
+    """Decorator: registers a C# weakness factory."""
+    wk = _wk(category, description, tag)
+    def decorator(fn):
+        CSHARP_WEAKNESS_FACTORIES.append((wk, fn))
+        return fn
+    return decorator
+
+
+# CBS-001: MD5
+@_csw("Weak algorithm", "MD5 hash via System.Security.Cryptography", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        using System.Security.Cryptography;
+
+        // Compute a fingerprint for cache key lookups.
+        public static string ComputeFingerprint(byte[] data)
+        {
+            using var md5 = MD5.Create();
+            return Convert.ToHexString(md5.ComputeHash(data));
+        }
+    """)
+
+
+# CBS-001: SHA-1
+@_csw("Weak algorithm", "SHA-1 hash via System.Security.Cryptography", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        using System.Security.Cryptography;
+
+        // Hash content for legacy checksum validation.
+        public static string HashContent(byte[] data)
+        {
+            using var sha1 = SHA1.Create();
+            return Convert.ToHexString(sha1.ComputeHash(data));
+        }
+    """)
+
+
+# CBS-001: DES-CBC
+@_csw("Weak algorithm", "DES-CBC encryption", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        using System.Security.Cryptography;
+
+        // Encrypt a value using DES-CBC for backward-compatible storage.
+        public static byte[] EncryptDES(byte[] key, byte[] iv, byte[] plaintext)
+        {
+            using var des = DES.Create();
+            using var enc = des.CreateEncryptor(key, iv);
+            return enc.TransformFinalBlock(plaintext, 0, plaintext.Length);
+        }
+    """)
+
+
+# CBS-001: 3DES
+@_csw("Weak algorithm", "Triple-DES encryption", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        using System.Security.Cryptography;
+
+        // Encrypt configuration data with 3DES for legacy protocol support.
+        public static byte[] Encrypt3DES(byte[] key, byte[] iv, byte[] plaintext)
+        {
+            using var tdes = TripleDES.Create();
+            using var enc = tdes.CreateEncryptor(key, iv);
+            return enc.TransformFinalBlock(plaintext, 0, plaintext.Length);
+        }
+    """)
+
+
+# CBS-001: RC2
+@_csw("Weak algorithm", "RC2 encryption", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        using System.Security.Cryptography;
+
+        // Encrypt a session blob using RC2 for client compatibility.
+        public static byte[] EncryptRC2(byte[] key, byte[] iv, byte[] plaintext)
+        {
+            using var rc2 = RC2.Create();
+            using var enc = rc2.CreateEncryptor(key, iv);
+            return enc.TransformFinalBlock(plaintext, 0, plaintext.Length);
+        }
+    """)
+
+
+# CBS-001: HMAC-MD5
+@_csw("Weak algorithm", "HMAC-MD5 for request signing", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        using System.Security.Cryptography;
+
+        // Sign API payloads with HMAC-MD5 for partner integrations.
+        public static string SignRequest(byte[] payload, byte[] key)
+        {
+            using var hmac = new HMACMD5(key);
+            return Convert.ToHexString(hmac.ComputeHash(payload));
+        }
+    """)
+
+
+# CBS-001: HMAC-SHA1
+@_csw("Weak algorithm", "HMAC-SHA1 for webhook verification", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        using System.Security.Cryptography;
+
+        // Sign webhook bodies with HMAC-SHA1 for delivery verification.
+        public static string SignWebhook(byte[] body, byte[] key)
+        {
+            using var hmac = new HMACSHA1(key);
+            return Convert.ToHexString(hmac.ComputeHash(body));
+        }
+    """)
+
+
+# CBS-001: RSA without OAEP
+@_csw("Weak algorithm", "RSA PKCS#1 v1.5 padding (no OAEP)", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        using System.Security.Cryptography;
+
+        // Encrypt a session key with RSA PKCS#1 v1.5 for legacy clients.
+        public static byte[] EncryptRSALegacy(RSA rsa, byte[] data)
+        {
+            return rsa.Encrypt(data, RSAEncryptionPadding.Pkcs1);
+        }
+    """)
+
+
+# CBS-002: AES-ECB
+@_csw("Insecure cipher mode", "AES-ECB mode", "CBS-002")
+def _():
+    return textwrap.dedent("""\
+        using System.Security.Cryptography;
+
+        // Encrypt a configuration blob with AES-ECB.
+        public static byte[] EncryptECB(byte[] key, byte[] plaintext)
+        {
+            using var aes = Aes.Create();
+            aes.Mode = CipherMode.ECB;
+            aes.Key = key;
+            using var enc = aes.CreateEncryptor();
+            return enc.TransformFinalBlock(plaintext, 0, plaintext.Length);
+        }
+    """)
+
+
+# CBS-002: Static IV
+@_csw("Static IV", "Hardcoded static AES IV", "CBS-002")
+def _():
+    iv_bytes = ", ".join(f"0x{random.randint(0,255):02x}" for _ in range(16))
+    return textwrap.dedent(f"""\
+        using System.Security.Cryptography;
+
+        // Default IV reused across encryption calls for reproducibility.
+        private static readonly byte[] DefaultIV = {{ {iv_bytes} }};
+
+        public static byte[] EncryptWithStaticIV(byte[] key, byte[] plaintext)
+        {{
+            using var aes = Aes.Create();
+            aes.Key = key;
+            aes.IV = DefaultIV;
+            using var enc = aes.CreateEncryptor();
+            return enc.TransformFinalBlock(plaintext, 0, plaintext.Length);
+        }}
+    """)
+
+
+# CBS-003: RSA-1024
+@_csw("Weak key size", "RSA-1024 key generation", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        using System.Security.Cryptography;
+
+        // Generate an RSA key for internal API signing.
+        public static RSA GenerateServiceKey()
+        {
+            return RSA.Create(1024);
+        }
+    """)
+
+
+# CBS-003: Hardcoded AES key
+@_csw("Hardcoded secret", "Hardcoded AES key derived from string literal", "CBS-003")
+def _():
+    secret = "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", k=16))
+    return textwrap.dedent(f"""\
+        using System.Security.Cryptography;
+        using System.Text;
+
+        // Symmetric key for encrypting internal metrics payloads.
+        private static readonly byte[] MetricsKey = Encoding.UTF8.GetBytes("{secret}");
+    """)
+
+
+# CBS-003: Insecure PRNG
+@_csw("Insecure PRNG", "System.Random seeded with TickCount", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        // Generate a session token using a non-cryptographic PRNG.
+        public static string GenerateToken(int length = 24)
+        {
+            var rng = new Random(Environment.TickCount);
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Range(0, length).Select(_ => chars[rng.Next(chars.Length)]).ToArray());
+        }
+    """)
+
+
+# CBS-003: PBKDF2 low iterations
+@_csw("Weak key derivation", "PBKDF2 with 100 iterations and SHA-1", "CBS-003")
+def _():
+    iters = random.randint(100, 200)
+    return textwrap.dedent(f"""\
+        using System.Security.Cryptography;
+        using System.Text;
+
+        // Derive an encryption key from a passphrase using PBKDF2.
+        public static byte[] DeriveKey(string password, byte[] salt)
+        {{
+            using var kdf = new Rfc2898DeriveBytes(password, salt, {iters}, HashAlgorithmName.SHA1);
+            return kdf.GetBytes(16);
+        }}
+    """)
+
+
+# CBS-004: TLS 1.0
+@_csw("Insecure TLS", "SslProtocols.Tls (TLS 1.0) in AuthenticateAsClient", "CBS-004")
+def _():
+    return textwrap.dedent("""\
+        using System.Net.Security;
+        using System.Security.Authentication;
+
+        // Authenticate over TLS 1.0 for legacy server compatibility.
+        public static async Task AuthenticateLegacy(SslStream stream, string host)
+        {
+            await stream.AuthenticateAsClientAsync(host, null, SslProtocols.Tls, false);
+        }
+    """)
+
+
+# PQC Discovery: ML-KEM-768 (.NET 9)
+@_csw("PQC algorithm", "ML-KEM-768 key encapsulation (.NET 9)", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        // Algorithm: ML-KEM  Library: dotnet-crypto  Language: C#
+        // #if NET9_0_OR_GREATER
+        using System.Security.Cryptography;
+
+        // Encapsulate a shared secret using ML-KEM-768.
+        public static (byte[] Ciphertext, byte[] SharedSecret) MlKemEncapsulate()
+        {
+            using var key = MLKem768.GenerateKey();
+            byte[] pubKey = key.ExportEncapsulationKey();
+            MLKem768.TryEncapsulate(pubKey, out byte[] ciphertext, out byte[] sharedSecret);
+            return (ciphertext, sharedSecret);
+        }
+        // #endif
+    """)
+
+
+# PQC Discovery: ML-DSA-44 (.NET 9)
+@_csw("PQC algorithm", "ML-DSA-44 digital signature (.NET 9)", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        // Algorithm: ML-DSA  Library: dotnet-crypto  Language: C#
+        // #if NET9_0_OR_GREATER
+        using System.Security.Cryptography;
+
+        // Sign a message using ML-DSA-44.
+        public static byte[] MlDsaSign(byte[] message)
+        {
+            using var key = MLDsa44.GenerateKey();
+            return key.SignData(message);
+        }
+        // #endif
+    """)
+
+
+# PQC Discovery: SLH-DSA-SHA2-128s (.NET 9)
+@_csw("PQC algorithm", "SLH-DSA-SHA2-128s digital signature (.NET 9)", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        // Algorithm: SLH-DSA Library: dotnet-crypto  Language: C#
+        // #if NET9_0_OR_GREATER
+        using System.Security.Cryptography;
+
+        // Sign a message using SLH-DSA with the minimal SHA2-128s parameter set.
+        public static byte[] SlhDsaSign(byte[] message)
+        {
+            using var key = SlhDsaSha2_128s.GenerateKey();
+            return key.SignData(message);
+        }
+        // #endif
+    """)
+
+
+
+# ===========================================================================
+# Dart snippet factories
+# ===========================================================================
+
+DART_WEAKNESS_FACTORIES: List[Tuple[Weakness, Callable[[], str]]] = []
+
+def _dw(category, description, tag=""):
+    """Decorator: registers a Dart weakness factory."""
+    wk = _wk(category, description, tag)
+    def decorator(fn):
+        DART_WEAKNESS_FACTORIES.append((wk, fn))
+        return fn
+    return decorator
+
+
+# CBS-001: MD5
+@_dw("Weak algorithm", "MD5 hash via package:crypto", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        import 'package:crypto/crypto.dart';
+
+        // Compute a fingerprint for cache key lookups.
+        String computeFingerprint(List<int> data) {
+          final digest = md5.convert(data);
+          return digest.toString();
+        }
+    """)
+
+
+# CBS-001: SHA-1
+@_dw("Weak algorithm", "SHA-1 hash via package:crypto", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        import 'package:crypto/crypto.dart';
+
+        // Hash content for legacy checksum validation.
+        String hashContent(List<int> data) {
+          final digest = sha1.convert(data);
+          return digest.toString();
+        }
+    """)
+
+
+# CBS-001: HMAC-MD5
+@_dw("Weak algorithm", "HMAC-MD5 for API request signing", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        import 'package:crypto/crypto.dart';
+
+        // Sign API payloads with HMAC-MD5 for partner integrations.
+        String signRequest(List<int> payload, List<int> secret) {
+          final hmac = Hmac(md5, secret);
+          return hmac.convert(payload).toString();
+        }
+    """)
+
+
+# CBS-002: AES-CBC without MAC
+@_dw("Insecure cipher mode", "AES-CBC without MAC via package:cryptography", "CBS-002")
+def _():
+    return textwrap.dedent("""\
+        import 'package:cryptography/cryptography.dart';
+
+        // Encrypt session data with AES-CBC but no MAC.
+        Future<List<int>> encryptSession(List<int> data, SecretKey key) async {
+          final algorithm = AesCbc.with128bits(macAlgorithm: MacAlgorithm.empty);
+          final secretBox = await algorithm.encrypt(data, secretKey: key);
+          return secretBox.cipherText;
+        }
+    """)
+
+
+# CBS-003: Predictable sequential key
+@_dw("Hardcoded secret", "Predictable sequential AES key", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        import 'package:cryptography/cryptography.dart';
+
+        // Generate a key from a sequential byte pattern for test reproducibility.
+        SecretKey buildTestKey() {
+          return SecretKey(List<int>.generate(16, (i) => i));
+        }
+    """)
+
+
+# CBS-003: Hardcoded HMAC secret
+@_dw("Hardcoded secret", "Hardcoded HMAC secret key literal", "CBS-003")
+def _():
+    key_bytes = ", ".join(f"0x{random.randint(0,255):02x}" for _ in range(16))
+    return textwrap.dedent(f"""\
+        import 'package:cryptography/cryptography.dart';
+
+        // Shared HMAC secret for webhook payload validation.
+        final _webhookSecret = SecretKey([{key_bytes}]);
+    """)
+
+
+# CBS-003: PBKDF2 low iterations
+@_dw("Weak key derivation", "PBKDF2 with 100 iterations", "CBS-003")
+def _():
+    iters = random.randint(100, 200)
+    return textwrap.dedent(f"""\
+        import 'package:cryptography/cryptography.dart';
+
+        // Derive an AES key from a passphrase using PBKDF2.
+        Future<SecretKey> deriveKey(List<int> password, List<int> salt) {{
+          final kdf = Pbkdf2(
+            macAlgorithm: Hmac.sha1(),
+            iterations: {iters},
+            bits: 128,
+          );
+          return kdf.deriveKey(secretKey: SecretKey(password), nonce: salt);
+        }}
+    """)
+
+
+# ===========================================================================
+# C / C++ snippet factories
+# ===========================================================================
+
+C_WEAKNESS_FACTORIES: List[Tuple[Weakness, Callable[[], str]]] = []
+
+def _cw(category, description, tag=""):
+    """Decorator: registers a C/C++ weakness factory."""
+    wk = _wk(category, description, tag)
+    def decorator(fn):
+        C_WEAKNESS_FACTORIES.append((wk, fn))
+        return fn
+    return decorator
+
+
+# CBS-001: MD5 via OpenSSL
+@_cw("Weak algorithm", "MD5 via OpenSSL EVP", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        #include <openssl/evp.h>
+        #include <string.h>
+
+        /* Compute an MD5 fingerprint for cache key generation. */
+        int compute_fingerprint(const unsigned char *data, size_t len,
+                                unsigned char *out, unsigned int *out_len) {
+            EVP_MD_CTX *ctx = EVP_MD_CTX_new();
+            EVP_DigestInit_ex(ctx, EVP_md5(), NULL);
+            EVP_DigestUpdate(ctx, data, len);
+            EVP_DigestFinal_ex(ctx, out, out_len);
+            EVP_MD_CTX_free(ctx);
+            return 0;
+        }
+    """)
+
+
+# CBS-001: SHA-1 via OpenSSL
+@_cw("Weak algorithm", "SHA-1 via OpenSSL EVP", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        #include <openssl/evp.h>
+
+        /* Hash content for legacy checksum validation. */
+        int hash_content(const unsigned char *data, size_t len,
+                         unsigned char *out, unsigned int *out_len) {
+            EVP_MD_CTX *ctx = EVP_MD_CTX_new();
+            EVP_DigestInit_ex(ctx, EVP_sha1(), NULL);
+            EVP_DigestUpdate(ctx, data, len);
+            EVP_DigestFinal_ex(ctx, out, out_len);
+            EVP_MD_CTX_free(ctx);
+            return 0;
+        }
+    """)
+
+
+# CBS-001: DES-CBC via OpenSSL
+@_cw("Weak algorithm", "DES-CBC via OpenSSL EVP", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        #include <openssl/evp.h>
+
+        /* Encrypt a payload using DES-CBC for backward-compatible storage. */
+        int encrypt_des(const unsigned char *key, const unsigned char *iv,
+                        const unsigned char *in, int in_len,
+                        unsigned char *out, int *out_len) {
+            EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+            int len = 0;
+            EVP_EncryptInit_ex(ctx, EVP_des_cbc(), NULL, key, iv);
+            EVP_EncryptUpdate(ctx, out, &len, in, in_len);
+            *out_len = len;
+            EVP_EncryptFinal_ex(ctx, out + len, &len);
+            *out_len += len;
+            EVP_CIPHER_CTX_free(ctx);
+            return 0;
+        }
+    """)
+
+
+# CBS-001: RC4 via OpenSSL
+@_cw("Weak algorithm", "RC4 via OpenSSL EVP", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        #include <openssl/evp.h>
+
+        /* Apply RC4 stream cipher for lightweight obfuscation. */
+        int stream_encrypt(const unsigned char *key, int key_len,
+                           unsigned char *data, int data_len) {
+            EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+            int out_len = 0;
+            EVP_EncryptInit_ex(ctx, EVP_rc4(), NULL, key, NULL);
+            EVP_EncryptUpdate(ctx, data, &out_len, data, data_len);
+            EVP_CIPHER_CTX_free(ctx);
+            return 0;
+        }
+    """)
+
+
+# CBS-002: AES-128-ECB via OpenSSL
+@_cw("Insecure cipher mode", "AES-128-ECB via OpenSSL EVP", "CBS-002")
+def _():
+    return textwrap.dedent("""\
+        #include <openssl/evp.h>
+
+        /* Encrypt a configuration blob with AES-128-ECB. */
+        int encrypt_config(const unsigned char *key, const unsigned char *in,
+                           int in_len, unsigned char *out, int *out_len) {
+            EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+            int len = 0;
+            EVP_EncryptInit_ex(ctx, EVP_aes_128_ecb(), NULL, key, NULL);
+            EVP_EncryptUpdate(ctx, out, &len, in, in_len);
+            *out_len = len;
+            EVP_EncryptFinal_ex(ctx, out + len, &len);
+            *out_len += len;
+            EVP_CIPHER_CTX_free(ctx);
+            return 0;
+        }
+    """)
+
+
+# CBS-002: Static IV via OpenSSL
+@_cw("Static IV", "Hardcoded AES IV via OpenSSL", "CBS-002")
+def _():
+    iv_hex = ", ".join(f"0x{random.randint(0,255):02x}" for _ in range(16))
+    return textwrap.dedent(f"""\
+        #include <openssl/evp.h>
+
+        /* Default IV reused across encryption calls for reproducibility. */
+        static const unsigned char DEFAULT_IV[] = {{ {iv_hex} }};
+
+        int encrypt_with_static_iv(const unsigned char *key, const unsigned char *in,
+                                   int in_len, unsigned char *out, int *out_len) {{
+            EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+            int len = 0;
+            EVP_EncryptInit_ex(ctx, EVP_aes_128_cbc(), NULL, key, DEFAULT_IV);
+            EVP_EncryptUpdate(ctx, out, &len, in, in_len);
+            *out_len = len;
+            EVP_EncryptFinal_ex(ctx, out + len, &len);
+            *out_len += len;
+            EVP_CIPHER_CTX_free(ctx);
+            return 0;
+        }}
+    """)
+
+
+# CBS-003: RSA-1024 via OpenSSL
+@_cw("Weak key size", "RSA-1024 key generation via OpenSSL", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        #include <openssl/rsa.h>
+        #include <openssl/pem.h>
+
+        /* Generate a 1024-bit RSA key for internal API signing. */
+        RSA *generate_service_key(void) {
+            BIGNUM *e = BN_new();
+            BN_set_word(e, RSA_F4);
+            RSA *rsa = RSA_new();
+            RSA_generate_key_ex(rsa, 1024, e, NULL);
+            BN_free(e);
+            return rsa;
+        }
+    """)
+
+
+# CBS-003: Hardcoded AES key via OpenSSL
+@_cw("Hardcoded secret", "Hardcoded AES key literal", "CBS-003")
+def _():
+    key_bytes = ", ".join(f"0x{random.randint(0,255):02x}" for _ in range(16))
+    return textwrap.dedent(f"""\
+        #include <openssl/evp.h>
+
+        /* Symmetric key for internal metrics payload encryption. */
+        static const unsigned char METRICS_KEY[] = {{ {key_bytes} }};
+    """)
+
+
+# CBS-003: PBKDF2 low iterations via OpenSSL
+@_cw("Weak key derivation", "PBKDF2-SHA1 with 100 iterations via OpenSSL", "CBS-003")
+def _():
+    iters = random.randint(100, 200)
+    return textwrap.dedent(f"""\
+        #include <openssl/evp.h>
+
+        /* Derive an AES key from a passphrase using PBKDF2. */
+        int derive_key(const char *password, int pass_len,
+                       const unsigned char *salt, int salt_len,
+                       unsigned char *out) {{
+            return PKCS5_PBKDF2_HMAC(password, pass_len, salt, salt_len,
+                                     {iters}, EVP_sha1(), 16, out);
+        }}
+    """)
+
+
+# CBS-004: TLS 1.0 via OpenSSL
+@_cw("Insecure TLS", "TLS 1.0 maximum version via OpenSSL SSL_CTX", "CBS-004")
+def _():
+    return textwrap.dedent("""\
+        #include <openssl/ssl.h>
+
+        /* Create a TLS context restricted to TLS 1.0 for legacy server support. */
+        SSL_CTX *create_legacy_ctx(void) {
+            SSL_CTX *ctx = SSL_CTX_new(TLS_client_method());
+            SSL_CTX_set_max_proto_version(ctx, TLS1_VERSION);
+            return ctx;
+        }
+    """)
+
+
+# CBS-004: Certificate verification disabled via OpenSSL
+@_cw("Insecure TLS", "SSL_VERIFY_NONE disables certificate validation", "CBS-004")
+def _():
+    return textwrap.dedent("""\
+        #include <openssl/ssl.h>
+
+        /* Disable certificate verification for internal service connections. */
+        void disable_cert_verify(SSL_CTX *ctx) {
+            SSL_CTX_set_verify(ctx, SSL_VERIFY_NONE, NULL);
+        }
+    """)
+
+
+# CBS-001: MD5 via Libgcrypt
+@_cw("Weak algorithm", "MD5 via Libgcrypt gcry_md_open", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        #include <gcrypt.h>
+
+        /* Compute an MD5 digest for cache key generation. */
+        void compute_md5(const void *data, size_t len, unsigned char *out) {
+            gcry_md_hd_t h;
+            gcry_md_open(&h, GCRY_MD_MD5, 0);
+            gcry_md_write(h, data, len);
+            unsigned char *digest = gcry_md_read(h, GCRY_MD_MD5);
+            memcpy(out, digest, 16);
+            gcry_md_close(h);
+        }
+    """)
+
+
+# CBS-001: DES via Libgcrypt
+@_cw("Weak algorithm", "DES-CBC via Libgcrypt gcry_cipher_open", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        #include <gcrypt.h>
+
+        /* Encrypt data with DES-CBC for backward-compatible protocol support. */
+        gcry_error_t encrypt_des(const void *key, const void *iv,
+                                 void *data, size_t len) {
+            gcry_cipher_hd_t h;
+            gcry_cipher_open(&h, GCRY_CIPHER_DES, GCRY_CIPHER_MODE_CBC, 0);
+            gcry_cipher_setkey(h, key, 8);
+            gcry_cipher_setiv(h, iv, 8);
+            gcry_error_t err = gcry_cipher_encrypt(h, data, len, NULL, 0);
+            gcry_cipher_close(h);
+            return err;
+        }
+    """)
+
+
+# CBS-001: MD5 via Nettle
+@_cw("Weak algorithm", "MD5 via Nettle nettle_md5_init", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        #include <nettle/md5.h>
+
+        /* Compute an MD5 fingerprint using Nettle. */
+        void compute_fingerprint(const uint8_t *data, size_t len,
+                                 uint8_t *out) {
+            struct md5_ctx ctx;
+            nettle_md5_init(&ctx);
+            md5_update(&ctx, len, data);
+            md5_digest(&ctx, MD5_DIGEST_SIZE, out);
+        }
+    """)
+
+
+# CBS-003: Hardcoded key via Nettle
+@_cw("Hardcoded secret", "Hardcoded AES key literal (Nettle)", "CBS-003")
+def _():
+    key_bytes = ", ".join(f"0x{random.randint(0,255):02x}" for _ in range(16))
+    return textwrap.dedent(f"""\
+        #include <stdint.h>
+
+        /* Symmetric key for encrypting internal metrics payloads. */
+        static const uint8_t METRICS_KEY[16] = {{ {key_bytes} }};
+    """)
+
+
+# CBS-001: MD5 via GSKit-crypto  (PLATFORM: Linux, Windows only)
+# PLATFORM: Linux, Windows only
+@_cw("Weak algorithm", "MD5 via GSKit-crypto gsk_attribute_set_enum", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        #include <gsk_ssl.h>
+
+        /* Configure GSKit handle to use MD5 for message digest. */
+        int set_md5_digest(gsk_handle handle) {
+            return gsk_attribute_set_enum(handle, GSK_MD_ALG, GSK_MD5);
+        }
+    """)
+
+
+# CBS-004: SSLv3 via GSKit-crypto  (PLATFORM: Linux, Windows only)
+# PLATFORM: Linux, Windows only
+@_cw("Insecure TLS", "SSLv3 enabled via GSKit-crypto", "CBS-004")
+def _():
+    return textwrap.dedent("""\
+        #include <gsk_ssl.h>
+
+        /* Enable SSLv3 for legacy mainframe client compatibility. */
+        int enable_sslv3(gsk_handle handle) {
+            return gsk_attribute_set_enum(handle,
+                       GSK_PROTOCOL_SSLV3, GSK_PROTOCOL_SSLV3_ON);
+        }
+    """)
 
 
 if __name__ == "__main__":
