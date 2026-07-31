@@ -10,6 +10,11 @@ All weaknesses are intentional; this tool is for demo/testing purposes only.
 Change history:
   2025-07-15  Initial version. Interactive generator for Java and Python apps
               with randomised cryptographic weakness injection across files.
+  2026-07-31  Added PQC algorithm discovery targets: Java/JCA (ML-KEM, ML-DSA),
+              Java/BouncyCastle (ML-KEM, ML-DSA, SLH-DSA), Python/cryptography
+              (ML-KEM, ML-DSA), Python/oqs (ML-KEM, ML-DSA, SLH-DSA, XMSS).
+              Updated pom.xml generation to include BouncyCastle dependency.
+              Updated requirements.txt generation to include liboqs-python.
 """
 
 import os
@@ -417,6 +422,114 @@ def _():
 
 
 # ---------------------------------------------------------------------------
+# Java PQC discovery targets — Java/JCA (Java 21+ built-in KEM API)
+# ---------------------------------------------------------------------------
+
+# Algorithm: ML-KEM  Library: Java JCA  Language: Java
+@_jw("PQC algorithm", "ML-KEM key encapsulation via JCA KEM API", "CBS-003")
+def _():
+    param = random.choice(["ML-KEM-512", "ML-KEM-768", "ML-KEM-1024"])
+    return textwrap.dedent(f"""\
+        // Algorithm: ML-KEM  Library: Java JCA  Language: Java
+        // Key encapsulation for post-quantum secure key exchange
+        public static byte[] mlKemEncapsulate(PublicKey recipientPublicKey) throws Exception {{
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("{param}");
+            KeyPair kp = kpg.generateKeyPair();
+            javax.crypto.KEM kem = javax.crypto.KEM.getInstance("{param}");
+            javax.crypto.KEM.Encapsulator enc = kem.newEncapsulator(recipientPublicKey);
+            javax.crypto.KEM.Encapsulated encapsulated = enc.encapsulate();
+            return encapsulated.encapsulation();
+        }}
+    """)
+
+
+# Algorithm: ML-DSA  Library: Java JCA  Language: Java
+@_jw("PQC algorithm", "ML-DSA digital signature via JCA Signature API", "CBS-003")
+def _():
+    param = random.choice(["ML-DSA-44", "ML-DSA-65", "ML-DSA-87"])
+    return textwrap.dedent(f"""\
+        // Algorithm: ML-DSA  Library: Java JCA  Language: Java
+        // Post-quantum digital signature for document signing
+        public static byte[] mlDsaSign(byte[] document, PrivateKey signingKey) throws Exception {{
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("{param}");
+            KeyPair kp = kpg.generateKeyPair();
+            Signature sig = Signature.getInstance("{param}");
+            sig.initSign(signingKey);
+            sig.update(document);
+            return sig.sign();
+        }}
+    """)
+
+
+# ---------------------------------------------------------------------------
+# Java PQC discovery targets — Java/BouncyCastle
+# ---------------------------------------------------------------------------
+
+# Algorithm: ML-KEM  Library: BouncyCastle  Language: Java
+@_jw("PQC algorithm", "ML-KEM key encapsulation via BouncyCastle", "CBS-003")
+def _():
+    param = random.choice(["ML-KEM-512", "ML-KEM-768", "ML-KEM-1024"])
+    return textwrap.dedent(f"""\
+        // Algorithm: ML-KEM  Library: BouncyCastle  Language: Java
+        // Register BC provider and perform post-quantum key encapsulation
+        public static byte[] bcMlKemEncapsulate() throws Exception {{
+            if (java.security.Security.getProvider("BC") == null) {{
+                java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+            }}
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("{param}", "BC");
+            KeyPair kp = kpg.generateKeyPair();
+            javax.crypto.KeyAgreement ka = javax.crypto.KeyAgreement.getInstance("{param}", "BC");
+            ka.init(kp.getPrivate());
+            ka.doPhase(kp.getPublic(), true);
+            return ka.generateSecret();
+        }}
+    """)
+
+
+# Algorithm: ML-DSA  Library: BouncyCastle  Language: Java
+@_jw("PQC algorithm", "ML-DSA digital signature via BouncyCastle", "CBS-003")
+def _():
+    param = random.choice(["ML-DSA-44", "ML-DSA-65", "ML-DSA-87"])
+    return textwrap.dedent(f"""\
+        // Algorithm: ML-DSA  Library: BouncyCastle  Language: Java
+        // Post-quantum digital signature using BouncyCastle provider
+        public static byte[] bcMlDsaSign(byte[] data) throws Exception {{
+            if (java.security.Security.getProvider("BC") == null) {{
+                java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+            }}
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("{param}", "BC");
+            KeyPair kp = kpg.generateKeyPair();
+            Signature sig = Signature.getInstance("{param}", "BC");
+            sig.initSign(kp.getPrivate());
+            sig.update(data);
+            return sig.sign();
+        }}
+    """)
+
+
+# Algorithm: SLH-DSA  Library: BouncyCastle  Language: Java
+@_jw("PQC algorithm", "SLH-DSA hash-based signature via BouncyCastle", "CBS-003")
+def _():
+    param = random.choice(["SLH-DSA-SHA2-128s", "SLH-DSA-SHA2-128f",
+                            "SLH-DSA-SHA2-192s", "SLH-DSA-SHAKE-128s"])
+    return textwrap.dedent(f"""\
+        // Algorithm: SLH-DSA  Library: BouncyCastle  Language: Java
+        // Stateless hash-based post-quantum signature using BouncyCastle
+        public static byte[] bcSlhDsaSign(byte[] message) throws Exception {{
+            if (java.security.Security.getProvider("BC") == null) {{
+                java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+            }}
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("{param}", "BC");
+            KeyPair kp = kpg.generateKeyPair();
+            Signature sig = Signature.getInstance("{param}", "BC");
+            sig.initSign(kp.getPrivate());
+            sig.update(message);
+            return sig.sign();
+        }}
+    """)
+
+
+# ---------------------------------------------------------------------------
 # Python snippet factories
 # ---------------------------------------------------------------------------
 
@@ -717,6 +830,172 @@ def _():
     """)
 
 
+# ---------------------------------------------------------------------------
+# Python PQC discovery targets — Python/cryptography library
+# ---------------------------------------------------------------------------
+
+# Algorithm: ML-KEM  Library: cryptography  Language: Python
+@_pw("PQC algorithm", "ML-KEM key encapsulation via cryptography library", "CBS-003")
+def _():
+    param = random.choice(["MLKEM512", "MLKEM768", "MLKEM1024"])
+    return textwrap.dedent(f"""\
+        # Algorithm: ML-KEM  Library: cryptography  Language: Python
+        # Post-quantum key encapsulation using the cryptography library
+        try:
+            from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey  # noqa: F401
+            from cryptography.hazmat.primitives.asymmetric.mlkem import (
+                MLKEMPrivateKey, MLKEMPublicKey, generate_private_key as mlkem_generate_private_key
+            )
+
+            def mlkem_keygen_and_encap() -> bytes:
+                # Algorithm: ML-KEM  Library: cryptography  Language: Python
+                private_key = mlkem_generate_private_key("{param}")
+                public_key = private_key.public_key()
+                ciphertext, shared_key = public_key.encapsulate()
+                return shared_key
+        except ImportError:
+            import sys
+            print("ML-KEM requires cryptography >= 44.0.0 with ML-KEM support", file=sys.stderr)
+
+            def mlkem_keygen_and_encap() -> bytes:  # type: ignore[no-redef]
+                raise RuntimeError("ML-KEM not available — install cryptography >= 44.0.0")
+    """)
+
+
+# Algorithm: ML-DSA  Library: cryptography  Language: Python
+@_pw("PQC algorithm", "ML-DSA digital signature via cryptography library", "CBS-003")
+def _():
+    param = random.choice(["MLDSA44", "MLDSA65", "MLDSA87"])
+    return textwrap.dedent(f"""\
+        # Algorithm: ML-DSA  Library: cryptography  Language: Python
+        # Post-quantum digital signature using the cryptography library
+        try:
+            from cryptography.hazmat.primitives.asymmetric.mldsa import (
+                MLDSAPrivateKey, MLDSAPublicKey, generate_private_key as mldsa_generate_private_key
+            )
+
+            def mldsa_sign(message: bytes) -> bytes:
+                # Algorithm: ML-DSA  Library: cryptography  Language: Python
+                private_key = mldsa_generate_private_key("{param}")
+                return private_key.sign(message)
+        except ImportError:
+            import sys
+            print("ML-DSA requires cryptography >= 44.0.0 with ML-DSA support", file=sys.stderr)
+
+            def mldsa_sign(message: bytes) -> bytes:  # type: ignore[no-redef]
+                raise RuntimeError("ML-DSA not available — install cryptography >= 44.0.0")
+    """)
+
+
+# ---------------------------------------------------------------------------
+# Python PQC discovery targets — Python/oqs (liboqs-python)
+# ---------------------------------------------------------------------------
+
+# Algorithm: ML-KEM  Library: oqs  Language: Python
+@_pw("PQC algorithm", "ML-KEM key encapsulation via liboqs-python", "CBS-003")
+def _():
+    param = random.choice(["Kyber512", "Kyber768", "Kyber1024",
+                            "ML-KEM-512", "ML-KEM-768", "ML-KEM-1024"])
+    return textwrap.dedent(f"""\
+        # Algorithm: ML-KEM  Library: oqs  Language: Python
+        # Post-quantum key encapsulation using liboqs-python (Open Quantum Safe)
+        try:
+            import oqs
+
+            def oqs_mlkem_keygen_and_encap() -> bytes:
+                # Algorithm: ML-KEM  Library: oqs  Language: Python
+                with oqs.KeyEncapsulation("{param}") as kem:
+                    public_key = kem.generate_keypair()
+                    ciphertext, shared_key_enc = kem.encap_secret(public_key)
+                    shared_key_dec = kem.decap_secret(ciphertext)
+                    return shared_key_dec
+        except ImportError:
+            import sys
+            print("ML-KEM (oqs) requires liboqs-python: pip install liboqs-python", file=sys.stderr)
+
+            def oqs_mlkem_keygen_and_encap() -> bytes:  # type: ignore[no-redef]
+                raise RuntimeError("liboqs-python not installed")
+    """)
+
+
+# Algorithm: ML-DSA  Library: oqs  Language: Python
+@_pw("PQC algorithm", "ML-DSA digital signature via liboqs-python", "CBS-003")
+def _():
+    param = random.choice(["Dilithium2", "Dilithium3", "Dilithium5",
+                            "ML-DSA-44", "ML-DSA-65", "ML-DSA-87"])
+    return textwrap.dedent(f"""\
+        # Algorithm: ML-DSA  Library: oqs  Language: Python
+        # Post-quantum digital signature using liboqs-python (Open Quantum Safe)
+        try:
+            import oqs
+
+            def oqs_mldsa_sign(message: bytes) -> bytes:
+                # Algorithm: ML-DSA  Library: oqs  Language: Python
+                with oqs.Signature("{param}") as sig:
+                    public_key = sig.generate_keypair()
+                    signature = sig.sign(message)
+                    is_valid = sig.verify(message, signature, public_key)
+                    return signature
+        except ImportError:
+            import sys
+            print("ML-DSA (oqs) requires liboqs-python: pip install liboqs-python", file=sys.stderr)
+
+            def oqs_mldsa_sign(message: bytes) -> bytes:  # type: ignore[no-redef]
+                raise RuntimeError("liboqs-python not installed")
+    """)
+
+
+# Algorithm: SLH-DSA  Library: oqs  Language: Python
+@_pw("PQC algorithm", "SLH-DSA hash-based signature via liboqs-python", "CBS-003")
+def _():
+    param = random.choice(["SPHINCS+-SHA2-128s-simple", "SPHINCS+-SHA2-128f-simple",
+                            "SPHINCS+-SHAKE-128s-simple", "SLH-DSA-SHA2-128s",
+                            "SLH-DSA-SHA2-128f"])
+    return textwrap.dedent(f"""\
+        # Algorithm: SLH-DSA  Library: oqs  Language: Python
+        # Stateless hash-based post-quantum signature using liboqs-python
+        try:
+            import oqs
+
+            def oqs_slhdsa_sign(message: bytes) -> bytes:
+                # Algorithm: SLH-DSA  Library: oqs  Language: Python
+                with oqs.Signature("{param}") as sig:
+                    public_key = sig.generate_keypair()
+                    return sig.sign(message)
+        except ImportError:
+            import sys
+            print("SLH-DSA (oqs) requires liboqs-python: pip install liboqs-python", file=sys.stderr)
+
+            def oqs_slhdsa_sign(message: bytes) -> bytes:  # type: ignore[no-redef]
+                raise RuntimeError("liboqs-python not installed")
+    """)
+
+
+# Algorithm: XMSS  Library: oqs  Language: Python
+@_pw("PQC algorithm", "XMSS stateful hash-based signature via liboqs-python", "CBS-003")
+def _():
+    param = random.choice(["XMSS-SHA2_10_256", "XMSS-SHA2_16_256",
+                            "XMSS-SHAKE_10_256", "XMSSMT-SHA2_20/2_256"])
+    return textwrap.dedent(f"""\
+        # Algorithm: XMSS  Library: oqs  Language: Python
+        # Stateful hash-based post-quantum signature using liboqs-python
+        try:
+            import oqs
+
+            def oqs_xmss_sign(message: bytes) -> bytes:
+                # Algorithm: XMSS  Library: oqs  Language: Python
+                with oqs.Signature("{param}") as sig:
+                    public_key = sig.generate_keypair()
+                    return sig.sign(message)
+        except ImportError:
+            import sys
+            print("XMSS (oqs) requires liboqs-python: pip install liboqs-python", file=sys.stderr)
+
+            def oqs_xmss_sign(message: bytes) -> bytes:  # type: ignore[no-redef]
+                raise RuntimeError("liboqs-python not installed")
+    """)
+
+
 @_pw("Hardcoded secret", "Hardcoded database password", "CBS-003")
 def _():
     password = "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$", k=16))
@@ -907,6 +1186,17 @@ def generate_java_app(base_dir: Path, app_name: str, version: str,
                     <groupId>io.jsonwebtoken</groupId>
                     <artifactId>jjwt-api</artifactId>
                     <version>0.12.3</version>
+                </dependency>
+                <!-- BouncyCastle: PQC algorithm support (ML-KEM, ML-DSA, SLH-DSA) -->
+                <dependency>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcprov-jdk18on</artifactId>
+                    <version>1.78.1</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcpkix-jdk18on</artifactId>
+                    <version>1.78.1</version>
                 </dependency>
                 <dependency>
                     <groupId>org.junit.jupiter</groupId>
@@ -1176,10 +1466,12 @@ def generate_python_app(base_dir: Path, app_name: str, version: str,
         flask>=2.3.0
         sqlalchemy>=2.0.0
         pycryptodome>=3.19.0
-        cryptography>=41.0.0
+        cryptography>=44.0.0
         pyjwt>=2.8.0
         requests>=2.31.0
         python-dotenv>=1.0.0
+        # liboqs-python: PQC algorithm support (ML-KEM, ML-DSA, SLH-DSA, XMSS)
+        liboqs-python>=0.10.0
     """))
 
     # setup.py
@@ -1194,9 +1486,10 @@ def generate_python_app(base_dir: Path, app_name: str, version: str,
                 "flask>=2.3.0",
                 "sqlalchemy>=2.0.0",
                 "pycryptodome>=3.19.0",
-                "cryptography>=41.0.0",
+                "cryptography>=44.0.0",
                 "pyjwt>=2.8.0",
                 "requests>=2.31.0",
+                "liboqs-python>=0.10.0",
             ],
         )
     """))
