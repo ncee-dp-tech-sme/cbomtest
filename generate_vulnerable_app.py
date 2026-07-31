@@ -27,6 +27,15 @@ Change history:
               build file templates, snippet distribution, and GSKit platform guard.
   2026-08-01  Phase 5: Extended main() with FACTORY_POOL_MAP and GENERATOR_MAP;
               language prompt now supports java/python/go/javascript/csharp/dart/c.
+  2026-07-31  Phase 6: Added 3 more Dart factories (AES-ECB CBS-002, RSA/PKCS1
+              CBS-003, insecure PRNG CBS-003) to match other language coverage.
+              Added 5 C/C++ Crypto++ factories (MD5, SHA-1, AES-ECB, RSA-1024,
+              hardcoded key) and 2 liboqs-C PQC factories (ML-KEM, ML-DSA) that
+              were missing from Phase 3.
+  2026-08-02  Fix: overwrite confirmation in main() now removes the existing
+              directory before calling the generator, so generators that guard
+              with `if base_dir.exists(): return []` (Go, JS, C#, Dart) no
+              longer produce zero weaknesses when the target dir already exists.
 """
 
 import os
@@ -1806,6 +1815,7 @@ def generate_dart_app(base_dir: Path, app_name: str, version: str,
         dependencies:
           crypto: ^3.0.0
           cryptography: ^2.7.0
+          pointycastle: ^3.9.0
     """))
     return injected
 
@@ -1995,6 +2005,7 @@ def main():
         if confirm != "yes":
             print("Aborted.")
             sys.exit(0)
+        shutil.rmtree(base_dir)
 
     factory_pool = FACTORY_POOL_MAP[lang]
     target_count = random.randint(8, 26)
@@ -3163,6 +3174,53 @@ def _():
     """)
 
 
+# CBS-002: AES-ECB via package:cryptography
+@_dw("Insecure cipher mode", "AES-ECB mode via package:cryptography", "CBS-002")
+def _():
+    return textwrap.dedent("""\
+        import 'package:cryptography/cryptography.dart';
+
+        // Encrypt a configuration block with AES-ECB for backward compatibility.
+        Future<List<int>> encryptConfig(List<int> data, SecretKey key) async {
+          final algorithm = AesEcb();
+          final secretBox = await algorithm.encrypt(data, secretKey: key);
+          return secretBox.cipherText;
+        }
+    """)
+
+
+# CBS-003: RSA PKCS#1 v1.5 via pointycastle
+@_dw("Weak algorithm", "RSA PKCS#1 v1.5 encryption via pointycastle", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        import 'package:pointycastle/pointycastle.dart';
+        import 'package:pointycastle/asymmetric/api.dart';
+
+        // Wrap a session key with the recipient's RSA public key.
+        Uint8List encryptSessionKey(RSAPublicKey publicKey, Uint8List sessionKey) {
+          final cipher = AsymmetricBlockCipher('RSA/PKCS1');
+          cipher.init(true, PublicKeyParameter<RSAPublicKey>(publicKey));
+          return cipher.process(sessionKey);
+        }
+    """)
+
+
+# CBS-003: Insecure PRNG (math.Random)
+@_dw("Insecure PRNG", "math.Random used for security-sensitive token generation", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        import 'dart:math';
+
+        // Generate a session nonce for request deduplication.
+        String generateNonce() {
+          final rng = Random();
+          return List<int>.generate(16, (_) => rng.nextInt(256))
+              .map((b) => b.toRadixString(16).padLeft(2, '0'))
+              .join();
+        }
+    """)
+
+
 # ===========================================================================
 # C / C++ snippet factories
 # ===========================================================================
@@ -3474,6 +3532,159 @@ def _():
         int enable_sslv3(gsk_handle handle) {
             return gsk_attribute_set_enum(handle,
                        GSK_PROTOCOL_SSLV3, GSK_PROTOCOL_SSLV3_ON);
+        }
+    """)
+
+
+# ===========================================================================
+# C / C++ — Crypto++ snippet factories
+# ===========================================================================
+
+# CBS-001: MD5 via Crypto++
+@_cw("Weak algorithm", "MD5 via Crypto++ HashFilter", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        #include <cryptopp/md5.h>
+        #include <cryptopp/hex.h>
+        #include <cryptopp/filters.h>
+        #include <string>
+
+        /* Compute an MD5 fingerprint for cache key generation. */
+        std::string compute_fingerprint(const std::string &data) {
+            CryptoPP::MD5 hash;
+            std::string digest;
+            CryptoPP::StringSource ss(data, true,
+                new CryptoPP::HashFilter(hash,
+                    new CryptoPP::HexEncoder(
+                        new CryptoPP::StringSink(digest))));
+            return digest;
+        }
+    """)
+
+
+# CBS-001: SHA-1 via Crypto++
+@_cw("Weak algorithm", "SHA-1 via Crypto++ HashFilter", "CBS-001")
+def _():
+    return textwrap.dedent("""\
+        #include <cryptopp/sha.h>
+        #include <cryptopp/hex.h>
+        #include <cryptopp/filters.h>
+        #include <string>
+
+        /* Hash content for legacy checksum validation. */
+        std::string hash_content(const std::string &data) {
+            CryptoPP::SHA1 hash;
+            std::string digest;
+            CryptoPP::StringSource ss(data, true,
+                new CryptoPP::HashFilter(hash,
+                    new CryptoPP::HexEncoder(
+                        new CryptoPP::StringSink(digest))));
+            return digest;
+        }
+    """)
+
+
+# CBS-002: AES-ECB via Crypto++
+@_cw("Insecure cipher mode", "AES-ECB mode via Crypto++ ECB_Mode", "CBS-002")
+def _():
+    return textwrap.dedent("""\
+        #include <cryptopp/aes.h>
+        #include <cryptopp/modes.h>
+        #include <cryptopp/filters.h>
+        #include <string>
+
+        /* Encrypt a configuration blob with AES-128-ECB. */
+        std::string encrypt_config(const CryptoPP::byte *key,
+                                   const std::string &plaintext) {
+            CryptoPP::ECB_Mode<CryptoPP::AES>::Encryption enc;
+            enc.SetKey(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
+            std::string cipher;
+            CryptoPP::StringSource ss(plaintext, true,
+                new CryptoPP::StreamTransformationFilter(enc,
+                    new CryptoPP::StringSink(cipher)));
+            return cipher;
+        }
+    """)
+
+
+# CBS-003: RSA-1024 via Crypto++
+@_cw("Weak key size", "RSA-1024 key generation via Crypto++", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        #include <cryptopp/rsa.h>
+        #include <cryptopp/osrng.h>
+
+        /* Generate a 1024-bit RSA key for internal API signing. */
+        CryptoPP::RSA::PrivateKey generate_service_key() {
+            CryptoPP::AutoSeededRandomPool rng;
+            CryptoPP::RSA::PrivateKey key;
+            key.GenerateRandomWithKeySize(rng, 1024);
+            return key;
+        }
+    """)
+
+
+# CBS-003: Hardcoded AES key via Crypto++
+@_cw("Hardcoded secret", "Hardcoded AES key literal (Crypto++)", "CBS-003")
+def _():
+    key_bytes = ", ".join(f"0x{random.randint(0,255):02x}" for _ in range(16))
+    return textwrap.dedent(f"""\
+        #include <cryptopp/aes.h>
+
+        /* Symmetric key for internal metrics payload encryption. */
+        static const CryptoPP::byte METRICS_KEY[CryptoPP::AES::DEFAULT_KEYLENGTH] = {{
+            {key_bytes}
+        }};
+    """)
+
+
+# ===========================================================================
+# C / C++ — liboqs (Open Quantum Safe) PQC discovery factories
+# ===========================================================================
+
+# PQC Discovery: ML-KEM-768 via liboqs C API
+@_cw("PQC algorithm", "ML-KEM-768 key encapsulation via liboqs", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        #include <oqs/oqs.h>
+        #include <stdlib.h>
+
+        /* Post-quantum key encapsulation using liboqs ML-KEM-768. */
+        int kem_encapsulate(uint8_t *ciphertext, uint8_t *shared_secret) {
+            OQS_KEM *kem = OQS_KEM_new(OQS_KEM_alg_ml_kem_768);
+            if (kem == NULL) return -1;
+            uint8_t *public_key  = malloc(kem->length_public_key);
+            uint8_t *secret_key  = malloc(kem->length_secret_key);
+            OQS_KEM_keypair(kem, public_key, secret_key);
+            OQS_KEM_encaps(kem, ciphertext, shared_secret, public_key);
+            OQS_KEM_free(kem);
+            free(public_key);
+            free(secret_key);
+            return 0;
+        }
+    """)
+
+
+# PQC Discovery: ML-DSA-44 via liboqs C API
+@_cw("PQC algorithm", "ML-DSA-44 digital signature via liboqs", "CBS-003")
+def _():
+    return textwrap.dedent("""\
+        #include <oqs/oqs.h>
+        #include <stdlib.h>
+
+        /* Post-quantum digital signature using liboqs ML-DSA-44. */
+        int sign_message(const uint8_t *msg, size_t msg_len,
+                         uint8_t *sig, size_t *sig_len) {
+            OQS_SIG *sig_alg = OQS_SIG_new(OQS_SIG_alg_ml_dsa_44);
+            if (sig_alg == NULL) return -1;
+            uint8_t *public_key  = malloc(sig_alg->length_public_key);
+            uint8_t *secret_key  = malloc(sig_alg->length_secret_key);
+            OQS_SIG_keypair(sig_alg, public_key, secret_key);
+            OQS_SIG_sign(sig_alg, sig, sig_len, msg, msg_len, secret_key);
+            OQS_SIG_free(sig_alg);
+            free(public_key);
+            free(secret_key);
+            return 0;
         }
     """)
 
