@@ -1,0 +1,875 @@
+[
+  {
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/pqc.go",
+    "methods": [
+      {
+        "methodName": "deriveKey",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "hash.Hash",
+            "fullyQualifiedName": "crypto.sha1.New",
+            "payload": "New",
+            "lineNumber": 11,
+            "start": 53,
+            "end": 56
+          },
+          {
+            "returnType": "[]byte",
+            "fullyQualifiedName": "golang.org.x.crypto.pbkdf2.Key",
+            "payload": "Key",
+            "lineNumber": 11,
+            "start": 19,
+            "end": 22
+          }
+        ]
+      },
+      {
+        "methodName": "legacyChecksum",
+        "variables": [
+          {
+            "name": "h",
+            "type": "md4.New",
+            "lineNumber": 21,
+            "start": 5,
+            "end": 5,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "md4.New",
+            "payload": "New",
+            "lineNumber": 21,
+            "start": 14,
+            "end": 17
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "md4.New.Write",
+            "payload": "Write",
+            "lineNumber": 22,
+            "start": 7,
+            "end": 12
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "md4.New.Sum",
+            "payload": "Sum",
+            "lineNumber": 23,
+            "start": 32,
+            "end": 35
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "fmt.Sprintf",
+            "payload": "Sprintf",
+            "lineNumber": 23,
+            "start": 16,
+            "end": 23
+          }
+        ]
+      },
+      {
+        "methodName": "mlkemEncapsulate",
+        "variables": [
+          {
+            "name": "dk",
+            "type": "mlkem.GenerateKey768",
+            "lineNumber": 34,
+            "start": 5,
+            "end": 6,
+            "isConstructor": false
+          },
+          {
+            "name": "err",
+            "type": "mlkem.GenerateKey768",
+            "lineNumber": 34,
+            "start": 9,
+            "end": 11,
+            "isConstructor": false
+          },
+          {
+            "name": "ek",
+            "type": "mlkem.GenerateKey768.EncapsulationKey",
+            "lineNumber": 38,
+            "start": 5,
+            "end": 6,
+            "isConstructor": false
+          },
+          {
+            "name": "ciphertext",
+            "type": "mlkem.GenerateKey768.EncapsulationKey.Encapsulate",
+            "lineNumber": 39,
+            "start": 5,
+            "end": 14,
+            "isConstructor": false
+          },
+          {
+            "name": "sharedKey",
+            "type": "mlkem.GenerateKey768.EncapsulationKey.Encapsulate",
+            "lineNumber": 39,
+            "start": 17,
+            "end": 25,
+            "isConstructor": false
+          },
+          {
+            "name": "err",
+            "type": "mlkem.GenerateKey768.EncapsulationKey.Encapsulate",
+            "lineNumber": 39,
+            "start": 28,
+            "end": 30,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "rand.Reader",
+            "payload": "Reader",
+            "lineNumber": 34,
+            "start": 42,
+            "end": 48
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "mlkem.GenerateKey768",
+            "payload": "GenerateKey768",
+            "lineNumber": 34,
+            "start": 22,
+            "end": 36
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "mlkem.GenerateKey768.EncapsulationKey",
+            "payload": "EncapsulationKey",
+            "lineNumber": 38,
+            "start": 14,
+            "end": 30
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "mlkem.GenerateKey768.EncapsulationKey.Encapsulate",
+            "payload": "Encapsulate",
+            "lineNumber": 39,
+            "start": 38,
+            "end": 49
+          }
+        ]
+      },
+      {
+        "methodName": "encryptBlock",
+        "variables": [
+          {
+            "name": "block",
+            "type": "aes.NewCipher",
+            "lineNumber": 48,
+            "start": 5,
+            "end": 9,
+            "isConstructor": false
+          },
+          {
+            "name": "err",
+            "type": "aes.NewCipher",
+            "lineNumber": 48,
+            "start": 12,
+            "end": 14,
+            "isConstructor": false
+          },
+          {
+            "name": "dst",
+            "type": "aes.BlockSize",
+            "lineNumber": 52,
+            "start": 5,
+            "end": 7,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "aes.NewCipher",
+            "payload": "NewCipher",
+            "lineNumber": 48,
+            "start": 23,
+            "end": 32
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "aes.BlockSize",
+            "payload": "BlockSize",
+            "lineNumber": 52,
+            "start": 29,
+            "end": 38
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "aes.BlockSize",
+            "payload": "BlockSize",
+            "lineNumber": 53,
+            "start": 39,
+            "end": 48
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "aes.NewCipher.Encrypt",
+            "payload": "Encrypt",
+            "lineNumber": 53,
+            "start": 11,
+            "end": 18
+          }
+        ]
+      },
+      {
+        "methodName": "encryptWithStaticIV",
+        "variables": [
+          {
+            "name": "block",
+            "type": "aes.NewCipher",
+            "lineNumber": 66,
+            "start": 5,
+            "end": 9,
+            "isConstructor": false
+          },
+          {
+            "name": "err",
+            "type": "aes.NewCipher",
+            "lineNumber": 66,
+            "start": 12,
+            "end": 14,
+            "isConstructor": false
+          },
+          {
+            "name": "dst",
+            "type": "Unresolved",
+            "lineNumber": 70,
+            "start": 5,
+            "end": 7,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "aes.NewCipher",
+            "payload": "NewCipher",
+            "lineNumber": 66,
+            "start": 23,
+            "end": 32
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "cipher.NewCBCEncrypter",
+            "payload": "NewCBCEncrypter",
+            "lineNumber": 71,
+            "start": 12,
+            "end": 27
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "cipher.NewCBCEncrypter.CryptBlocks",
+            "payload": "CryptBlocks",
+            "lineNumber": 71,
+            "start": 46,
+            "end": 57
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  },
+  {
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/tls.go",
+    "methods": [
+      {
+        "methodName": "signPayload",
+        "variables": [
+          {
+            "name": "mac",
+            "type": "hash.Hash",
+            "lineNumber": 14,
+            "start": 5,
+            "end": 7,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "hash.Hash",
+            "fullyQualifiedName": "crypto.sha256.New",
+            "payload": "New",
+            "lineNumber": 14,
+            "start": 28,
+            "end": 31
+          },
+          {
+            "returnType": "hash.Hash",
+            "fullyQualifiedName": "crypto.hmac.New",
+            "payload": "New",
+            "lineNumber": 14,
+            "start": 17,
+            "end": 20
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "hash.Hash.Write",
+            "payload": "Write",
+            "lineNumber": 15,
+            "start": 9,
+            "end": 14
+          },
+          {
+            "returnType": "[]byte",
+            "fullyQualifiedName": "hash.Hash.Sum",
+            "payload": "Sum",
+            "lineNumber": 16,
+            "start": 34,
+            "end": 37
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "fmt.Sprintf",
+            "payload": "Sprintf",
+            "lineNumber": 16,
+            "start": 16,
+            "end": 23
+          }
+        ]
+      },
+      {
+        "methodName": "computeFingerprint",
+        "variables": [
+          {
+            "name": "sum",
+            "type": "md5.Sum",
+            "lineNumber": 26,
+            "start": 5,
+            "end": 7,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "md5.Sum",
+            "payload": "Sum",
+            "lineNumber": 26,
+            "start": 16,
+            "end": 19
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "fmt.Sprintf",
+            "payload": "Sprintf",
+            "lineNumber": 27,
+            "start": 16,
+            "end": 23
+          }
+        ]
+      },
+      {
+        "methodName": "newInternalClient",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "http.Client",
+            "fullyQualifiedName": "http.Client",
+            "payload": "Structure",
+            "lineNumber": 37,
+            "start": 13,
+            "end": 24
+          },
+          {
+            "returnType": "http.Transport",
+            "fullyQualifiedName": "http.Transport",
+            "payload": "Structure",
+            "lineNumber": 38,
+            "start": 21,
+            "end": 35
+          },
+          {
+            "returnType": "tls.Config",
+            "fullyQualifiedName": "tls.Config",
+            "payload": "Structure",
+            "lineNumber": 39,
+            "start": 31,
+            "end": 41
+          }
+        ]
+      },
+      {
+        "methodName": "encryptCBC",
+        "variables": [
+          {
+            "name": "block",
+            "type": "aes.NewCipher",
+            "lineNumber": 51,
+            "start": 5,
+            "end": 9,
+            "isConstructor": false
+          },
+          {
+            "name": "err",
+            "type": "aes.NewCipher",
+            "lineNumber": 51,
+            "start": 12,
+            "end": 14,
+            "isConstructor": false
+          },
+          {
+            "name": "dst",
+            "type": "Unresolved",
+            "lineNumber": 55,
+            "start": 5,
+            "end": 7,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "aes.NewCipher",
+            "payload": "NewCipher",
+            "lineNumber": 51,
+            "start": 23,
+            "end": 32
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "cipher.NewCBCEncrypter",
+            "payload": "NewCBCEncrypter",
+            "lineNumber": 56,
+            "start": 12,
+            "end": 27
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "cipher.NewCBCEncrypter.CryptBlocks",
+            "payload": "CryptBlocks",
+            "lineNumber": 56,
+            "start": 39,
+            "end": 50
+          }
+        ]
+      },
+      {
+        "methodName": "computeFingerprint",
+        "variables": [
+          {
+            "name": "sum",
+            "type": "md5.Sum",
+            "lineNumber": 67,
+            "start": 5,
+            "end": 7,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "md5.Sum",
+            "payload": "Sum",
+            "lineNumber": 67,
+            "start": 16,
+            "end": 19
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "fmt.Sprintf",
+            "payload": "Sprintf",
+            "lineNumber": 68,
+            "start": 16,
+            "end": 23
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  },
+  {
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/cipher.go",
+    "methods": [
+      {
+        "methodName": "generateServiceKey",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "crypto.rand.Reader",
+            "payload": "Reader",
+            "lineNumber": 11,
+            "start": 33,
+            "end": 39
+          },
+          {
+            "returnType": "crypto.rsa.PrivateKey",
+            "fullyQualifiedName": "crypto.rsa.GenerateKey",
+            "payload": "GenerateKey",
+            "lineNumber": 11,
+            "start": 16,
+            "end": 27
+          }
+        ]
+      },
+      {
+        "methodName": "ripemdDigest",
+        "variables": [
+          {
+            "name": "h",
+            "type": "ripemd160.New",
+            "lineNumber": 21,
+            "start": 5,
+            "end": 5,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "ripemd160.New",
+            "payload": "New",
+            "lineNumber": 21,
+            "start": 20,
+            "end": 23
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "ripemd160.New.Write",
+            "payload": "Write",
+            "lineNumber": 22,
+            "start": 7,
+            "end": 12
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "ripemd160.New.Sum",
+            "payload": "Sum",
+            "lineNumber": 23,
+            "start": 32,
+            "end": 35
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "fmt.Sprintf",
+            "payload": "Sprintf",
+            "lineNumber": 23,
+            "start": 16,
+            "end": 23
+          }
+        ]
+      },
+      {
+        "methodName": "hashPassword",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "bcrypt.GenerateFromPassword",
+            "payload": "GenerateFromPassword",
+            "lineNumber": 30,
+            "start": 19,
+            "end": 39
+          }
+        ]
+      },
+      {
+        "methodName": "encryptDES",
+        "variables": [
+          {
+            "name": "block",
+            "type": "des.NewCipher",
+            "lineNumber": 40,
+            "start": 5,
+            "end": 9,
+            "isConstructor": false
+          },
+          {
+            "name": "err",
+            "type": "des.NewCipher",
+            "lineNumber": 40,
+            "start": 12,
+            "end": 14,
+            "isConstructor": false
+          },
+          {
+            "name": "dst",
+            "type": "Unresolved",
+            "lineNumber": 44,
+            "start": 5,
+            "end": 7,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "des.NewCipher",
+            "payload": "NewCipher",
+            "lineNumber": 40,
+            "start": 23,
+            "end": 32
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "cipher.NewCBCEncrypter",
+            "payload": "NewCBCEncrypter",
+            "lineNumber": 45,
+            "start": 12,
+            "end": 27
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "cipher.NewCBCEncrypter.CryptBlocks",
+            "payload": "CryptBlocks",
+            "lineNumber": 45,
+            "start": 39,
+            "end": 50
+          }
+        ]
+      },
+      {
+        "methodName": "generateToken",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "crypto.rand.Int63",
+            "payload": "Int63",
+            "lineNumber": 56,
+            "start": 38,
+            "end": 43
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "fmt.Sprintf",
+            "payload": "Sprintf",
+            "lineNumber": 56,
+            "start": 16,
+            "end": 23
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  },
+  {
+    "className": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/hash.go",
+    "methods": [
+      {
+        "methodName": "streamEncrypt",
+        "variables": [
+          {
+            "name": "c",
+            "type": "crypto.rc4.Cipher",
+            "lineNumber": 8,
+            "start": 5,
+            "end": 5,
+            "isConstructor": false
+          },
+          {
+            "name": "err",
+            "type": "crypto.rc4.Cipher",
+            "lineNumber": 8,
+            "start": 8,
+            "end": 10,
+            "isConstructor": false
+          },
+          {
+            "name": "dst",
+            "type": "Unresolved",
+            "lineNumber": 12,
+            "start": 5,
+            "end": 7,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "crypto.rc4.Cipher",
+            "fullyQualifiedName": "crypto.rc4.NewCipher",
+            "payload": "NewCipher",
+            "lineNumber": 8,
+            "start": 19,
+            "end": 28
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "crypto.rc4.Cipher.XORKeyStream",
+            "payload": "XORKeyStream",
+            "lineNumber": 13,
+            "start": 7,
+            "end": 19
+          }
+        ]
+      },
+      {
+        "methodName": "hashContent",
+        "variables": [
+          {
+            "name": "sum",
+            "type": "sha1.Sum",
+            "lineNumber": 24,
+            "start": 5,
+            "end": 7,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "sha1.Sum",
+            "payload": "Sum",
+            "lineNumber": 24,
+            "start": 17,
+            "end": 20
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "fmt.Sprintf",
+            "payload": "Sprintf",
+            "lineNumber": 25,
+            "start": 16,
+            "end": 23
+          }
+        ]
+      },
+      {
+        "methodName": "newLegacyClient",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "http.Client",
+            "fullyQualifiedName": "http.Client",
+            "payload": "Structure",
+            "lineNumber": 35,
+            "start": 13,
+            "end": 24
+          },
+          {
+            "returnType": "http.Transport",
+            "fullyQualifiedName": "http.Transport",
+            "payload": "Structure",
+            "lineNumber": 36,
+            "start": 21,
+            "end": 35
+          },
+          {
+            "returnType": "tls.Config",
+            "fullyQualifiedName": "tls.Config",
+            "payload": "Structure",
+            "lineNumber": 37,
+            "start": 31,
+            "end": 41
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "tls.VersionTLS10",
+            "payload": "VersionTLS10",
+            "lineNumber": 38,
+            "start": 33,
+            "end": 45
+          }
+        ]
+      },
+      {
+        "methodName": "encryptBlowfish",
+        "variables": [
+          {
+            "name": "c",
+            "type": "blowfish.NewCipher",
+            "lineNumber": 48,
+            "start": 5,
+            "end": 5,
+            "isConstructor": false
+          },
+          {
+            "name": "err",
+            "type": "blowfish.NewCipher",
+            "lineNumber": 48,
+            "start": 8,
+            "end": 10,
+            "isConstructor": false
+          },
+          {
+            "name": "dst",
+            "type": "blowfish.BlockSize",
+            "lineNumber": 52,
+            "start": 5,
+            "end": 7,
+            "isConstructor": false
+          }
+        ],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "blowfish.NewCipher",
+            "payload": "NewCipher",
+            "lineNumber": 48,
+            "start": 24,
+            "end": 33
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "blowfish.BlockSize",
+            "payload": "BlockSize",
+            "lineNumber": 52,
+            "start": 34,
+            "end": 43
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "blowfish.BlockSize",
+            "payload": "BlockSize",
+            "lineNumber": 53,
+            "start": 40,
+            "end": 49
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "blowfish.NewCipher.Encrypt",
+            "payload": "Encrypt",
+            "lineNumber": 53,
+            "start": 7,
+            "end": 14
+          }
+        ]
+      },
+      {
+        "methodName": "generateECDHKey",
+        "variables": [],
+        "functions": [
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "rand.Reader",
+            "payload": "Reader",
+            "lineNumber": 64,
+            "start": 41,
+            "end": 47
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "ecdh.P256",
+            "payload": "P256",
+            "lineNumber": 64,
+            "start": 17,
+            "end": 21
+          },
+          {
+            "returnType": "Unresolved",
+            "fullyQualifiedName": "ecdh.P256.GenerateKey",
+            "payload": "GenerateKey",
+            "lineNumber": 64,
+            "start": 24,
+            "end": 35
+          }
+        ]
+      }
+    ],
+    "isInnerClass": false,
+    "methodNamesAndTypesMap": {}
+  }
+]

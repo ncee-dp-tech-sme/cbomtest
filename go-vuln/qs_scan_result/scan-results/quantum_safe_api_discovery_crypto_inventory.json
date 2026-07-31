@@ -1,0 +1,259 @@
+{
+  "scanId": "bdca4097a1bf498ca079a34646abadda",
+  "applicationId": " ",
+  "applicationVersion": " ",
+  "scanTime": "2026-07-31T16:08:42.001339Z",
+  "totalCryptoArtifacts": "16",
+  "metadata": {
+    "provider": {
+      "name": "IBM Quantum Safe Explorer",
+      "version": "2.3.1.0"
+    },
+    "properties": []
+  },
+  "findings": [
+    {
+      "fileType": "py"
+    },
+    {
+      "fileType": "java"
+    },
+    {
+      "fileType": "Go",
+      "children": [
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/pqc.go",
+          "cryptoArtifacts": 2,
+          "cryptoInfo": [
+            {
+              "functionName": "crypto.sha1.New",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 11,
+                  "startColumn": 53,
+                  "endColumn": 56
+                }
+              ]
+            },
+            {
+              "functionName": "golang.org.x.crypto.pbkdf2.Key",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 11,
+                  "startColumn": 19,
+                  "endColumn": 22
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/tls.go",
+          "cryptoArtifacts": 3,
+          "cryptoInfo": [
+            {
+              "functionName": "crypto.sha256.New",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 14,
+                  "startColumn": 28,
+                  "endColumn": 31
+                }
+              ]
+            },
+            {
+              "functionName": "crypto.hmac.New",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 14,
+                  "startColumn": 17,
+                  "endColumn": 20
+                }
+              ]
+            },
+            {
+              "functionName": "hash.Hash.Sum",
+              "library": "hash",
+              "locations": [
+                {
+                  "line": 16,
+                  "startColumn": 34,
+                  "endColumn": 37
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/cipher.go",
+          "cryptoArtifacts": 1,
+          "cryptoInfo": [
+            {
+              "functionName": "crypto.rsa.GenerateKey",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 11,
+                  "startColumn": 16,
+                  "endColumn": 27
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/hash.go",
+          "cryptoArtifacts": 2,
+          "cryptoInfo": [
+            {
+              "functionName": "crypto.rc4.NewCipher",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 8,
+                  "startColumn": 19,
+                  "endColumn": 28
+                }
+              ]
+            },
+            {
+              "functionName": "crypto.rc4.Cipher.XORKeyStream",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 13,
+                  "startColumn": 7,
+                  "endColumn": 19
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fileType": "c"
+    },
+    {
+      "fileType": "Go",
+      "children": [
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/pqc.go",
+          "cryptoArtifacts": 2,
+          "cryptoInfo": [
+            {
+              "functionName": "crypto.sha1.New",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 11,
+                  "startColumn": 53,
+                  "endColumn": 56
+                }
+              ]
+            },
+            {
+              "functionName": "golang.org.x.crypto.pbkdf2.Key",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 11,
+                  "startColumn": 19,
+                  "endColumn": 22
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/tls.go",
+          "cryptoArtifacts": 3,
+          "cryptoInfo": [
+            {
+              "functionName": "crypto.sha256.New",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 14,
+                  "startColumn": 28,
+                  "endColumn": 31
+                }
+              ]
+            },
+            {
+              "functionName": "crypto.hmac.New",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 14,
+                  "startColumn": 17,
+                  "endColumn": 20
+                }
+              ]
+            },
+            {
+              "functionName": "hash.Hash.Sum",
+              "library": "hash",
+              "locations": [
+                {
+                  "line": 16,
+                  "startColumn": 34,
+                  "endColumn": 37
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/cipher.go",
+          "cryptoArtifacts": 1,
+          "cryptoInfo": [
+            {
+              "functionName": "crypto.rsa.GenerateKey",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 11,
+                  "startColumn": 16,
+                  "endColumn": 27
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "fileName": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/hash.go",
+          "cryptoArtifacts": 2,
+          "cryptoInfo": [
+            {
+              "functionName": "crypto.rc4.NewCipher",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 8,
+                  "startColumn": 19,
+                  "endColumn": 28
+                }
+              ]
+            },
+            {
+              "functionName": "crypto.rc4.Cipher.XORKeyStream",
+              "library": "crypto",
+              "locations": [
+                {
+                  "line": 13,
+                  "startColumn": 7,
+                  "endColumn": 19
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

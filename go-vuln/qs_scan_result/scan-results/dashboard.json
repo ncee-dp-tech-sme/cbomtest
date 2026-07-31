@@ -1,0 +1,268 @@
+{
+  "children": [
+    {
+      "file_type": "py",
+      "statistics": {
+        "Lines_scanned": 0,
+        "Files_scanned": 0,
+        "Methods_scanned": 0,
+        "External_functions": 0,
+        "Crypto_evidences": 0,
+        "Crypto_vulnerabilities": 0,
+        "Crypto_calls": 0,
+        "Function_calls": 0,
+        "Quantum_safe_algorithms": 0,
+        "Non_quantum_safe_algorithms": 0,
+        "Algorithms": {},
+        "Instances": {},
+        "Libraries": {},
+        "Files": {}
+      },
+      "findings": []
+    },
+    {
+      "file_type": "java",
+      "statistics": {
+        "Lines_scanned": 0,
+        "Files_scanned": 0,
+        "Methods_scanned": 0,
+        "External_functions": 0,
+        "Crypto_evidences": 0,
+        "Crypto_vulnerabilities": 0,
+        "Crypto_calls": 69,
+        "Function_calls": 0,
+        "Quantum_safe_algorithms": 0,
+        "Non_quantum_safe_algorithms": 0,
+        "Algorithms": {},
+        "Instances": {},
+        "Libraries": {},
+        "Files": {}
+      },
+      "findings": []
+    },
+    {
+      "file_type": "Go",
+      "statistics": {
+        "Lines_scanned": 197,
+        "Files_scanned": 4,
+        "Methods_scanned": 20,
+        "External_functions": 49,
+        "Crypto_evidences": 0,
+        "Crypto_vulnerabilities": 0,
+        "Crypto_calls": 8,
+        "Function_calls": 49,
+        "Quantum_safe_algorithms": 0,
+        "Non_quantum_safe_algorithms": 0,
+        "Algorithms": {},
+        "Instances": {
+          "crypto.hmac.New": 1,
+          "crypto.rc4.Cipher.XORKeyStream": 1,
+          "crypto.rc4.NewCipher": 1,
+          "crypto.rsa.GenerateKey": 1,
+          "crypto.sha1.New": 1,
+          "crypto.sha256.New": 1,
+          "golang.org.x.crypto.pbkdf2.Key": 1,
+          "hash.Hash.Sum": 1
+        },
+        "Libraries": {
+          "crypto": 7,
+          "hash": 1
+        },
+        "Files": {
+          "crypto/cipher.go": 1,
+          "crypto/hash.go": 2,
+          "crypto/pqc.go": 2,
+          "crypto/tls.go": 3
+        }
+      },
+      "findings": [
+        {
+          "id": "0",
+          "Function_Name": "crypto.sha1.New",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/pqc.go:11",
+          "Location": "crypto/pqc.go"
+        },
+        {
+          "id": "1",
+          "Function_Name": "golang.org.x.crypto.pbkdf2.Key",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/pqc.go:11",
+          "Location": "crypto/pqc.go"
+        },
+        {
+          "id": "2",
+          "Function_Name": "crypto.sha256.New",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/tls.go:14",
+          "Location": "crypto/tls.go"
+        },
+        {
+          "id": "3",
+          "Function_Name": "crypto.hmac.New",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/tls.go:14",
+          "Location": "crypto/tls.go"
+        },
+        {
+          "id": "4",
+          "Function_Name": "hash.Hash.Sum",
+          "Asset_Type": "algorithm",
+          "Library": "hash",
+          "Parent": "crypto/tls.go:16",
+          "Location": "crypto/tls.go"
+        },
+        {
+          "id": "5",
+          "Function_Name": "crypto.rsa.GenerateKey",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/cipher.go:11",
+          "Location": "crypto/cipher.go"
+        },
+        {
+          "id": "6",
+          "Function_Name": "crypto.rc4.NewCipher",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/hash.go:8",
+          "Location": "crypto/hash.go"
+        },
+        {
+          "id": "7",
+          "Function_Name": "crypto.rc4.Cipher.XORKeyStream",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/hash.go:13",
+          "Location": "crypto/hash.go"
+        }
+      ]
+    },
+    {
+      "file_type": "c",
+      "statistics": {
+        "Lines_scanned": 0,
+        "Files_scanned": 0,
+        "Methods_scanned": 0,
+        "External_functions": 0,
+        "Crypto_evidences": 0,
+        "Crypto_vulnerabilities": 0,
+        "Crypto_calls": 0,
+        "Function_calls": 0,
+        "Quantum_safe_algorithms": 0,
+        "Non_quantum_safe_algorithms": 0,
+        "Algorithms": {},
+        "Instances": {},
+        "Libraries": {},
+        "Files": {}
+      },
+      "findings": []
+    },
+    {
+      "file_type": "Go",
+      "statistics": {
+        "Lines_scanned": 197,
+        "Files_scanned": 4,
+        "Methods_scanned": 20,
+        "External_functions": 49,
+        "Crypto_evidences": 0,
+        "Crypto_vulnerabilities": 0,
+        "Crypto_calls": 8,
+        "Function_calls": 49,
+        "Quantum_safe_algorithms": 0,
+        "Non_quantum_safe_algorithms": 0,
+        "Algorithms": {},
+        "Instances": {
+          "crypto.hmac.New": 1,
+          "crypto.rc4.Cipher.XORKeyStream": 1,
+          "crypto.rc4.NewCipher": 1,
+          "crypto.rsa.GenerateKey": 1,
+          "crypto.sha1.New": 1,
+          "crypto.sha256.New": 1,
+          "golang.org.x.crypto.pbkdf2.Key": 1,
+          "hash.Hash.Sum": 1
+        },
+        "Libraries": {
+          "crypto": 7,
+          "hash": 1
+        },
+        "Files": {
+          "crypto/cipher.go": 1,
+          "crypto/hash.go": 2,
+          "crypto/pqc.go": 2,
+          "crypto/tls.go": 3
+        }
+      },
+      "findings": [
+        {
+          "id": "0",
+          "Function_Name": "crypto.sha1.New",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/pqc.go:11",
+          "Location": "crypto/pqc.go"
+        },
+        {
+          "id": "1",
+          "Function_Name": "golang.org.x.crypto.pbkdf2.Key",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/pqc.go:11",
+          "Location": "crypto/pqc.go"
+        },
+        {
+          "id": "2",
+          "Function_Name": "crypto.sha256.New",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/tls.go:14",
+          "Location": "crypto/tls.go"
+        },
+        {
+          "id": "3",
+          "Function_Name": "crypto.hmac.New",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/tls.go:14",
+          "Location": "crypto/tls.go"
+        },
+        {
+          "id": "4",
+          "Function_Name": "hash.Hash.Sum",
+          "Asset_Type": "algorithm",
+          "Library": "hash",
+          "Parent": "crypto/tls.go:16",
+          "Location": "crypto/tls.go"
+        },
+        {
+          "id": "5",
+          "Function_Name": "crypto.rsa.GenerateKey",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/cipher.go:11",
+          "Location": "crypto/cipher.go"
+        },
+        {
+          "id": "6",
+          "Function_Name": "crypto.rc4.NewCipher",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/hash.go:8",
+          "Location": "crypto/hash.go"
+        },
+        {
+          "id": "7",
+          "Function_Name": "crypto.rc4.Cipher.XORKeyStream",
+          "Asset_Type": "algorithm",
+          "Library": "crypto",
+          "Parent": "crypto/hash.go:13",
+          "Location": "crypto/hash.go"
+        }
+      ]
+    }
+  ]
+}

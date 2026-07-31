@@ -1,0 +1,515 @@
+{
+  "bomFormat" : "CycloneDX",
+  "specVersion" : "1.6",
+  "serialNumber" : "urn:uuid:bdca4097a1bf498ca079a34646abadda",
+  "version" : 1,
+  "metadata" : {
+    "timestamp" : "2026-07-31T16:08:41Z",
+    "tools" : {
+      "services" : [
+        {
+          "provider" : {
+            "name" : "IBM Corporation."
+          },
+          "name" : "IBM Quantum Safe Explorer",
+          "version" : "2.3.1.0"
+        }
+      ]
+    },
+    "component" : {
+      "type" : "application",
+      "name" : "",
+      "version" : ""
+    },
+    "properties" : [
+      {
+        "name" : "language",
+        "value" : "python, Go, c, Go"
+      },
+      {
+        "name" : "gitUrl",
+        "value" : ""
+      }
+    ]
+  },
+  "components" : [
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "150a5b0e-9cea-4f69-a7b6-b949c47f140e",
+      "name" : "crypto.sha1.New",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/pqc.go",
+            "line" : 11,
+            "offset" : 53,
+            "additionalContext" : "lineHash=965ed15f81be670a1d988eaaa1468d19df930c80542f9cd92d430419d4abe2f0;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "hash"
+        },
+        "oid" : "1.3.14.3.2.18"
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "73d0ecf4-b631-4de9-89b0-f6449d8d8e2e",
+      "name" : "golang.org.x.crypto.pbkdf2.Key",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/pqc.go",
+            "line" : 11,
+            "offset" : 19,
+            "additionalContext" : "lineHash=965ed15f81be670a1d988eaaa1468d19df930c80542f9cd92d430419d4abe2f0;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "kdf",
+          "cryptoFunctions" : [
+            "keyderive"
+          ]
+        }
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "003ab070-ac3a-4d29-980f-cea0f859231e",
+      "name" : "crypto.sha256.New",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/tls.go",
+            "line" : 14,
+            "offset" : 28,
+            "additionalContext" : "lineHash=1317899de24278227c7689fe7260f10bedab0bdedf637dfa0b56ef898e728c6d;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "hash"
+        },
+        "oid" : "2.16.840.1.101.3.4.2.1"
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "c180d827-31c1-4102-9624-dd2dece382b9",
+      "name" : "crypto.hmac.New",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/tls.go",
+            "line" : 14,
+            "offset" : 17,
+            "additionalContext" : "lineHash=1317899de24278227c7689fe7260f10bedab0bdedf637dfa0b56ef898e728c6d;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "mac"
+        }
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "7e094e85-0b59-4d89-a499-150bf9e11f1a",
+      "name" : "hash.Hash.Sum",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/tls.go",
+            "line" : 16,
+            "offset" : 34,
+            "additionalContext" : "lineHash=176ed27357edbe5f37df0808137b1999093af1a589c441494e555246c6e1277c;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "hash",
+          "cryptoFunctions" : [
+            "digest"
+          ]
+        }
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "2cd0d388-d892-4352-9be6-8e4dff6a5212",
+      "name" : "crypto.rsa.GenerateKey",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/cipher.go",
+            "line" : 11,
+            "offset" : 16,
+            "additionalContext" : "lineHash=88882b371537d2668baf4f2c216b18311859e4da0582c4e8e12d44d084f83453;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "pke",
+          "cryptoFunctions" : [
+            "keygen"
+          ]
+        },
+        "oid" : "1.3.6.1.4.1.53675.3.2"
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "c135bc47-13a2-4e9e-a87b-f080597585c8",
+      "name" : "crypto.rc4.NewCipher",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/hash.go",
+            "line" : 8,
+            "offset" : 19,
+            "additionalContext" : "lineHash=05d53515f174cc8f530e71836843b1e37b47222bfa9732af311084a271a80da8;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "stream-cipher"
+        }
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "e6c5a98d-cb9b-4503-bb5f-b31e29d92970",
+      "name" : "crypto.rc4.Cipher.XORKeyStream",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/hash.go",
+            "line" : 13,
+            "offset" : 7,
+            "additionalContext" : "lineHash=f9b71c8192d9cc97d5b03527636f176cd384d9ce9ae3cc1d117acd58edf9bd2c;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "stream-cipher"
+        }
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "dc122524-dde2-4e90-a65a-3b6bf4464302",
+      "name" : "crypto.sha1.New",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/pqc.go",
+            "line" : 11,
+            "offset" : 53,
+            "additionalContext" : "lineHash=965ed15f81be670a1d988eaaa1468d19df930c80542f9cd92d430419d4abe2f0;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "hash"
+        },
+        "oid" : "1.3.14.3.2.18"
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "fe4e7c86-ea55-46ed-b2d6-fd7aec9a1227",
+      "name" : "golang.org.x.crypto.pbkdf2.Key",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/pqc.go",
+            "line" : 11,
+            "offset" : 19,
+            "additionalContext" : "lineHash=965ed15f81be670a1d988eaaa1468d19df930c80542f9cd92d430419d4abe2f0;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "kdf",
+          "cryptoFunctions" : [
+            "keyderive"
+          ]
+        }
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "31c0b1ef-f173-482e-935d-d9b651998de4",
+      "name" : "crypto.sha256.New",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/tls.go",
+            "line" : 14,
+            "offset" : 28,
+            "additionalContext" : "lineHash=1317899de24278227c7689fe7260f10bedab0bdedf637dfa0b56ef898e728c6d;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "hash"
+        },
+        "oid" : "2.16.840.1.101.3.4.2.1"
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "dd68c991-122c-439c-aa57-466659d4d29e",
+      "name" : "crypto.hmac.New",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/tls.go",
+            "line" : 14,
+            "offset" : 17,
+            "additionalContext" : "lineHash=1317899de24278227c7689fe7260f10bedab0bdedf637dfa0b56ef898e728c6d;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "mac"
+        }
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "d09d74c9-e219-47df-8517-383efc3c7da8",
+      "name" : "hash.Hash.Sum",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/tls.go",
+            "line" : 16,
+            "offset" : 34,
+            "additionalContext" : "lineHash=176ed27357edbe5f37df0808137b1999093af1a589c441494e555246c6e1277c;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "hash",
+          "cryptoFunctions" : [
+            "digest"
+          ]
+        }
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "be9f0f8b-1a60-4b79-bc93-a3f049a5dfea",
+      "name" : "crypto.rsa.GenerateKey",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/cipher.go",
+            "line" : 11,
+            "offset" : 16,
+            "additionalContext" : "lineHash=88882b371537d2668baf4f2c216b18311859e4da0582c4e8e12d44d084f83453;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "pke",
+          "cryptoFunctions" : [
+            "keygen"
+          ]
+        },
+        "oid" : "1.3.6.1.4.1.53675.3.2"
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "d752f14a-8bf8-472f-8298-7d862a564db8",
+      "name" : "crypto.rc4.NewCipher",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/hash.go",
+            "line" : 8,
+            "offset" : 19,
+            "additionalContext" : "lineHash=05d53515f174cc8f530e71836843b1e37b47222bfa9732af311084a271a80da8;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "stream-cipher"
+        }
+      }
+    },
+    {
+      "type" : "cryptographic-asset",
+      "bom-ref" : "972a65dd-e2e4-4f9c-bbac-f14bedc2b349",
+      "name" : "crypto.rc4.Cipher.XORKeyStream",
+      "evidence" : {
+        "occurrences" : [
+          {
+            "location" : "crypto/hash.go",
+            "line" : 13,
+            "offset" : 7,
+            "additionalContext" : "lineHash=f9b71c8192d9cc97d5b03527636f176cd384d9ce9ae3cc1d117acd58edf9bd2c;"
+          }
+        ]
+      },
+      "cryptoProperties" : {
+        "assetType" : "algorithm",
+        "algorithmProperties" : {
+          "primitive" : "stream-cipher"
+        }
+      }
+    }
+  ],
+  "vulnerabilities" : [
+    {
+      "id" : "CWE-327",
+      "source" : {
+        "name" : "CWE",
+        "url" : "https://cwe.mitre.org/data/definitions/327.html"
+      },
+      "ratings" : [
+        {
+          "severity" : "high"
+        }
+      ],
+      "cwes" : [
+        327
+      ],
+      "affects" : [
+        {
+          "ref" : "150a5b0e-9cea-4f69-a7b6-b949c47f140e"
+        },
+        {
+          "ref" : "2cd0d388-d892-4352-9be6-8e4dff6a5212"
+        },
+        {
+          "ref" : "c135bc47-13a2-4e9e-a87b-f080597585c8"
+        },
+        {
+          "ref" : "e6c5a98d-cb9b-4503-bb5f-b31e29d92970"
+        }
+      ]
+    },
+    {
+      "id" : "CWE-328",
+      "source" : {
+        "name" : "CWE",
+        "url" : "https://cwe.mitre.org/data/definitions/328.html"
+      },
+      "ratings" : [
+        {
+          "severity" : "high"
+        }
+      ],
+      "cwes" : [
+        328
+      ],
+      "affects" : [
+        {
+          "ref" : "150a5b0e-9cea-4f69-a7b6-b949c47f140e"
+        },
+        {
+          "ref" : "2cd0d388-d892-4352-9be6-8e4dff6a5212"
+        },
+        {
+          "ref" : "c135bc47-13a2-4e9e-a87b-f080597585c8"
+        },
+        {
+          "ref" : "e6c5a98d-cb9b-4503-bb5f-b31e29d92970"
+        }
+      ]
+    },
+    {
+      "id" : "CWE-327",
+      "source" : {
+        "name" : "CWE",
+        "url" : "https://cwe.mitre.org/data/definitions/327.html"
+      },
+      "ratings" : [
+        {
+          "severity" : "high"
+        }
+      ],
+      "cwes" : [
+        327
+      ],
+      "affects" : [
+        {
+          "ref" : "dc122524-dde2-4e90-a65a-3b6bf4464302"
+        },
+        {
+          "ref" : "be9f0f8b-1a60-4b79-bc93-a3f049a5dfea"
+        },
+        {
+          "ref" : "d752f14a-8bf8-472f-8298-7d862a564db8"
+        },
+        {
+          "ref" : "972a65dd-e2e4-4f9c-bbac-f14bedc2b349"
+        }
+      ]
+    },
+    {
+      "id" : "CWE-328",
+      "source" : {
+        "name" : "CWE",
+        "url" : "https://cwe.mitre.org/data/definitions/328.html"
+      },
+      "ratings" : [
+        {
+          "severity" : "high"
+        }
+      ],
+      "cwes" : [
+        328
+      ],
+      "affects" : [
+        {
+          "ref" : "dc122524-dde2-4e90-a65a-3b6bf4464302"
+        },
+        {
+          "ref" : "be9f0f8b-1a60-4b79-bc93-a3f049a5dfea"
+        },
+        {
+          "ref" : "d752f14a-8bf8-472f-8298-7d862a564db8"
+        },
+        {
+          "ref" : "972a65dd-e2e4-4f9c-bbac-f14bedc2b349"
+        }
+      ]
+    }
+  ]
+}

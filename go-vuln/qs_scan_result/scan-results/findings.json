@@ -1,0 +1,1083 @@
+{
+  "scanId": "bdca4097a1bf498ca079a34646abadda",
+  "name": "crypto artifacts",
+  "applicationId": " ",
+  "applicationVersion": " ",
+  "scanTime": "2026-07-31T16:08:42.002519Z",
+  "num_artifacts": 16,
+  "repositoryId": "pqc-smoke-java",
+  "repositoryUrl": " ",
+  "metadata": {
+    "provider": {
+      "name": "IBM Quantum Safe Explorer",
+      "version": "2.3.1.0"
+    },
+    "properties": []
+  },
+  "children": [
+    {
+      "file_type": "py"
+    },
+    {
+      "file_type": "Go",
+      "children": [
+        {
+          "file_id": "4e26abad-5298-4c33-9c9a-68f4fe6ad0c8",
+          "name": "pqc.go",
+          "full_name": "crypto/pqc.go",
+          "num_artifacts": 2,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "crypto.sha1.New",
+              "tooltip": [
+                "crypto.sha1.New"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.sha1.New",
+                "primitive": "hash",
+                "variant": "SHA-1",
+                "oid": "1.3.14.3.2.18",
+                "digestSize": "160",
+                "assetType": "algorithm",
+                "blockSize": "512",
+                "algorithmFamily": "SHA-1"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "2",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of broken or risky cryptographic algorithm: SHA-1",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "SHA-1",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/pqc.go",
+                          "line": 11,
+                          "startColumn": 53,
+                          "endColumn": 56
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "vulnerabilityId": "12",
+                  "classification": "cwe328",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/328.html",
+                  "debugMessage": "Use of weak hash algorithm: SHA-1",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "SHA-1",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/pqc.go",
+                          "line": 11,
+                          "startColumn": 53,
+                          "endColumn": 56
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/pqc.go",
+              "call_line": 11,
+              "start": 53,
+              "end": 56,
+              "startScoped": 53,
+              "endScoped": 56,
+              "lineHash": "965ed15f81be670a1d988eaaa1468d19df930c80542f9cd92d430419d4abe2f0",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 non-compliant",
+                  "isUnCompliant": true,
+                  "message": "Use of non-approved message digest algorithm SHA-1."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "golang.org.x.crypto.pbkdf2.Key",
+              "tooltip": [
+                "golang.org.x.crypto.pbkdf2.Key"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "golang.org.x.crypto.pbkdf2.Key",
+                "primitive": "kdf",
+                "variant": "PBKDF2",
+                "assetType": "algorithm",
+                "cryptoFunction": "keyderive",
+                "algorithmFamily": "PBKDF2"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "crypto/pqc.go",
+              "call_line": 11,
+              "start": 19,
+              "end": 22,
+              "startScoped": 19,
+              "endScoped": 22,
+              "lineHash": "965ed15f81be670a1d988eaaa1468d19df930c80542f9cd92d430419d4abe2f0",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 compliant",
+                  "isUnCompliant": false,
+                  "message": "Use of PBKDF2 is FIPS 140-3 compliant"
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "d12c022b-8498-4317-906b-2068a281ec0b",
+          "name": "tls.go",
+          "full_name": "crypto/tls.go",
+          "num_artifacts": 3,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "crypto.sha256.New",
+              "tooltip": [
+                "crypto.sha256.New"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.sha256.New",
+                "primitive": "hash",
+                "variant": "SHA-256",
+                "oid": "2.16.840.1.101.3.4.2.1",
+                "digestSize": "256",
+                "assetType": "algorithm",
+                "blockSize": "512",
+                "algorithmFamily": "SHA-2"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "10",
+                  "classification": "cwe759",
+                  "vulnerabilityScore": "low",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/759.html",
+                  "debugMessage": "Hashes should include an unpredictable salt.",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "SHA-256",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/tls.go",
+                          "line": 14,
+                          "startColumn": 28,
+                          "endColumn": 31
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/tls.go",
+              "call_line": 14,
+              "start": 28,
+              "end": 31,
+              "startScoped": 28,
+              "endScoped": 31,
+              "lineHash": "1317899de24278227c7689fe7260f10bedab0bdedf637dfa0b56ef898e728c6d",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 compliant",
+                  "isUnCompliant": false,
+                  "message": "Use of FIPS approved message digest algorithm SHA-256."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "crypto.hmac.New",
+              "tooltip": [
+                "crypto.hmac.New"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.hmac.New",
+                "primitive": "mac",
+                "variant": "HMAC",
+                "assetType": "algorithm",
+                "algorithmFamily": "HMAC"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "crypto/tls.go",
+              "call_line": 14,
+              "start": 17,
+              "end": 20,
+              "startScoped": 17,
+              "endScoped": 20,
+              "lineHash": "1317899de24278227c7689fe7260f10bedab0bdedf637dfa0b56ef898e728c6d",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 capable",
+                  "isUnCompliant": true,
+                  "message": "Use of HMAC is FIPS 140-3 capable"
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "hash.Hash.Sum",
+              "tooltip": [
+                "hash.Hash.Sum"
+              ],
+              "crypto_properties": {
+                "library": "hash",
+                "name": "hash.Hash.Sum",
+                "primitive": "hash",
+                "assetType": "algorithm",
+                "cryptoFunction": "digest"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "10",
+                  "classification": "cwe759",
+                  "vulnerabilityScore": "low",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/759.html",
+                  "debugMessage": "Hashes should include an unpredictable salt.",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/tls.go",
+                          "line": 16,
+                          "startColumn": 34,
+                          "endColumn": 37
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/tls.go",
+              "call_line": 16,
+              "start": 34,
+              "end": 37,
+              "startScoped": 34,
+              "endScoped": 37,
+              "lineHash": "176ed27357edbe5f37df0808137b1999093af1a589c441494e555246c6e1277c",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "0bdb153f-707a-4fa4-84dc-19cd33024066",
+          "name": "cipher.go",
+          "full_name": "crypto/cipher.go",
+          "num_artifacts": 1,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "crypto.rsa.GenerateKey",
+              "tooltip": [
+                "crypto.rsa.GenerateKey"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.rsa.GenerateKey",
+                "primitive": "pke",
+                "variant": "RSA",
+                "oid": "1.3.6.1.4.1.53675.3.2",
+                "assetType": "algorithm",
+                "cryptoFunction": "keygen"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "4",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of non-quantum-resistant public-key algorithms (must be ML-KEM, ML-DSA, SLH-DSA): RSA",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RSA",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/cipher.go",
+                          "line": 11,
+                          "startColumn": 16,
+                          "endColumn": 27
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "vulnerabilityId": "18",
+                  "classification": "cwe326",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/326.html",
+                  "debugMessage": "Cryptographic keys should be robust. Use a key length of more than 1024 bits.",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RSA",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/cipher.go",
+                          "line": 11,
+                          "startColumn": 16,
+                          "endColumn": 27
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/cipher.go",
+              "call_line": 11,
+              "start": 16,
+              "end": 27,
+              "startScoped": 16,
+              "endScoped": 27,
+              "lineHash": "88882b371537d2668baf4f2c216b18311859e4da0582c4e8e12d44d084f83453",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 capable",
+                  "isUnCompliant": true,
+                  "message": "Use of asymmetric key pair generation algorithm RSA is FIPS compliant, provided approved key sizes [2048, 3072, 4096] are used."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Quantum Safe",
+                  "isUnCompliant": true,
+                  "message": "The asset has an asymmetric primitive and does not match with the Quantum Safe whitelists of OIDs and algorithms."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "2938dc4e-5cdd-4405-91a0-129aeb9472a8",
+          "name": "hash.go",
+          "full_name": "crypto/hash.go",
+          "num_artifacts": 2,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "crypto.rc4.NewCipher",
+              "tooltip": [
+                "crypto.rc4.NewCipher"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.rc4.NewCipher",
+                "primitive": "stream-cipher",
+                "variant": "RC4",
+                "assetType": "algorithm",
+                "algorithmFamily": "RC4"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "2",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of broken or risky cryptographic algorithm: RC4",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RC4",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/hash.go",
+                          "line": 8,
+                          "startColumn": 19,
+                          "endColumn": 28
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/hash.go",
+              "call_line": 8,
+              "start": 19,
+              "end": 28,
+              "startScoped": 19,
+              "endScoped": 28,
+              "lineHash": "05d53515f174cc8f530e71836843b1e37b47222bfa9732af311084a271a80da8",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 non-compliant",
+                  "isUnCompliant": true,
+                  "message": "Use of non-approved stream-cipher algorithm RC4"
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "crypto.rc4.Cipher.XORKeyStream",
+              "tooltip": [
+                "crypto.rc4.Cipher.XORKeyStream"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.rc4.Cipher.XORKeyStream",
+                "primitive": "stream-cipher",
+                "variant": "RC4",
+                "assetType": "algorithm",
+                "algorithmFamily": "RC4"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "2",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of broken or risky cryptographic algorithm: RC4",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RC4",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/hash.go",
+                          "line": 13,
+                          "startColumn": 7,
+                          "endColumn": 19
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/hash.go",
+              "call_line": 13,
+              "start": 7,
+              "end": 19,
+              "startScoped": 7,
+              "endScoped": 19,
+              "lineHash": "f9b71c8192d9cc97d5b03527636f176cd384d9ce9ae3cc1d117acd58edf9bd2c",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 non-compliant",
+                  "isUnCompliant": true,
+                  "message": "Use of non-approved stream-cipher algorithm RC4"
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file_type": "c"
+    },
+    {
+      "file_type": "Go",
+      "children": [
+        {
+          "file_id": "46171538-c317-4186-8795-6d2885c983ec",
+          "name": "pqc.go",
+          "full_name": "crypto/pqc.go",
+          "num_artifacts": 2,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "crypto.sha1.New",
+              "tooltip": [
+                "crypto.sha1.New"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.sha1.New",
+                "primitive": "hash",
+                "variant": "SHA-1",
+                "oid": "1.3.14.3.2.18",
+                "digestSize": "160",
+                "assetType": "algorithm",
+                "blockSize": "512",
+                "algorithmFamily": "SHA-1"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "2",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of broken or risky cryptographic algorithm: SHA-1",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "SHA-1",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/pqc.go",
+                          "line": 11,
+                          "startColumn": 53,
+                          "endColumn": 56
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "vulnerabilityId": "12",
+                  "classification": "cwe328",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/328.html",
+                  "debugMessage": "Use of weak hash algorithm: SHA-1",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "SHA-1",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/pqc.go",
+                          "line": 11,
+                          "startColumn": 53,
+                          "endColumn": 56
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/pqc.go",
+              "call_line": 11,
+              "start": 53,
+              "end": 56,
+              "startScoped": 53,
+              "endScoped": 56,
+              "lineHash": "965ed15f81be670a1d988eaaa1468d19df930c80542f9cd92d430419d4abe2f0",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 non-compliant",
+                  "isUnCompliant": true,
+                  "message": "Use of non-approved message digest algorithm SHA-1."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "golang.org.x.crypto.pbkdf2.Key",
+              "tooltip": [
+                "golang.org.x.crypto.pbkdf2.Key"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "golang.org.x.crypto.pbkdf2.Key",
+                "primitive": "kdf",
+                "variant": "PBKDF2",
+                "assetType": "algorithm",
+                "cryptoFunction": "keyderive",
+                "algorithmFamily": "PBKDF2"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "crypto/pqc.go",
+              "call_line": 11,
+              "start": 19,
+              "end": 22,
+              "startScoped": 19,
+              "endScoped": 22,
+              "lineHash": "965ed15f81be670a1d988eaaa1468d19df930c80542f9cd92d430419d4abe2f0",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 compliant",
+                  "isUnCompliant": false,
+                  "message": "Use of PBKDF2 is FIPS 140-3 compliant"
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "abe04073-9327-4425-b829-c6d0dace9aaa",
+          "name": "tls.go",
+          "full_name": "crypto/tls.go",
+          "num_artifacts": 3,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "crypto.sha256.New",
+              "tooltip": [
+                "crypto.sha256.New"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.sha256.New",
+                "primitive": "hash",
+                "variant": "SHA-256",
+                "oid": "2.16.840.1.101.3.4.2.1",
+                "digestSize": "256",
+                "assetType": "algorithm",
+                "blockSize": "512",
+                "algorithmFamily": "SHA-2"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "10",
+                  "classification": "cwe759",
+                  "vulnerabilityScore": "low",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/759.html",
+                  "debugMessage": "Hashes should include an unpredictable salt.",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "SHA-256",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/tls.go",
+                          "line": 14,
+                          "startColumn": 28,
+                          "endColumn": 31
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/tls.go",
+              "call_line": 14,
+              "start": 28,
+              "end": 31,
+              "startScoped": 28,
+              "endScoped": 31,
+              "lineHash": "1317899de24278227c7689fe7260f10bedab0bdedf637dfa0b56ef898e728c6d",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 compliant",
+                  "isUnCompliant": false,
+                  "message": "Use of FIPS approved message digest algorithm SHA-256."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "crypto.hmac.New",
+              "tooltip": [
+                "crypto.hmac.New"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.hmac.New",
+                "primitive": "mac",
+                "variant": "HMAC",
+                "assetType": "algorithm",
+                "algorithmFamily": "HMAC"
+              },
+              "crypto_vulnerabilities": [],
+              "file_path": "crypto/tls.go",
+              "call_line": 14,
+              "start": 17,
+              "end": 20,
+              "startScoped": 17,
+              "endScoped": 20,
+              "lineHash": "1317899de24278227c7689fe7260f10bedab0bdedf637dfa0b56ef898e728c6d",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 capable",
+                  "isUnCompliant": true,
+                  "message": "Use of HMAC is FIPS 140-3 capable"
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "title": "hash.Hash.Sum",
+              "tooltip": [
+                "hash.Hash.Sum"
+              ],
+              "crypto_properties": {
+                "library": "hash",
+                "name": "hash.Hash.Sum",
+                "primitive": "hash",
+                "assetType": "algorithm",
+                "cryptoFunction": "digest"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "10",
+                  "classification": "cwe759",
+                  "vulnerabilityScore": "low",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/759.html",
+                  "debugMessage": "Hashes should include an unpredictable salt.",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/tls.go",
+                          "line": 16,
+                          "startColumn": 34,
+                          "endColumn": 37
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/tls.go",
+              "call_line": 16,
+              "start": 34,
+              "end": 37,
+              "startScoped": 34,
+              "endScoped": 37,
+              "lineHash": "176ed27357edbe5f37df0808137b1999093af1a589c441494e555246c6e1277c",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm or primitive could not be discovered, which does not allow further categorization."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Unknown",
+                  "description": "Unknown Compliance",
+                  "isUnCompliant": true,
+                  "message": "The cryptographic algorithm could not be discovered, which does not allow further categorization."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "0892ab36-7804-41c0-9da7-e8901c0f46bc",
+          "name": "cipher.go",
+          "full_name": "crypto/cipher.go",
+          "num_artifacts": 1,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "crypto.rsa.GenerateKey",
+              "tooltip": [
+                "crypto.rsa.GenerateKey"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.rsa.GenerateKey",
+                "primitive": "pke",
+                "variant": "RSA",
+                "oid": "1.3.6.1.4.1.53675.3.2",
+                "assetType": "algorithm",
+                "cryptoFunction": "keygen"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "4",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of non-quantum-resistant public-key algorithms (must be ML-KEM, ML-DSA, SLH-DSA): RSA",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RSA",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/cipher.go",
+                          "line": 11,
+                          "startColumn": 16,
+                          "endColumn": 27
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "vulnerabilityId": "18",
+                  "classification": "cwe326",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/326.html",
+                  "debugMessage": "Cryptographic keys should be robust. Use a key length of more than 1024 bits.",
+                  "type": "Suggestive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RSA",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/cipher.go",
+                          "line": 11,
+                          "startColumn": 16,
+                          "endColumn": 27
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/cipher.go",
+              "call_line": 11,
+              "start": 16,
+              "end": 27,
+              "startScoped": 16,
+              "endScoped": 27,
+              "lineHash": "88882b371537d2668baf4f2c216b18311859e4da0582c4e8e12d44d084f83453",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 capable",
+                  "isUnCompliant": true,
+                  "message": "Use of asymmetric key pair generation algorithm RSA is FIPS compliant, provided approved key sizes [2048, 3072, 4096] are used."
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Quantum Safe",
+                  "isUnCompliant": true,
+                  "message": "The asset has an asymmetric primitive and does not match with the Quantum Safe whitelists of OIDs and algorithms."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "file_id": "2f285691-b119-4f3a-b746-a940b5d2b382",
+          "name": "hash.go",
+          "full_name": "crypto/hash.go",
+          "num_artifacts": 2,
+          "crypto_info": [
+            {
+              "id": 0,
+              "title": "crypto.rc4.NewCipher",
+              "tooltip": [
+                "crypto.rc4.NewCipher"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.rc4.NewCipher",
+                "primitive": "stream-cipher",
+                "variant": "RC4",
+                "assetType": "algorithm",
+                "algorithmFamily": "RC4"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "2",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of broken or risky cryptographic algorithm: RC4",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RC4",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/hash.go",
+                          "line": 8,
+                          "startColumn": 19,
+                          "endColumn": 28
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/hash.go",
+              "call_line": 8,
+              "start": 19,
+              "end": 28,
+              "startScoped": 19,
+              "endScoped": 28,
+              "lineHash": "05d53515f174cc8f530e71836843b1e37b47222bfa9732af311084a271a80da8",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 non-compliant",
+                  "isUnCompliant": true,
+                  "message": "Use of non-approved stream-cipher algorithm RC4"
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "crypto.rc4.Cipher.XORKeyStream",
+              "tooltip": [
+                "crypto.rc4.Cipher.XORKeyStream"
+              ],
+              "crypto_properties": {
+                "library": "crypto",
+                "name": "crypto.rc4.Cipher.XORKeyStream",
+                "primitive": "stream-cipher",
+                "variant": "RC4",
+                "assetType": "algorithm",
+                "algorithmFamily": "RC4"
+              },
+              "crypto_vulnerabilities": [
+                {
+                  "vulnerabilityId": "2",
+                  "classification": "cwe327",
+                  "vulnerabilityScore": "high",
+                  "vulnerabilityDocumentationReference": "https://cwe.mitre.org/data/definitions/327.html",
+                  "debugMessage": "Use of broken or risky cryptographic algorithm: RC4",
+                  "type": "Definitive",
+                  "references": [
+                    {
+                      "type": "variant",
+                      "value": "RC4",
+                      "context": {
+                        "location": {
+                          "fileName": "crypto/hash.go",
+                          "line": 13,
+                          "startColumn": 7,
+                          "endColumn": 19
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "file_path": "crypto/hash.go",
+              "call_line": 13,
+              "start": 7,
+              "end": 19,
+              "startScoped": 7,
+              "endScoped": 19,
+              "lineHash": "f9b71c8192d9cc97d5b03527636f176cd384d9ce9ae3cc1d117acd58edf9bd2c",
+              "complianceLevels": [
+                {
+                  "type": "fips140-3-l1",
+                  "label": "FIPS140-3-L1 non-compliant",
+                  "isUnCompliant": true,
+                  "message": "Use of non-approved stream-cipher algorithm RC4"
+                },
+                {
+                  "type": "quantum_safe",
+                  "label": "Not Applicable",
+                  "description": "Not Applicable: we only categorize asymmetric algorithms",
+                  "isUnCompliant": false,
+                  "message": "The asset has a symmetric primitive, so the Quantum Safe categorization is not applicable."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3788 @@
+{
+  "sourceFile": [
+    {
+      "packageClause": [
+        {
+          "type": "PACKAGE",
+          "text": "package",
+          "line": 1,
+          "start": 1,
+          "stop": 7
+        },
+        {
+          "type": "IDENTIFIER",
+          "text": "crypto",
+          "line": 1,
+          "start": 9,
+          "stop": 14
+        }
+      ]
+    },
+    {
+      "eos": [
+        {
+          "type": "EOS",
+          "text": "\n\n\n",
+          "line": 1,
+          "start": 15,
+          "stop": 17
+        }
+      ]
+    },
+    {
+      "importDecl": [
+        {
+          "type": "IMPORT",
+          "text": "import",
+          "line": 4,
+          "start": 1,
+          "stop": 6
+        },
+        {
+          "importSpec": [
+            {
+              "importPath": [
+                {
+                  "string_": [
+                    {
+                      "type": "INTERPRETED_STRING_LIT",
+                      "text": "\"crypto/rc4\"",
+                      "line": 4,
+                      "start": 8,
+                      "stop": 19
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "eos": [
+        {
+          "type": "EOS",
+          "text": "\n\n",
+          "line": 4,
+          "start": 20,
+          "stop": 21
+        }
+      ]
+    },
+    {
+      "functionDecl": [
+        {
+          "type": "FUNC",
+          "text": "func",
+          "line": 7,
+          "start": 1,
+          "stop": 4
+        },
+        {
+          "type": "IDENTIFIER",
+          "text": "streamEncrypt",
+          "line": 7,
+          "start": 6,
+          "stop": 18
+        },
+        {
+          "signature": [
+            {
+              "parameters": [
+                {
+                  "type": "L_PAREN",
+                  "text": "(",
+                  "line": 7,
+                  "start": 19,
+                  "stop": 19
+                },
+                {
+                  "parameterDecl": [
+                    {
+                      "identifierList": [
+                        {
+                          "type": "IDENTIFIER",
+                          "text": "key",
+                          "line": 7,
+                          "start": 20,
+                          "stop": 22
+                        },
+                        {
+                          "type": "COMMA",
+                          "text": ",",
+                          "line": 7,
+                          "start": 23,
+                          "stop": 23
+                        },
+                        {
+                          "type": "IDENTIFIER",
+                          "text": "data",
+                          "line": 7,
+                          "start": 25,
+                          "stop": 28
+                        }
+                      ]
+                    },
+                    {
+                      "type_": [
+                        {
+                          "typeLit": [
+                            {
+                              "sliceType": [
+                                {
+                                  "type": "L_BRACKET",
+                                  "text": "[",
+                                  "line": 7,
+                                  "start": 30,
+                                  "stop": 30
+                                },
+                                {
+                                  "type": "R_BRACKET",
+                                  "text": "]",
+                                  "line": 7,
+                                  "start": 31,
+                                  "stop": 31
+                                },
+                                {
+                                  "elementType": [
+                                    {
+                                      "type_": [
+                                        {
+                                          "typeName": [
+                                            {
+                                              "type": "IDENTIFIER",
+                                              "text": "byte",
+                                              "line": 7,
+                                              "start": 32,
+                                              "stop": 35
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "R_PAREN",
+                  "text": ")",
+                  "line": 7,
+                  "start": 36,
+                  "stop": 36
+                }
+              ]
+            },
+            {
+              "result": [
+                {
+                  "parameters": [
+                    {
+                      "type": "L_PAREN",
+                      "text": "(",
+                      "line": 7,
+                      "start": 38,
+                      "stop": 38
+                    },
+                    {
+                      "parameterDecl": [
+                        {
+                          "type_": [
+                            {
+                              "typeLit": [
+                                {
+                                  "sliceType": [
+                                    {
+                                      "type": "L_BRACKET",
+                                      "text": "[",
+                                      "line": 7,
+                                      "start": 39,
+                                      "stop": 39
+                                    },
+                                    {
+                                      "type": "R_BRACKET",
+                                      "text": "]",
+                                      "line": 7,
+                                      "start": 40,
+                                      "stop": 40
+                                    },
+                                    {
+                                      "elementType": [
+                                        {
+                                          "type_": [
+                                            {
+                                              "typeName": [
+                                                {
+                                                  "type": "IDENTIFIER",
+                                                  "text": "byte",
+                                                  "line": 7,
+                                                  "start": 41,
+                                                  "stop": 44
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "COMMA",
+                      "text": ",",
+                      "line": 7,
+                      "start": 45,
+                      "stop": 45
+                    },
+                    {
+                      "parameterDecl": [
+                        {
+                          "type_": [
+                            {
+                              "typeName": [
+                                {
+                                  "type": "IDENTIFIER",
+                                  "text": "error",
+                                  "line": 7,
+                                  "start": 47,
+                                  "stop": 51
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "R_PAREN",
+                      "text": ")",
+                      "line": 7,
+                      "start": 52,
+                      "stop": 52
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "block": [
+            {
+              "type": "L_CURLY",
+              "text": "{",
+              "line": 7,
+              "start": 54,
+              "stop": 54
+            },
+            {
+              "statementList": [
+                {
+                  "statement": [
+                    {
+                      "simpleStmt": [
+                        {
+                          "shortVarDecl": [
+                            {
+                              "identifierList": [
+                                {
+                                  "type": "IDENTIFIER",
+                                  "text": "c",
+                                  "line": 8,
+                                  "start": 5,
+                                  "stop": 5
+                                },
+                                {
+                                  "type": "COMMA",
+                                  "text": ",",
+                                  "line": 8,
+                                  "start": 6,
+                                  "stop": 6
+                                },
+                                {
+                                  "type": "IDENTIFIER",
+                                  "text": "err",
+                                  "line": 8,
+                                  "start": 8,
+                                  "stop": 10
+                                }
+                              ]
+                            },
+                            {
+                              "type": "DECLARE_ASSIGN",
+                              "text": ":\u003d",
+                              "line": 8,
+                              "start": 12,
+                              "stop": 13
+                            },
+                            {
+                              "expressionList": [
+                                {
+                                  "expression": [
+                                    {
+                                      "primaryExpr": [
+                                        {
+                                          "primaryExpr": [
+                                            {
+                                              "primaryExpr": [
+                                                {
+                                                  "operand": [
+                                                    {
+                                                      "operandName": [
+                                                        {
+                                                          "type": "IDENTIFIER",
+                                                          "text": "rc4",
+                                                          "line": 8,
+                                                          "start": 15,
+                                                          "stop": 17
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "DOT",
+                                              "text": ".",
+                                              "line": 8,
+                                              "start": 18,
+                                              "stop": 18
+                                            },
+                                            {
+                                              "type": "IDENTIFIER",
+                                              "text": "NewCipher",
+                                              "line": 8,
+                                              "start": 19,
+                                              "stop": 27
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "arguments": [
+                                            {
+                                              "type": "L_PAREN",
+                                              "text": "(",
+                                              "line": 8,
+                                              "start": 28,
+                                              "stop": 28
+                                            },
+                                            {
+                                              "expressionList": [
+                                                {
+                                                  "expression": [
+                                                    {
+                                                      "primaryExpr": [
+                                                        {
+                                                          "operand": [
+                                                            {
+                                                              "operandName": [
+                                                                {
+                                                                  "type": "IDENTIFIER",
+                                                                  "text": "key",
+                                                                  "line": 8,
+                                                                  "start": 29,
+                                                                  "stop": 31
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "R_PAREN",
+                                              "text": ")",
+                                              "line": 8,
+                                              "start": 32,
+                                              "stop": 32
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 8,
+                      "start": 33,
+                      "stop": 33
+                    }
+                  ]
+                },
+                {
+                  "statement": [
+                    {
+                      "ifStmt": [
+                        {
+                          "type": "IF",
+                          "text": "if",
+                          "line": 9,
+                          "start": 5,
+                          "stop": 6
+                        },
+                        {
+                          "expression": [
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "operand": [
+                                        {
+                                          "operandName": [
+                                            {
+                                              "type": "IDENTIFIER",
+                                              "text": "err",
+                                              "line": 9,
+                                              "start": 8,
+                                              "stop": 10
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "NOT_EQUALS",
+                              "text": "!\u003d",
+                              "line": 9,
+                              "start": 12,
+                              "stop": 13
+                            },
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "operand": [
+                                        {
+                                          "literal": [
+                                            {
+                                              "basicLit": [
+                                                {
+                                                  "type": "NIL_LIT",
+                                                  "text": "nil",
+                                                  "line": 9,
+                                                  "start": 15,
+                                                  "stop": 17
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "block": [
+                            {
+                              "type": "L_CURLY",
+                              "text": "{",
+                              "line": 9,
+                              "start": 19,
+                              "stop": 19
+                            },
+                            {
+                              "statementList": [
+                                {
+                                  "statement": [
+                                    {
+                                      "returnStmt": [
+                                        {
+                                          "type": "RETURN",
+                                          "text": "return",
+                                          "line": 10,
+                                          "start": 9,
+                                          "stop": 14
+                                        },
+                                        {
+                                          "expressionList": [
+                                            {
+                                              "expression": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "operand": [
+                                                        {
+                                                          "literal": [
+                                                            {
+                                                              "basicLit": [
+                                                                {
+                                                                  "type": "NIL_LIT",
+                                                                  "text": "nil",
+                                                                  "line": 10,
+                                                                  "start": 16,
+                                                                  "stop": 18
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "COMMA",
+                                              "text": ",",
+                                              "line": 10,
+                                              "start": 19,
+                                              "stop": 19
+                                            },
+                                            {
+                                              "expression": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "operand": [
+                                                        {
+                                                          "operandName": [
+                                                            {
+                                                              "type": "IDENTIFIER",
+                                                              "text": "err",
+                                                              "line": 10,
+                                                              "start": 21,
+                                                              "stop": 23
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "eos": [
+                                    {
+                                      "type": "EOS",
+                                      "text": "\n",
+                                      "line": 10,
+                                      "start": 24,
+                                      "stop": 24
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "R_CURLY",
+                              "text": "}",
+                              "line": 11,
+                              "start": 5,
+                              "stop": 5
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 11,
+                      "start": 6,
+                      "stop": 6
+                    }
+                  ]
+                },
+                {
+                  "statement": [
+                    {
+                      "simpleStmt": [
+                        {
+                          "shortVarDecl": [
+                            {
+                              "identifierList": [
+                                {
+                                  "type": "IDENTIFIER",
+                                  "text": "dst",
+                                  "line": 12,
+                                  "start": 5,
+                                  "stop": 7
+                                }
+                              ]
+                            },
+                            {
+                              "type": "DECLARE_ASSIGN",
+                              "text": ":\u003d",
+                              "line": 12,
+                              "start": 9,
+                              "stop": 10
+                            },
+                            {
+                              "expressionList": [
+                                {
+                                  "expression": [
+                                    {
+                                      "primaryExpr": [
+                                        {
+                                          "primaryExpr": [
+                                            {
+                                              "operand": [
+                                                {
+                                                  "operandName": [
+                                                    {
+                                                      "type": "IDENTIFIER",
+                                                      "text": "make",
+                                                      "line": 12,
+                                                      "start": 12,
+                                                      "stop": 15
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "arguments": [
+                                            {
+                                              "type": "L_PAREN",
+                                              "text": "(",
+                                              "line": 12,
+                                              "start": 16,
+                                              "stop": 16
+                                            },
+                                            {
+                                              "type_": [
+                                                {
+                                                  "typeLit": [
+                                                    {
+                                                      "sliceType": [
+                                                        {
+                                                          "type": "L_BRACKET",
+                                                          "text": "[",
+                                                          "line": 12,
+                                                          "start": 17,
+                                                          "stop": 17
+                                                        },
+                                                        {
+                                                          "type": "R_BRACKET",
+                                                          "text": "]",
+                                                          "line": 12,
+                                                          "start": 18,
+                                                          "stop": 18
+                                                        },
+                                                        {
+                                                          "elementType": [
+                                                            {
+                                                              "type_": [
+                                                                {
+                                                                  "typeName": [
+                                                                    {
+                                                                      "type": "IDENTIFIER",
+                                                                      "text": "byte",
+                                                                      "line": 12,
+                                                                      "start": 19,
+                                                                      "stop": 22
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "COMMA",
+                                              "text": ",",
+                                              "line": 12,
+                                              "start": 23,
+                                              "stop": 23
+                                            },
+                                            {
+                                              "expressionList": [
+                                                {
+                                                  "expression": [
+                                                    {
+                                                      "primaryExpr": [
+                                                        {
+                                                          "primaryExpr": [
+                                                            {
+                                                              "operand": [
+                                                                {
+                                                                  "operandName": [
+                                                                    {
+                                                                      "type": "IDENTIFIER",
+                                                                      "text": "len",
+                                                                      "line": 12,
+                                                                      "start": 25,
+                                                                      "stop": 27
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "arguments": [
+                                                            {
+                                                              "type": "L_PAREN",
+                                                              "text": "(",
+                                                              "line": 12,
+                                                              "start": 28,
+                                                              "stop": 28
+                                                            },
+                                                            {
+                                                              "expressionList": [
+                                                                {
+                                                                  "expression": [
+                                                                    {
+                                                                      "primaryExpr": [
+                                                                        {
+                                                                          "operand": [
+                                                                            {
+                                                                              "operandName": [
+                                                                                {
+                                                                                  "type": "IDENTIFIER",
+                                                                                  "text": "data",
+                                                                                  "line": 12,
+                                                                                  "start": 29,
+                                                                                  "stop": 32
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "type": "R_PAREN",
+                                                              "text": ")",
+                                                              "line": 12,
+                                                              "start": 33,
+                                                              "stop": 33
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "R_PAREN",
+                                              "text": ")",
+                                              "line": 12,
+                                              "start": 34,
+                                              "stop": 34
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 12,
+                      "start": 35,
+                      "stop": 35
+                    }
+                  ]
+                },
+                {
+                  "statement": [
+                    {
+                      "simpleStmt": [
+                        {
+                          "expressionStmt": [
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "primaryExpr": [
+                                        {
+                                          "primaryExpr": [
+                                            {
+                                              "operand": [
+                                                {
+                                                  "operandName": [
+                                                    {
+                                                      "type": "IDENTIFIER",
+                                                      "text": "c",
+                                                      "line": 13,
+                                                      "start": 5,
+                                                      "stop": 5
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "DOT",
+                                          "text": ".",
+                                          "line": 13,
+                                          "start": 6,
+                                          "stop": 6
+                                        },
+                                        {
+                                          "type": "IDENTIFIER",
+                                          "text": "XORKeyStream",
+                                          "line": 13,
+                                          "start": 7,
+                                          "stop": 18
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "arguments": [
+                                        {
+                                          "type": "L_PAREN",
+                                          "text": "(",
+                                          "line": 13,
+                                          "start": 19,
+                                          "stop": 19
+                                        },
+                                        {
+                                          "expressionList": [
+                                            {
+                                              "expression": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "operand": [
+                                                        {
+                                                          "operandName": [
+                                                            {
+                                                              "type": "IDENTIFIER",
+                                                              "text": "dst",
+                                                              "line": 13,
+                                                              "start": 20,
+                                                              "stop": 22
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "COMMA",
+                                              "text": ",",
+                                              "line": 13,
+                                              "start": 23,
+                                              "stop": 23
+                                            },
+                                            {
+                                              "expression": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "operand": [
+                                                        {
+                                                          "operandName": [
+                                                            {
+                                                              "type": "IDENTIFIER",
+                                                              "text": "data",
+                                                              "line": 13,
+                                                              "start": 25,
+                                                              "stop": 28
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "R_PAREN",
+                                          "text": ")",
+                                          "line": 13,
+                                          "start": 29,
+                                          "stop": 29
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 13,
+                      "start": 30,
+                      "stop": 30
+                    }
+                  ]
+                },
+                {
+                  "statement": [
+                    {
+                      "returnStmt": [
+                        {
+                          "type": "RETURN",
+                          "text": "return",
+                          "line": 14,
+                          "start": 5,
+                          "stop": 10
+                        },
+                        {
+                          "expressionList": [
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "operand": [
+                                        {
+                                          "operandName": [
+                                            {
+                                              "type": "IDENTIFIER",
+                                              "text": "dst",
+                                              "line": 14,
+                                              "start": 12,
+                                              "stop": 14
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "COMMA",
+                              "text": ",",
+                              "line": 14,
+                              "start": 15,
+                              "stop": 15
+                            },
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "operand": [
+                                        {
+                                          "literal": [
+                                            {
+                                              "basicLit": [
+                                                {
+                                                  "type": "NIL_LIT",
+                                                  "text": "nil",
+                                                  "line": 14,
+                                                  "start": 17,
+                                                  "stop": 19
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 14,
+                      "start": 20,
+                      "stop": 20
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "R_CURLY",
+              "text": "}",
+              "line": 15,
+              "start": 1,
+              "stop": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "eos": [
+        {
+          "type": "EOS",
+          "text": "\n\n",
+          "line": 15,
+          "start": 2,
+          "stop": 3
+        }
+      ]
+    },
+    {
+      "type": "IMPORT",
+      "text": "import",
+      "line": 17,
+      "start": 1,
+      "stop": 6
+    },
+    {
+      "type": "L_PAREN",
+      "text": "(",
+      "line": 17,
+      "start": 8,
+      "stop": 8
+    },
+    {
+      "type": "INTERPRETED_STRING_LIT",
+      "text": "\"crypto/sha1\"",
+      "line": 18,
+      "start": 5,
+      "stop": 17
+    },
+    {
+      "type": "EOS",
+      "text": "\n",
+      "line": 18,
+      "start": 18,
+      "stop": 18
+    },
+    {
+      "type": "INTERPRETED_STRING_LIT",
+      "text": "\"fmt\"",
+      "line": 19,
+      "start": 5,
+      "stop": 9
+    },
+    {
+      "type": "EOS",
+      "text": "\n",
+      "line": 19,
+      "start": 10,
+      "stop": 10
+    },
+    {
+      "type": "R_PAREN",
+      "text": ")",
+      "line": 20,
+      "start": 1,
+      "stop": 1
+    },
+    {
+      "type": "EOS",
+      "text": "\n\n",
+      "line": 20,
+      "start": 2,
+      "stop": 3
+    },
+    {
+      "functionDecl": [
+        {
+          "type": "FUNC",
+          "text": "func",
+          "line": 23,
+          "start": 1,
+          "stop": 4
+        },
+        {
+          "type": "IDENTIFIER",
+          "text": "hashContent",
+          "line": 23,
+          "start": 6,
+          "stop": 16
+        },
+        {
+          "signature": [
+            {
+              "parameters": [
+                {
+                  "type": "L_PAREN",
+                  "text": "(",
+                  "line": 23,
+                  "start": 17,
+                  "stop": 17
+                },
+                {
+                  "parameterDecl": [
+                    {
+                      "identifierList": [
+                        {
+                          "type": "IDENTIFIER",
+                          "text": "data",
+                          "line": 23,
+                          "start": 18,
+                          "stop": 21
+                        }
+                      ]
+                    },
+                    {
+                      "type_": [
+                        {
+                          "typeLit": [
+                            {
+                              "sliceType": [
+                                {
+                                  "type": "L_BRACKET",
+                                  "text": "[",
+                                  "line": 23,
+                                  "start": 23,
+                                  "stop": 23
+                                },
+                                {
+                                  "type": "R_BRACKET",
+                                  "text": "]",
+                                  "line": 23,
+                                  "start": 24,
+                                  "stop": 24
+                                },
+                                {
+                                  "elementType": [
+                                    {
+                                      "type_": [
+                                        {
+                                          "typeName": [
+                                            {
+                                              "type": "IDENTIFIER",
+                                              "text": "byte",
+                                              "line": 23,
+                                              "start": 25,
+                                              "stop": 28
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "R_PAREN",
+                  "text": ")",
+                  "line": 23,
+                  "start": 29,
+                  "stop": 29
+                }
+              ]
+            },
+            {
+              "result": [
+                {
+                  "type_": [
+                    {
+                      "typeName": [
+                        {
+                          "type": "IDENTIFIER",
+                          "text": "string",
+                          "line": 23,
+                          "start": 31,
+                          "stop": 36
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "block": [
+            {
+              "type": "L_CURLY",
+              "text": "{",
+              "line": 23,
+              "start": 38,
+              "stop": 38
+            },
+            {
+              "statementList": [
+                {
+                  "statement": [
+                    {
+                      "simpleStmt": [
+                        {
+                          "shortVarDecl": [
+                            {
+                              "identifierList": [
+                                {
+                                  "type": "IDENTIFIER",
+                                  "text": "sum",
+                                  "line": 24,
+                                  "start": 5,
+                                  "stop": 7
+                                }
+                              ]
+                            },
+                            {
+                              "type": "DECLARE_ASSIGN",
+                              "text": ":\u003d",
+                              "line": 24,
+                              "start": 9,
+                              "stop": 10
+                            },
+                            {
+                              "expressionList": [
+                                {
+                                  "expression": [
+                                    {
+                                      "primaryExpr": [
+                                        {
+                                          "primaryExpr": [
+                                            {
+                                              "primaryExpr": [
+                                                {
+                                                  "operand": [
+                                                    {
+                                                      "operandName": [
+                                                        {
+                                                          "type": "IDENTIFIER",
+                                                          "text": "sha1",
+                                                          "line": 24,
+                                                          "start": 12,
+                                                          "stop": 15
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "DOT",
+                                              "text": ".",
+                                              "line": 24,
+                                              "start": 16,
+                                              "stop": 16
+                                            },
+                                            {
+                                              "type": "IDENTIFIER",
+                                              "text": "Sum",
+                                              "line": 24,
+                                              "start": 17,
+                                              "stop": 19
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "arguments": [
+                                            {
+                                              "type": "L_PAREN",
+                                              "text": "(",
+                                              "line": 24,
+                                              "start": 20,
+                                              "stop": 20
+                                            },
+                                            {
+                                              "expressionList": [
+                                                {
+                                                  "expression": [
+                                                    {
+                                                      "primaryExpr": [
+                                                        {
+                                                          "operand": [
+                                                            {
+                                                              "operandName": [
+                                                                {
+                                                                  "type": "IDENTIFIER",
+                                                                  "text": "data",
+                                                                  "line": 24,
+                                                                  "start": 21,
+                                                                  "stop": 24
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "R_PAREN",
+                                              "text": ")",
+                                              "line": 24,
+                                              "start": 25,
+                                              "stop": 25
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 24,
+                      "start": 26,
+                      "stop": 26
+                    }
+                  ]
+                },
+                {
+                  "statement": [
+                    {
+                      "returnStmt": [
+                        {
+                          "type": "RETURN",
+                          "text": "return",
+                          "line": 25,
+                          "start": 5,
+                          "stop": 10
+                        },
+                        {
+                          "expressionList": [
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "primaryExpr": [
+                                        {
+                                          "primaryExpr": [
+                                            {
+                                              "operand": [
+                                                {
+                                                  "operandName": [
+                                                    {
+                                                      "type": "IDENTIFIER",
+                                                      "text": "fmt",
+                                                      "line": 25,
+                                                      "start": 12,
+                                                      "stop": 14
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "DOT",
+                                          "text": ".",
+                                          "line": 25,
+                                          "start": 15,
+                                          "stop": 15
+                                        },
+                                        {
+                                          "type": "IDENTIFIER",
+                                          "text": "Sprintf",
+                                          "line": 25,
+                                          "start": 16,
+                                          "stop": 22
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "arguments": [
+                                        {
+                                          "type": "L_PAREN",
+                                          "text": "(",
+                                          "line": 25,
+                                          "start": 23,
+                                          "stop": 23
+                                        },
+                                        {
+                                          "expressionList": [
+                                            {
+                                              "expression": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "operand": [
+                                                        {
+                                                          "literal": [
+                                                            {
+                                                              "basicLit": [
+                                                                {
+                                                                  "string_": [
+                                                                    {
+                                                                      "type": "INTERPRETED_STRING_LIT",
+                                                                      "text": "\"%x\"",
+                                                                      "line": 25,
+                                                                      "start": 24,
+                                                                      "stop": 27
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "COMMA",
+                                              "text": ",",
+                                              "line": 25,
+                                              "start": 28,
+                                              "stop": 28
+                                            },
+                                            {
+                                              "expression": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "operand": [
+                                                        {
+                                                          "operandName": [
+                                                            {
+                                                              "type": "IDENTIFIER",
+                                                              "text": "sum",
+                                                              "line": 25,
+                                                              "start": 30,
+                                                              "stop": 32
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "R_PAREN",
+                                          "text": ")",
+                                          "line": 25,
+                                          "start": 33,
+                                          "stop": 33
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 25,
+                      "start": 34,
+                      "stop": 34
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "R_CURLY",
+              "text": "}",
+              "line": 26,
+              "start": 1,
+              "stop": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "eos": [
+        {
+          "type": "EOS",
+          "text": "\n\n",
+          "line": 26,
+          "start": 2,
+          "stop": 3
+        }
+      ]
+    },
+    {
+      "type": "IMPORT",
+      "text": "import",
+      "line": 28,
+      "start": 1,
+      "stop": 6
+    },
+    {
+      "type": "L_PAREN",
+      "text": "(",
+      "line": 28,
+      "start": 8,
+      "stop": 8
+    },
+    {
+      "type": "INTERPRETED_STRING_LIT",
+      "text": "\"crypto/tls\"",
+      "line": 29,
+      "start": 5,
+      "stop": 16
+    },
+    {
+      "type": "EOS",
+      "text": "\n",
+      "line": 29,
+      "start": 17,
+      "stop": 17
+    },
+    {
+      "type": "INTERPRETED_STRING_LIT",
+      "text": "\"net/http\"",
+      "line": 30,
+      "start": 5,
+      "stop": 14
+    },
+    {
+      "type": "EOS",
+      "text": "\n",
+      "line": 30,
+      "start": 15,
+      "stop": 15
+    },
+    {
+      "type": "R_PAREN",
+      "text": ")",
+      "line": 31,
+      "start": 1,
+      "stop": 1
+    },
+    {
+      "type": "EOS",
+      "text": "\n\n",
+      "line": 31,
+      "start": 2,
+      "stop": 3
+    },
+    {
+      "functionDecl": [
+        {
+          "type": "FUNC",
+          "text": "func",
+          "line": 34,
+          "start": 1,
+          "stop": 4
+        },
+        {
+          "type": "IDENTIFIER",
+          "text": "newLegacyClient",
+          "line": 34,
+          "start": 6,
+          "stop": 20
+        },
+        {
+          "signature": [
+            {
+              "parameters": [
+                {
+                  "type": "L_PAREN",
+                  "text": "(",
+                  "line": 34,
+                  "start": 21,
+                  "stop": 21
+                },
+                {
+                  "type": "R_PAREN",
+                  "text": ")",
+                  "line": 34,
+                  "start": 22,
+                  "stop": 22
+                }
+              ]
+            },
+            {
+              "result": [
+                {
+                  "type_": [
+                    {
+                      "typeLit": [
+                        {
+                          "pointerType": [
+                            {
+                              "type": "STAR",
+                              "text": "*",
+                              "line": 34,
+                              "start": 24,
+                              "stop": 24
+                            },
+                            {
+                              "type_": [
+                                {
+                                  "typeName": [
+                                    {
+                                      "qualifiedIdent": [
+                                        {
+                                          "type": "IDENTIFIER",
+                                          "text": "http",
+                                          "line": 34,
+                                          "start": 25,
+                                          "stop": 28
+                                        },
+                                        {
+                                          "type": "DOT",
+                                          "text": ".",
+                                          "line": 34,
+                                          "start": 29,
+                                          "stop": 29
+                                        },
+                                        {
+                                          "type": "IDENTIFIER",
+                                          "text": "Client",
+                                          "line": 34,
+                                          "start": 30,
+                                          "stop": 35
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "block": [
+            {
+              "type": "L_CURLY",
+              "text": "{",
+              "line": 34,
+              "start": 37,
+              "stop": 37
+            },
+            {
+              "statementList": [
+                {
+                  "statement": [
+                    {
+                      "returnStmt": [
+                        {
+                          "type": "RETURN",
+                          "text": "return",
+                          "line": 35,
+                          "start": 5,
+                          "stop": 10
+                        },
+                        {
+                          "expressionList": [
+                            {
+                              "expression": [
+                                {
+                                  "type": "AMPERSAND",
+                                  "text": "\u0026",
+                                  "line": 35,
+                                  "start": 12,
+                                  "stop": 12
+                                },
+                                {
+                                  "expression": [
+                                    {
+                                      "primaryExpr": [
+                                        {
+                                          "operand": [
+                                            {
+                                              "literal": [
+                                                {
+                                                  "compositeLit": [
+                                                    {
+                                                      "literalType": [
+                                                        {
+                                                          "typeName": [
+                                                            {
+                                                              "qualifiedIdent": [
+                                                                {
+                                                                  "type": "IDENTIFIER",
+                                                                  "text": "http",
+                                                                  "line": 35,
+                                                                  "start": 13,
+                                                                  "stop": 16
+                                                                },
+                                                                {
+                                                                  "type": "DOT",
+                                                                  "text": ".",
+                                                                  "line": 35,
+                                                                  "start": 17,
+                                                                  "stop": 17
+                                                                },
+                                                                {
+                                                                  "type": "IDENTIFIER",
+                                                                  "text": "Client",
+                                                                  "line": 35,
+                                                                  "start": 18,
+                                                                  "stop": 23
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "literalValue": [
+                                                        {
+                                                          "type": "L_CURLY",
+                                                          "text": "{",
+                                                          "line": 35,
+                                                          "start": 24,
+                                                          "stop": 24
+                                                        },
+                                                        {
+                                                          "elementList": [
+                                                            {
+                                                              "keyedElement": [
+                                                                {
+                                                                  "key": [
+                                                                    {
+                                                                      "expression": [
+                                                                        {
+                                                                          "primaryExpr": [
+                                                                            {
+                                                                              "operand": [
+                                                                                {
+                                                                                  "operandName": [
+                                                                                    {
+                                                                                      "type": "IDENTIFIER",
+                                                                                      "text": "Transport",
+                                                                                      "line": 36,
+                                                                                      "start": 9,
+                                                                                      "stop": 17
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "type": "COLON",
+                                                                  "text": ":",
+                                                                  "line": 36,
+                                                                  "start": 18,
+                                                                  "stop": 18
+                                                                },
+                                                                {
+                                                                  "element": [
+                                                                    {
+                                                                      "expression": [
+                                                                        {
+                                                                          "type": "AMPERSAND",
+                                                                          "text": "\u0026",
+                                                                          "line": 36,
+                                                                          "start": 20,
+                                                                          "stop": 20
+                                                                        },
+                                                                        {
+                                                                          "expression": [
+                                                                            {
+                                                                              "primaryExpr": [
+                                                                                {
+                                                                                  "operand": [
+                                                                                    {
+                                                                                      "literal": [
+                                                                                        {
+                                                                                          "compositeLit": [
+                                                                                            {
+                                                                                              "literalType": [
+                                                                                                {
+                                                                                                  "typeName": [
+                                                                                                    {
+                                                                                                      "qualifiedIdent": [
+                                                                                                        {
+                                                                                                          "type": "IDENTIFIER",
+                                                                                                          "text": "http",
+                                                                                                          "line": 36,
+                                                                                                          "start": 21,
+                                                                                                          "stop": 24
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "type": "DOT",
+                                                                                                          "text": ".",
+                                                                                                          "line": 36,
+                                                                                                          "start": 25,
+                                                                                                          "stop": 25
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "type": "IDENTIFIER",
+                                                                                                          "text": "Transport",
+                                                                                                          "line": 36,
+                                                                                                          "start": 26,
+                                                                                                          "stop": 34
+                                                                                                        }
+                                                                                                      ]
+                                                                                                    }
+                                                                                                  ]
+                                                                                                }
+                                                                                              ]
+                                                                                            },
+                                                                                            {
+                                                                                              "literalValue": [
+                                                                                                {
+                                                                                                  "type": "L_CURLY",
+                                                                                                  "text": "{",
+                                                                                                  "line": 36,
+                                                                                                  "start": 35,
+                                                                                                  "stop": 35
+                                                                                                },
+                                                                                                {
+                                                                                                  "elementList": [
+                                                                                                    {
+                                                                                                      "keyedElement": [
+                                                                                                        {
+                                                                                                          "key": [
+                                                                                                            {
+                                                                                                              "expression": [
+                                                                                                                {
+                                                                                                                  "primaryExpr": [
+                                                                                                                    {
+                                                                                                                      "operand": [
+                                                                                                                        {
+                                                                                                                          "operandName": [
+                                                                                                                            {
+                                                                                                                              "type": "IDENTIFIER",
+                                                                                                                              "text": "TLSClientConfig",
+                                                                                                                              "line": 37,
+                                                                                                                              "start": 13,
+                                                                                                                              "stop": 27
+                                                                                                                            }
+                                                                                                                          ]
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  ]
+                                                                                                                }
+                                                                                                              ]
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "type": "COLON",
+                                                                                                          "text": ":",
+                                                                                                          "line": 37,
+                                                                                                          "start": 28,
+                                                                                                          "stop": 28
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "element": [
+                                                                                                            {
+                                                                                                              "expression": [
+                                                                                                                {
+                                                                                                                  "type": "AMPERSAND",
+                                                                                                                  "text": "\u0026",
+                                                                                                                  "line": 37,
+                                                                                                                  "start": 30,
+                                                                                                                  "stop": 30
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "expression": [
+                                                                                                                    {
+                                                                                                                      "primaryExpr": [
+                                                                                                                        {
+                                                                                                                          "operand": [
+                                                                                                                            {
+                                                                                                                              "literal": [
+                                                                                                                                {
+                                                                                                                                  "compositeLit": [
+                                                                                                                                    {
+                                                                                                                                      "literalType": [
+                                                                                                                                        {
+                                                                                                                                          "typeName": [
+                                                                                                                                            {
+                                                                                                                                              "qualifiedIdent": [
+                                                                                                                                                {
+                                                                                                                                                  "type": "IDENTIFIER",
+                                                                                                                                                  "text": "tls",
+                                                                                                                                                  "line": 37,
+                                                                                                                                                  "start": 31,
+                                                                                                                                                  "stop": 33
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                  "type": "DOT",
+                                                                                                                                                  "text": ".",
+                                                                                                                                                  "line": 37,
+                                                                                                                                                  "start": 34,
+                                                                                                                                                  "stop": 34
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                  "type": "IDENTIFIER",
+                                                                                                                                                  "text": "Config",
+                                                                                                                                                  "line": 37,
+                                                                                                                                                  "start": 35,
+                                                                                                                                                  "stop": 40
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          ]
+                                                                                                                                        }
+                                                                                                                                      ]
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                      "literalValue": [
+                                                                                                                                        {
+                                                                                                                                          "type": "L_CURLY",
+                                                                                                                                          "text": "{",
+                                                                                                                                          "line": 37,
+                                                                                                                                          "start": 41,
+                                                                                                                                          "stop": 41
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                          "elementList": [
+                                                                                                                                            {
+                                                                                                                                              "keyedElement": [
+                                                                                                                                                {
+                                                                                                                                                  "key": [
+                                                                                                                                                    {
+                                                                                                                                                      "expression": [
+                                                                                                                                                        {
+                                                                                                                                                          "primaryExpr": [
+                                                                                                                                                            {
+                                                                                                                                                              "operand": [
+                                                                                                                                                                {
+                                                                                                                                                                  "operandName": [
+                                                                                                                                                                    {
+                                                                                                                                                                      "type": "IDENTIFIER",
+                                                                                                                                                                      "text": "MinVersion",
+                                                                                                                                                                      "line": 38,
+                                                                                                                                                                      "start": 17,
+                                                                                                                                                                      "stop": 26
+                                                                                                                                                                    }
+                                                                                                                                                                  ]
+                                                                                                                                                                }
+                                                                                                                                                              ]
+                                                                                                                                                            }
+                                                                                                                                                          ]
+                                                                                                                                                        }
+                                                                                                                                                      ]
+                                                                                                                                                    }
+                                                                                                                                                  ]
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                  "type": "COLON",
+                                                                                                                                                  "text": ":",
+                                                                                                                                                  "line": 38,
+                                                                                                                                                  "start": 27,
+                                                                                                                                                  "stop": 27
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                  "element": [
+                                                                                                                                                    {
+                                                                                                                                                      "expression": [
+                                                                                                                                                        {
+                                                                                                                                                          "primaryExpr": [
+                                                                                                                                                            {
+                                                                                                                                                              "primaryExpr": [
+                                                                                                                                                                {
+                                                                                                                                                                  "operand": [
+                                                                                                                                                                    {
+                                                                                                                                                                      "operandName": [
+                                                                                                                                                                        {
+                                                                                                                                                                          "type": "IDENTIFIER",
+                                                                                                                                                                          "text": "tls",
+                                                                                                                                                                          "line": 38,
+                                                                                                                                                                          "start": 29,
+                                                                                                                                                                          "stop": 31
+                                                                                                                                                                        }
+                                                                                                                                                                      ]
+                                                                                                                                                                    }
+                                                                                                                                                                  ]
+                                                                                                                                                                }
+                                                                                                                                                              ]
+                                                                                                                                                            },
+                                                                                                                                                            {
+                                                                                                                                                              "type": "DOT",
+                                                                                                                                                              "text": ".",
+                                                                                                                                                              "line": 38,
+                                                                                                                                                              "start": 32,
+                                                                                                                                                              "stop": 32
+                                                                                                                                                            },
+                                                                                                                                                            {
+                                                                                                                                                              "type": "IDENTIFIER",
+                                                                                                                                                              "text": "VersionTLS10",
+                                                                                                                                                              "line": 38,
+                                                                                                                                                              "start": 33,
+                                                                                                                                                              "stop": 44
+                                                                                                                                                            }
+                                                                                                                                                          ]
+                                                                                                                                                        }
+                                                                                                                                                      ]
+                                                                                                                                                    }
+                                                                                                                                                  ]
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          ]
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                          "type": "COMMA",
+                                                                                                                                          "text": ",",
+                                                                                                                                          "line": 38,
+                                                                                                                                          "start": 45,
+                                                                                                                                          "stop": 45
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                          "type": "R_CURLY",
+                                                                                                                                          "text": "}",
+                                                                                                                                          "line": 39,
+                                                                                                                                          "start": 13,
+                                                                                                                                          "stop": 13
+                                                                                                                                        }
+                                                                                                                                      ]
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              ]
+                                                                                                                            }
+                                                                                                                          ]
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  ]
+                                                                                                                }
+                                                                                                              ]
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      ]
+                                                                                                    }
+                                                                                                  ]
+                                                                                                },
+                                                                                                {
+                                                                                                  "type": "COMMA",
+                                                                                                  "text": ",",
+                                                                                                  "line": 39,
+                                                                                                  "start": 14,
+                                                                                                  "stop": 14
+                                                                                                },
+                                                                                                {
+                                                                                                  "type": "R_CURLY",
+                                                                                                  "text": "}",
+                                                                                                  "line": 40,
+                                                                                                  "start": 9,
+                                                                                                  "stop": 9
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          ]
+                                                                                        }
+                                                                                      ]
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "type": "COMMA",
+                                                          "text": ",",
+                                                          "line": 40,
+                                                          "start": 10,
+                                                          "stop": 10
+                                                        },
+                                                        {
+                                                          "type": "R_CURLY",
+                                                          "text": "}",
+                                                          "line": 41,
+                                                          "start": 5,
+                                                          "stop": 5
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 41,
+                      "start": 6,
+                      "stop": 6
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "R_CURLY",
+              "text": "}",
+              "line": 42,
+              "start": 1,
+              "stop": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "eos": [
+        {
+          "type": "EOS",
+          "text": "\n\n",
+          "line": 42,
+          "start": 2,
+          "stop": 3
+        }
+      ]
+    },
+    {
+      "type": "IMPORT",
+      "text": "import",
+      "line": 44,
+      "start": 1,
+      "stop": 6
+    },
+    {
+      "type": "INTERPRETED_STRING_LIT",
+      "text": "\"golang.org/x/crypto/blowfish\"",
+      "line": 44,
+      "start": 8,
+      "stop": 37
+    },
+    {
+      "type": "EOS",
+      "text": "\n\n",
+      "line": 44,
+      "start": 38,
+      "stop": 39
+    },
+    {
+      "functionDecl": [
+        {
+          "type": "FUNC",
+          "text": "func",
+          "line": 47,
+          "start": 1,
+          "stop": 4
+        },
+        {
+          "type": "IDENTIFIER",
+          "text": "encryptBlowfish",
+          "line": 47,
+          "start": 6,
+          "stop": 20
+        },
+        {
+          "signature": [
+            {
+              "parameters": [
+                {
+                  "type": "L_PAREN",
+                  "text": "(",
+                  "line": 47,
+                  "start": 21,
+                  "stop": 21
+                },
+                {
+                  "parameterDecl": [
+                    {
+                      "identifierList": [
+                        {
+                          "type": "IDENTIFIER",
+                          "text": "key",
+                          "line": 47,
+                          "start": 22,
+                          "stop": 24
+                        },
+                        {
+                          "type": "COMMA",
+                          "text": ",",
+                          "line": 47,
+                          "start": 25,
+                          "stop": 25
+                        },
+                        {
+                          "type": "IDENTIFIER",
+                          "text": "plaintext",
+                          "line": 47,
+                          "start": 27,
+                          "stop": 35
+                        }
+                      ]
+                    },
+                    {
+                      "type_": [
+                        {
+                          "typeLit": [
+                            {
+                              "sliceType": [
+                                {
+                                  "type": "L_BRACKET",
+                                  "text": "[",
+                                  "line": 47,
+                                  "start": 37,
+                                  "stop": 37
+                                },
+                                {
+                                  "type": "R_BRACKET",
+                                  "text": "]",
+                                  "line": 47,
+                                  "start": 38,
+                                  "stop": 38
+                                },
+                                {
+                                  "elementType": [
+                                    {
+                                      "type_": [
+                                        {
+                                          "typeName": [
+                                            {
+                                              "type": "IDENTIFIER",
+                                              "text": "byte",
+                                              "line": 47,
+                                              "start": 39,
+                                              "stop": 42
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "R_PAREN",
+                  "text": ")",
+                  "line": 47,
+                  "start": 43,
+                  "stop": 43
+                }
+              ]
+            },
+            {
+              "result": [
+                {
+                  "parameters": [
+                    {
+                      "type": "L_PAREN",
+                      "text": "(",
+                      "line": 47,
+                      "start": 45,
+                      "stop": 45
+                    },
+                    {
+                      "parameterDecl": [
+                        {
+                          "type_": [
+                            {
+                              "typeLit": [
+                                {
+                                  "sliceType": [
+                                    {
+                                      "type": "L_BRACKET",
+                                      "text": "[",
+                                      "line": 47,
+                                      "start": 46,
+                                      "stop": 46
+                                    },
+                                    {
+                                      "type": "R_BRACKET",
+                                      "text": "]",
+                                      "line": 47,
+                                      "start": 47,
+                                      "stop": 47
+                                    },
+                                    {
+                                      "elementType": [
+                                        {
+                                          "type_": [
+                                            {
+                                              "typeName": [
+                                                {
+                                                  "type": "IDENTIFIER",
+                                                  "text": "byte",
+                                                  "line": 47,
+                                                  "start": 48,
+                                                  "stop": 51
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "COMMA",
+                      "text": ",",
+                      "line": 47,
+                      "start": 52,
+                      "stop": 52
+                    },
+                    {
+                      "parameterDecl": [
+                        {
+                          "type_": [
+                            {
+                              "typeName": [
+                                {
+                                  "type": "IDENTIFIER",
+                                  "text": "error",
+                                  "line": 47,
+                                  "start": 54,
+                                  "stop": 58
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "R_PAREN",
+                      "text": ")",
+                      "line": 47,
+                      "start": 59,
+                      "stop": 59
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "block": [
+            {
+              "type": "L_CURLY",
+              "text": "{",
+              "line": 47,
+              "start": 61,
+              "stop": 61
+            },
+            {
+              "statementList": [
+                {
+                  "statement": [
+                    {
+                      "simpleStmt": [
+                        {
+                          "shortVarDecl": [
+                            {
+                              "identifierList": [
+                                {
+                                  "type": "IDENTIFIER",
+                                  "text": "c",
+                                  "line": 48,
+                                  "start": 5,
+                                  "stop": 5
+                                },
+                                {
+                                  "type": "COMMA",
+                                  "text": ",",
+                                  "line": 48,
+                                  "start": 6,
+                                  "stop": 6
+                                },
+                                {
+                                  "type": "IDENTIFIER",
+                                  "text": "err",
+                                  "line": 48,
+                                  "start": 8,
+                                  "stop": 10
+                                }
+                              ]
+                            },
+                            {
+                              "type": "DECLARE_ASSIGN",
+                              "text": ":\u003d",
+                              "line": 48,
+                              "start": 12,
+                              "stop": 13
+                            },
+                            {
+                              "expressionList": [
+                                {
+                                  "expression": [
+                                    {
+                                      "primaryExpr": [
+                                        {
+                                          "primaryExpr": [
+                                            {
+                                              "primaryExpr": [
+                                                {
+                                                  "operand": [
+                                                    {
+                                                      "operandName": [
+                                                        {
+                                                          "type": "IDENTIFIER",
+                                                          "text": "blowfish",
+                                                          "line": 48,
+                                                          "start": 15,
+                                                          "stop": 22
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "DOT",
+                                              "text": ".",
+                                              "line": 48,
+                                              "start": 23,
+                                              "stop": 23
+                                            },
+                                            {
+                                              "type": "IDENTIFIER",
+                                              "text": "NewCipher",
+                                              "line": 48,
+                                              "start": 24,
+                                              "stop": 32
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "arguments": [
+                                            {
+                                              "type": "L_PAREN",
+                                              "text": "(",
+                                              "line": 48,
+                                              "start": 33,
+                                              "stop": 33
+                                            },
+                                            {
+                                              "expressionList": [
+                                                {
+                                                  "expression": [
+                                                    {
+                                                      "primaryExpr": [
+                                                        {
+                                                          "operand": [
+                                                            {
+                                                              "operandName": [
+                                                                {
+                                                                  "type": "IDENTIFIER",
+                                                                  "text": "key",
+                                                                  "line": 48,
+                                                                  "start": 34,
+                                                                  "stop": 36
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "R_PAREN",
+                                              "text": ")",
+                                              "line": 48,
+                                              "start": 37,
+                                              "stop": 37
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 48,
+                      "start": 38,
+                      "stop": 38
+                    }
+                  ]
+                },
+                {
+                  "statement": [
+                    {
+                      "ifStmt": [
+                        {
+                          "type": "IF",
+                          "text": "if",
+                          "line": 49,
+                          "start": 5,
+                          "stop": 6
+                        },
+                        {
+                          "expression": [
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "operand": [
+                                        {
+                                          "operandName": [
+                                            {
+                                              "type": "IDENTIFIER",
+                                              "text": "err",
+                                              "line": 49,
+                                              "start": 8,
+                                              "stop": 10
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "NOT_EQUALS",
+                              "text": "!\u003d",
+                              "line": 49,
+                              "start": 12,
+                              "stop": 13
+                            },
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "operand": [
+                                        {
+                                          "literal": [
+                                            {
+                                              "basicLit": [
+                                                {
+                                                  "type": "NIL_LIT",
+                                                  "text": "nil",
+                                                  "line": 49,
+                                                  "start": 15,
+                                                  "stop": 17
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "block": [
+                            {
+                              "type": "L_CURLY",
+                              "text": "{",
+                              "line": 49,
+                              "start": 19,
+                              "stop": 19
+                            },
+                            {
+                              "statementList": [
+                                {
+                                  "statement": [
+                                    {
+                                      "returnStmt": [
+                                        {
+                                          "type": "RETURN",
+                                          "text": "return",
+                                          "line": 50,
+                                          "start": 9,
+                                          "stop": 14
+                                        },
+                                        {
+                                          "expressionList": [
+                                            {
+                                              "expression": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "operand": [
+                                                        {
+                                                          "literal": [
+                                                            {
+                                                              "basicLit": [
+                                                                {
+                                                                  "type": "NIL_LIT",
+                                                                  "text": "nil",
+                                                                  "line": 50,
+                                                                  "start": 16,
+                                                                  "stop": 18
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "COMMA",
+                                              "text": ",",
+                                              "line": 50,
+                                              "start": 19,
+                                              "stop": 19
+                                            },
+                                            {
+                                              "expression": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "operand": [
+                                                        {
+                                                          "operandName": [
+                                                            {
+                                                              "type": "IDENTIFIER",
+                                                              "text": "err",
+                                                              "line": 50,
+                                                              "start": 21,
+                                                              "stop": 23
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "eos": [
+                                    {
+                                      "type": "EOS",
+                                      "text": "\n",
+                                      "line": 50,
+                                      "start": 24,
+                                      "stop": 24
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "R_CURLY",
+                              "text": "}",
+                              "line": 51,
+                              "start": 5,
+                              "stop": 5
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 51,
+                      "start": 6,
+                      "stop": 6
+                    }
+                  ]
+                },
+                {
+                  "statement": [
+                    {
+                      "simpleStmt": [
+                        {
+                          "shortVarDecl": [
+                            {
+                              "identifierList": [
+                                {
+                                  "type": "IDENTIFIER",
+                                  "text": "dst",
+                                  "line": 52,
+                                  "start": 5,
+                                  "stop": 7
+                                }
+                              ]
+                            },
+                            {
+                              "type": "DECLARE_ASSIGN",
+                              "text": ":\u003d",
+                              "line": 52,
+                              "start": 9,
+                              "stop": 10
+                            },
+                            {
+                              "expressionList": [
+                                {
+                                  "expression": [
+                                    {
+                                      "primaryExpr": [
+                                        {
+                                          "primaryExpr": [
+                                            {
+                                              "operand": [
+                                                {
+                                                  "operandName": [
+                                                    {
+                                                      "type": "IDENTIFIER",
+                                                      "text": "make",
+                                                      "line": 52,
+                                                      "start": 12,
+                                                      "stop": 15
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "arguments": [
+                                            {
+                                              "type": "L_PAREN",
+                                              "text": "(",
+                                              "line": 52,
+                                              "start": 16,
+                                              "stop": 16
+                                            },
+                                            {
+                                              "type_": [
+                                                {
+                                                  "typeLit": [
+                                                    {
+                                                      "sliceType": [
+                                                        {
+                                                          "type": "L_BRACKET",
+                                                          "text": "[",
+                                                          "line": 52,
+                                                          "start": 17,
+                                                          "stop": 17
+                                                        },
+                                                        {
+                                                          "type": "R_BRACKET",
+                                                          "text": "]",
+                                                          "line": 52,
+                                                          "start": 18,
+                                                          "stop": 18
+                                                        },
+                                                        {
+                                                          "elementType": [
+                                                            {
+                                                              "type_": [
+                                                                {
+                                                                  "typeName": [
+                                                                    {
+                                                                      "type": "IDENTIFIER",
+                                                                      "text": "byte",
+                                                                      "line": 52,
+                                                                      "start": 19,
+                                                                      "stop": 22
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "COMMA",
+                                              "text": ",",
+                                              "line": 52,
+                                              "start": 23,
+                                              "stop": 23
+                                            },
+                                            {
+                                              "expressionList": [
+                                                {
+                                                  "expression": [
+                                                    {
+                                                      "primaryExpr": [
+                                                        {
+                                                          "primaryExpr": [
+                                                            {
+                                                              "operand": [
+                                                                {
+                                                                  "operandName": [
+                                                                    {
+                                                                      "type": "IDENTIFIER",
+                                                                      "text": "blowfish",
+                                                                      "line": 52,
+                                                                      "start": 25,
+                                                                      "stop": 32
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "type": "DOT",
+                                                          "text": ".",
+                                                          "line": 52,
+                                                          "start": 33,
+                                                          "stop": 33
+                                                        },
+                                                        {
+                                                          "type": "IDENTIFIER",
+                                                          "text": "BlockSize",
+                                                          "line": 52,
+                                                          "start": 34,
+                                                          "stop": 42
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "R_PAREN",
+                                              "text": ")",
+                                              "line": 52,
+                                              "start": 43,
+                                              "stop": 43
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 52,
+                      "start": 44,
+                      "stop": 44
+                    }
+                  ]
+                },
+                {
+                  "statement": [
+                    {
+                      "simpleStmt": [
+                        {
+                          "expressionStmt": [
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "primaryExpr": [
+                                        {
+                                          "primaryExpr": [
+                                            {
+                                              "operand": [
+                                                {
+                                                  "operandName": [
+                                                    {
+                                                      "type": "IDENTIFIER",
+                                                      "text": "c",
+                                                      "line": 53,
+                                                      "start": 5,
+                                                      "stop": 5
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "DOT",
+                                          "text": ".",
+                                          "line": 53,
+                                          "start": 6,
+                                          "stop": 6
+                                        },
+                                        {
+                                          "type": "IDENTIFIER",
+                                          "text": "Encrypt",
+                                          "line": 53,
+                                          "start": 7,
+                                          "stop": 13
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "arguments": [
+                                        {
+                                          "type": "L_PAREN",
+                                          "text": "(",
+                                          "line": 53,
+                                          "start": 14,
+                                          "stop": 14
+                                        },
+                                        {
+                                          "expressionList": [
+                                            {
+                                              "expression": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "operand": [
+                                                        {
+                                                          "operandName": [
+                                                            {
+                                                              "type": "IDENTIFIER",
+                                                              "text": "dst",
+                                                              "line": 53,
+                                                              "start": 15,
+                                                              "stop": 17
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "COMMA",
+                                              "text": ",",
+                                              "line": 53,
+                                              "start": 18,
+                                              "stop": 18
+                                            },
+                                            {
+                                              "expression": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "primaryExpr": [
+                                                        {
+                                                          "operand": [
+                                                            {
+                                                              "operandName": [
+                                                                {
+                                                                  "type": "IDENTIFIER",
+                                                                  "text": "plaintext",
+                                                                  "line": 53,
+                                                                  "start": 20,
+                                                                  "stop": 28
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "slice_": [
+                                                        {
+                                                          "type": "L_BRACKET",
+                                                          "text": "[",
+                                                          "line": 53,
+                                                          "start": 29,
+                                                          "stop": 29
+                                                        },
+                                                        {
+                                                          "type": "COLON",
+                                                          "text": ":",
+                                                          "line": 53,
+                                                          "start": 30,
+                                                          "stop": 30
+                                                        },
+                                                        {
+                                                          "expression": [
+                                                            {
+                                                              "primaryExpr": [
+                                                                {
+                                                                  "primaryExpr": [
+                                                                    {
+                                                                      "operand": [
+                                                                        {
+                                                                          "operandName": [
+                                                                            {
+                                                                              "type": "IDENTIFIER",
+                                                                              "text": "blowfish",
+                                                                              "line": 53,
+                                                                              "start": 31,
+                                                                              "stop": 38
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "type": "DOT",
+                                                                  "text": ".",
+                                                                  "line": 53,
+                                                                  "start": 39,
+                                                                  "stop": 39
+                                                                },
+                                                                {
+                                                                  "type": "IDENTIFIER",
+                                                                  "text": "BlockSize",
+                                                                  "line": 53,
+                                                                  "start": 40,
+                                                                  "stop": 48
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "type": "R_BRACKET",
+                                                          "text": "]",
+                                                          "line": 53,
+                                                          "start": 49,
+                                                          "stop": 49
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "R_PAREN",
+                                          "text": ")",
+                                          "line": 53,
+                                          "start": 50,
+                                          "stop": 50
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 53,
+                      "start": 51,
+                      "stop": 51
+                    }
+                  ]
+                },
+                {
+                  "statement": [
+                    {
+                      "returnStmt": [
+                        {
+                          "type": "RETURN",
+                          "text": "return",
+                          "line": 54,
+                          "start": 5,
+                          "stop": 10
+                        },
+                        {
+                          "expressionList": [
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "operand": [
+                                        {
+                                          "operandName": [
+                                            {
+                                              "type": "IDENTIFIER",
+                                              "text": "dst",
+                                              "line": 54,
+                                              "start": 12,
+                                              "stop": 14
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "COMMA",
+                              "text": ",",
+                              "line": 54,
+                              "start": 15,
+                              "stop": 15
+                            },
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "operand": [
+                                        {
+                                          "literal": [
+                                            {
+                                              "basicLit": [
+                                                {
+                                                  "type": "NIL_LIT",
+                                                  "text": "nil",
+                                                  "line": 54,
+                                                  "start": 17,
+                                                  "stop": 19
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 54,
+                      "start": 20,
+                      "stop": 20
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "R_CURLY",
+              "text": "}",
+              "line": 55,
+              "start": 1,
+              "stop": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "eos": [
+        {
+          "type": "EOS",
+          "text": "\n\n",
+          "line": 55,
+          "start": 2,
+          "stop": 3
+        }
+      ]
+    },
+    {
+      "type": "IMPORT",
+      "text": "import",
+      "line": 57,
+      "start": 1,
+      "stop": 6
+    },
+    {
+      "type": "L_PAREN",
+      "text": "(",
+      "line": 57,
+      "start": 8,
+      "stop": 8
+    },
+    {
+      "type": "INTERPRETED_STRING_LIT",
+      "text": "\"crypto/ecdh\"",
+      "line": 58,
+      "start": 5,
+      "stop": 17
+    },
+    {
+      "type": "EOS",
+      "text": "\n",
+      "line": 58,
+      "start": 18,
+      "stop": 18
+    },
+    {
+      "type": "INTERPRETED_STRING_LIT",
+      "text": "\"crypto/rand\"",
+      "line": 59,
+      "start": 5,
+      "stop": 17
+    },
+    {
+      "type": "EOS",
+      "text": "\n",
+      "line": 59,
+      "start": 18,
+      "stop": 18
+    },
+    {
+      "type": "R_PAREN",
+      "text": ")",
+      "line": 60,
+      "start": 1,
+      "stop": 1
+    },
+    {
+      "type": "EOS",
+      "text": "\n\n",
+      "line": 60,
+      "start": 2,
+      "stop": 3
+    },
+    {
+      "functionDecl": [
+        {
+          "type": "FUNC",
+          "text": "func",
+          "line": 63,
+          "start": 1,
+          "stop": 4
+        },
+        {
+          "type": "IDENTIFIER",
+          "text": "generateECDHKey",
+          "line": 63,
+          "start": 6,
+          "stop": 20
+        },
+        {
+          "signature": [
+            {
+              "parameters": [
+                {
+                  "type": "L_PAREN",
+                  "text": "(",
+                  "line": 63,
+                  "start": 21,
+                  "stop": 21
+                },
+                {
+                  "type": "R_PAREN",
+                  "text": ")",
+                  "line": 63,
+                  "start": 22,
+                  "stop": 22
+                }
+              ]
+            },
+            {
+              "result": [
+                {
+                  "parameters": [
+                    {
+                      "type": "L_PAREN",
+                      "text": "(",
+                      "line": 63,
+                      "start": 24,
+                      "stop": 24
+                    },
+                    {
+                      "parameterDecl": [
+                        {
+                          "type_": [
+                            {
+                              "typeLit": [
+                                {
+                                  "pointerType": [
+                                    {
+                                      "type": "STAR",
+                                      "text": "*",
+                                      "line": 63,
+                                      "start": 25,
+                                      "stop": 25
+                                    },
+                                    {
+                                      "type_": [
+                                        {
+                                          "typeName": [
+                                            {
+                                              "qualifiedIdent": [
+                                                {
+                                                  "type": "IDENTIFIER",
+                                                  "text": "ecdh",
+                                                  "line": 63,
+                                                  "start": 26,
+                                                  "stop": 29
+                                                },
+                                                {
+                                                  "type": "DOT",
+                                                  "text": ".",
+                                                  "line": 63,
+                                                  "start": 30,
+                                                  "stop": 30
+                                                },
+                                                {
+                                                  "type": "IDENTIFIER",
+                                                  "text": "PrivateKey",
+                                                  "line": 63,
+                                                  "start": 31,
+                                                  "stop": 40
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "COMMA",
+                      "text": ",",
+                      "line": 63,
+                      "start": 41,
+                      "stop": 41
+                    },
+                    {
+                      "parameterDecl": [
+                        {
+                          "type_": [
+                            {
+                              "typeName": [
+                                {
+                                  "type": "IDENTIFIER",
+                                  "text": "error",
+                                  "line": 63,
+                                  "start": 43,
+                                  "stop": 47
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "R_PAREN",
+                      "text": ")",
+                      "line": 63,
+                      "start": 48,
+                      "stop": 48
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "block": [
+            {
+              "type": "L_CURLY",
+              "text": "{",
+              "line": 63,
+              "start": 50,
+              "stop": 50
+            },
+            {
+              "statementList": [
+                {
+                  "statement": [
+                    {
+                      "returnStmt": [
+                        {
+                          "type": "RETURN",
+                          "text": "return",
+                          "line": 64,
+                          "start": 5,
+                          "stop": 10
+                        },
+                        {
+                          "expressionList": [
+                            {
+                              "expression": [
+                                {
+                                  "primaryExpr": [
+                                    {
+                                      "primaryExpr": [
+                                        {
+                                          "primaryExpr": [
+                                            {
+                                              "primaryExpr": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "operand": [
+                                                        {
+                                                          "operandName": [
+                                                            {
+                                                              "type": "IDENTIFIER",
+                                                              "text": "ecdh",
+                                                              "line": 64,
+                                                              "start": 12,
+                                                              "stop": 15
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "DOT",
+                                                  "text": ".",
+                                                  "line": 64,
+                                                  "start": 16,
+                                                  "stop": 16
+                                                },
+                                                {
+                                                  "type": "IDENTIFIER",
+                                                  "text": "P256",
+                                                  "line": 64,
+                                                  "start": 17,
+                                                  "stop": 20
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "arguments": [
+                                                {
+                                                  "type": "L_PAREN",
+                                                  "text": "(",
+                                                  "line": 64,
+                                                  "start": 21,
+                                                  "stop": 21
+                                                },
+                                                {
+                                                  "type": "R_PAREN",
+                                                  "text": ")",
+                                                  "line": 64,
+                                                  "start": 22,
+                                                  "stop": 22
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "DOT",
+                                          "text": ".",
+                                          "line": 64,
+                                          "start": 23,
+                                          "stop": 23
+                                        },
+                                        {
+                                          "type": "IDENTIFIER",
+                                          "text": "GenerateKey",
+                                          "line": 64,
+                                          "start": 24,
+                                          "stop": 34
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "arguments": [
+                                        {
+                                          "type": "L_PAREN",
+                                          "text": "(",
+                                          "line": 64,
+                                          "start": 35,
+                                          "stop": 35
+                                        },
+                                        {
+                                          "expressionList": [
+                                            {
+                                              "expression": [
+                                                {
+                                                  "primaryExpr": [
+                                                    {
+                                                      "primaryExpr": [
+                                                        {
+                                                          "operand": [
+                                                            {
+                                                              "operandName": [
+                                                                {
+                                                                  "type": "IDENTIFIER",
+                                                                  "text": "rand",
+                                                                  "line": 64,
+                                                                  "start": 36,
+                                                                  "stop": 39
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "type": "DOT",
+                                                      "text": ".",
+                                                      "line": 64,
+                                                      "start": 40,
+                                                      "stop": 40
+                                                    },
+                                                    {
+                                                      "type": "IDENTIFIER",
+                                                      "text": "Reader",
+                                                      "line": 64,
+                                                      "start": 41,
+                                                      "stop": 46
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "R_PAREN",
+                                          "text": ")",
+                                          "line": 64,
+                                          "start": 47,
+                                          "stop": 47
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "eos": [
+                    {
+                      "type": "EOS",
+                      "text": "\n",
+                      "line": 64,
+                      "start": 48,
+                      "stop": 48
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "R_CURLY",
+              "text": "}",
+              "line": 65,
+              "start": 1,
+              "stop": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "eos": [
+        {
+          "type": "EOS",
+          "text": "\n",
+          "line": 65,
+          "start": 2,
+          "stop": 2
+        }
+      ]
+    },
+    {
+      "type": "EOF",
+      "text": "\u003cEOF\u003e",
+      "line": 66,
+      "start": 1,
+      "stop": 0
+    }
+  ]
+}

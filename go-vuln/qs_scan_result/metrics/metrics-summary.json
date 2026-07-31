@@ -1,0 +1,49 @@
+{
+  "mapCollections": {
+    "Go": {
+      "map": {
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/cipher.go": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/cipher.go",
+          "totalLinesOfCode": 57,
+          "activeLinesOfCode": 41,
+          "methodDefined": 5,
+          "methodCalls": 12,
+          "variables": 3
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/hash.go": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/hash.go",
+          "totalLinesOfCode": 65,
+          "activeLinesOfCode": 49,
+          "methodDefined": 5,
+          "methodCalls": 10,
+          "variables": 5
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/pqc.go": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/pqc.go",
+          "totalLinesOfCode": 73,
+          "activeLinesOfCode": 55,
+          "methodDefined": 5,
+          "methodCalls": 15,
+          "variables": 8
+        },
+        "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/tls.go": {
+          "path": "/Users/erwin/Documents/Projecten/Github_repos/workspace_bob/cbomtest/go-vuln/crypto/tls.go",
+          "totalLinesOfCode": 69,
+          "activeLinesOfCode": 52,
+          "methodDefined": 5,
+          "methodCalls": 12,
+          "variables": 5
+        }
+      }
+    },
+    "c": {
+      "map": {}
+    },
+    "java": {
+      "map": {}
+    },
+    "py": {
+      "map": {}
+    }
+  }
+}
