@@ -21,9 +21,12 @@ Change history:
   2026-08-01  Phase 2: Added local temp file strategy helpers (_make_temp_dir,
               _ensure_gitignore_entry) for project-local, git-ignored temp
               directories during multi-language app generation.
-  2026-08-01  Phase 4: Added generator functions for Go, JavaScript, C#, Dart,
-              and C/C++. Added _distribute() helper for snippet distribution.
-              Added import platform_guard for GSKit-crypto guard in generate_c_app.
+  2026-08-01  Phase 3: Added snippet factories for Go (19), JavaScript (21),
+              C# (18), Dart (7), C/C++ (17) — all CBS-001..004 + PQC patterns.
+  2026-08-01  Phase 4: Added generator functions for all 5 new languages with
+              build file templates, snippet distribution, and GSKit platform guard.
+  2026-08-01  Phase 5: Extended main() with FACTORY_POOL_MAP and GENERATOR_MAP;
+              language prompt now supports java/python/go/javascript/csharp/dart/c.
 """
 
 import os
@@ -1935,12 +1938,48 @@ def prompt_non_empty(prompt: str) -> str:
 
 
 def main():
+    # Maps are resolved at call-time so all factory lists are already populated.
+    FACTORY_POOL_MAP = {
+        "java":       JAVA_WEAKNESS_FACTORIES,
+        "python":     PYTHON_WEAKNESS_FACTORIES,
+        "go":         GO_WEAKNESS_FACTORIES,
+        "javascript": JS_WEAKNESS_FACTORIES,
+        "csharp":     CSHARP_WEAKNESS_FACTORIES,
+        "dart":       DART_WEAKNESS_FACTORIES,
+        "c":          C_WEAKNESS_FACTORIES,
+    }
+    GENERATOR_MAP = {
+        "java":       generate_java_app,
+        "python":     generate_python_app,
+        "go":         generate_go_app,
+        "javascript": generate_js_app,
+        "csharp":     generate_csharp_app,
+        "dart":       generate_dart_app,
+        "c":          generate_c_app,
+    }
+    LANG_LABELS = {
+        "java": "Java / Spring Boot",
+        "python": "Python / Flask",
+        "go": "Go",
+        "javascript": "JavaScript / Node.js",
+        "csharp": "C# / .NET",
+        "dart": "Dart",
+        "c": "C / C++",
+    }
+
     print("=" * 60)
     print("  Vulnerable App Generator — Guardium QSE Demo Tool")
     print("=" * 60)
     print()
+    print("  Supported languages:")
+    for key, label in LANG_LABELS.items():
+        print(f"    {key:<12}  {label}")
+    print()
 
-    lang = prompt_choice("Language [java/python]: ", ["java", "python"])
+    lang = prompt_choice(
+        "Language [java/python/go/javascript/csharp/dart/c]: ",
+        list(FACTORY_POOL_MAP.keys()),
+    )
     app_name = prompt_non_empty("Application name: ")
     version = prompt_non_empty("Version (e.g. 1.0.0): ")
 
@@ -1957,13 +1996,11 @@ def main():
             print("Aborted.")
             sys.exit(0)
 
+    factory_pool = FACTORY_POOL_MAP[lang]
     target_count = random.randint(8, 26)
-    print(f"\n  Generating {lang.upper()} application '{app_name}' v{version}...")
+    print(f"\n  Generating {LANG_LABELS[lang]} application '{app_name}' v{version}...")
     print(f"  Target weakness count: {target_count}")
     print()
-
-    # Draw weaknesses from the relevant pool
-    factory_pool = JAVA_WEAKNESS_FACTORIES if lang == "java" else PYTHON_WEAKNESS_FACTORIES
 
     # Build weighted sample: allow repetition with different random state
     selected: List[Tuple[Weakness, str]] = []
@@ -1978,10 +2015,7 @@ def main():
             selected.append((_wk(wk_def.category, wk_def.description, wk_def.tag), factory()))
 
     # Generate the application
-    if lang == "java":
-        injected = generate_java_app(base_dir, safe_name, version, selected)
-    else:
-        injected = generate_python_app(base_dir, safe_name, version, selected)
+    injected = GENERATOR_MAP[lang](base_dir, safe_name, version, selected)
 
     # Summarise
     from collections import Counter
@@ -1989,6 +2023,7 @@ def main():
 
     print(f"\n{'=' * 60}")
     print(f"  Generation complete: {base_dir.resolve()}")
+    print(f"  Language: {LANG_LABELS[lang]}")
     print(f"  Total cryptographic weaknesses injected: {len(injected)}")
     print(f"{'=' * 60}")
     print("  Weakness breakdown by category:")
