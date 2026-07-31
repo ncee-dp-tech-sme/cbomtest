@@ -1,10 +1,34 @@
 # generate_vulnerable_app.py
 
+> **Repository:** <https://github.com/ncee-dp-tech-sme/cbomtest/>
+
 A demo tool that interactively generates realistic multi-file Java or Python applications with deliberately introduced cryptographic weaknesses, for showcasing the value of **IBM Guardium Quantum Safe Explorer**.
 After running **IBM Guardium Quantum Safe Explorer** the results can be uploaded **IBM Guardium Cryptography Manager** after adding the required metadata,(gitUrl or repositoryUrl & repositoryId).
 
 > **Note:** This tool is exclusively for client demos and should NEVER be used in production.
 
+
+---
+
+## Required Files
+
+To run the generator as designed, download the following two files from the repository root and keep them in the **same directory**:
+
+| File | Purpose |
+|------|---------|
+| [`generate_vulnerable_app.py`](https://github.com/ncee-dp-tech-sme/cbomtest/blob/main/generate_vulnerable_app.py) | Main generator — interactive CLI, weakness injection, file generation |
+| [`platform_guard.py`](https://github.com/ncee-dp-tech-sme/cbomtest/blob/main/platform_guard.py) | Platform compatibility guard — prevents generation of code that targets libraries unavailable on the current OS (e.g. GSKit-crypto on macOS) |
+
+Both files use the Python standard library only — no virtual environment or `pip install` needed.
+
+```bash
+# Download both files (curl example)
+curl -O https://raw.githubusercontent.com/ncee-dp-tech-sme/cbomtest/main/generate_vulnerable_app.py
+curl -O https://raw.githubusercontent.com/ncee-dp-tech-sme/cbomtest/main/platform_guard.py
+
+# Run the generator
+python3 generate_vulnerable_app.py
+```
 
 ---
 
@@ -73,6 +97,7 @@ AppName/
 ```
 AppName/
 ├── go.mod                                (golang.org/x/crypto v0.23.0)
+├── README.md
 └── crypto/
     ├── hash.go
     ├── cipher.go
@@ -85,6 +110,7 @@ AppName/
 ```
 AppName/
 ├── package.json                          (jsonwebtoken, mlkem, @noble/post-quantum)
+├── README.md
 └── src/
     ├── hash.js
     ├── cipher.js
@@ -98,6 +124,7 @@ AppName/
 ```
 AppName/
 ├── AppName.csproj                        (net9.0)
+├── README.md
 └── Crypto/
     ├── Hash.cs
     ├── Cipher.cs
@@ -110,6 +137,7 @@ AppName/
 ```
 AppName/
 ├── pubspec.yaml                          (crypto ^3.0.0, cryptography ^2.7.0)
+├── README.md
 └── lib/src/
     ├── hash.dart
     ├── cipher.dart
@@ -121,6 +149,7 @@ AppName/
 ```
 AppName/
 ├── CMakeLists.txt                        (OpenSSL required)
+├── README.md
 └── src/
     ├── hash.c
     ├── cipher.c
@@ -148,7 +177,7 @@ All libraries are **code-generation targets only** — the generator emits sourc
 | JS/TS | node:crypto | ✅ | ✅ | ✅ | Node 18+ built-in |
 | JS/TS | jsonwebtoken | ✅ | ✅ | ✅ | Pure JS npm package |
 
-The generator enforces platform restrictions at generation time via [`platform_guard.py`](../platform_guard.py). Attempting to generate a GSKit-crypto app on macOS raises a clear `[PLATFORM ERROR]` with remediation steps.
+The generator enforces platform restrictions at generation time via [`platform_guard.py`](platform_guard.py). Attempting to generate a GSKit-crypto app on macOS raises a clear `[PLATFORM ERROR]` with remediation steps.
 
 ---
 
@@ -226,4 +255,3 @@ The following rules were added from `cwe.yaml` to cover additional CWE mappings 
 - Created by Erwin Friethoff, Senior Security Architect at IBM. Please reach out for questions or suggestions.
 
 <script data-goatcounter="https://ncee-data-sme.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-

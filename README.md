@@ -1,10 +1,34 @@
 # generate_vulnerable_app.py
 
+> **Repository:** <https://github.com/ncee-dp-tech-sme/cbomtest/>
+
 A demo tool that interactively generates realistic multi-file Java or Python applications with deliberately introduced cryptographic weaknesses, for showcasing the value of **IBM Guardium Quantum Safe Explorer**.
 After running **IBM Guardium Quantum Safe Explorer** the results can be uploaded **IBM Guardium Cryptography Manager** after adding the required metadata,(gitUrl or repositoryUrl & repositoryId).
 
 > **Note:** This tool is exclusively for client demos and should NEVER be used in production.
 
+
+---
+
+## Required Files
+
+To run the generator as designed, download the following two files from the repository root and keep them in the **same directory**:
+
+| File | Purpose |
+|------|---------|
+| [`generate_vulnerable_app.py`](https://github.com/ncee-dp-tech-sme/cbomtest/blob/main/generate_vulnerable_app.py) | Main generator — interactive CLI, weakness injection, file generation |
+| [`platform_guard.py`](https://github.com/ncee-dp-tech-sme/cbomtest/blob/main/platform_guard.py) | Platform compatibility guard — prevents generation of code that targets libraries unavailable on the current OS (e.g. GSKit-crypto on macOS) |
+
+Both files use the Python standard library only — no virtual environment or `pip install` needed.
+
+```bash
+# Download both files (curl example)
+curl -O https://raw.githubusercontent.com/ncee-dp-tech-sme/cbomtest/main/generate_vulnerable_app.py
+curl -O https://raw.githubusercontent.com/ncee-dp-tech-sme/cbomtest/main/platform_guard.py
+
+# Run the generator
+python3 generate_vulnerable_app.py
+```
 
 ---
 
