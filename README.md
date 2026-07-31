@@ -71,7 +71,9 @@ AppName/
 
 ## Weakness Catalogue
 
-Weaknesses are mapped to the rules defined in [`cbom-security.yaml`](cbom-security.yaml):
+Weaknesses are mapped to the rules defined in [`cbom-security.yaml`](cbom-security.yaml).
+
+### Generator rules (CBS-001 – CBS-004)
 
 | Rule    | Category                              | Examples                                                                                     |
 |---------|---------------------------------------|----------------------------------------------------------------------------------------------|
@@ -79,6 +81,27 @@ Weaknesses are mapped to the rules defined in [`cbom-security.yaml`](cbom-securi
 | CBS-002 | Insecure cipher mode                  | AES-ECB, AES-CBC (no AEAD), static / hardcoded IVs                                          |
 | CBS-003 | Insufficient key size / hardcoded material | RSA-512/1024, AES-64, PBKDF2 <2000 iters, no salt, hardcoded keys / passwords / PEM / JWT secrets, insecure PRNG, quantum-vulnerable RSA / ECDH |
 | CBS-004 | Outdated protocol                     | SSLv3, TLS 1.0, TLS 1.1, trust-all TrustManager, certificate validation disabled            |
+
+### Extended CWE rules (CBS-005 – CBS-012)
+
+The following rules were added from `cwe.yaml` to cover additional CWE mappings detected by IBM Guardium Quantum Safe Explorer:
+
+| Rule    | CWE       | Name                                              | Severity |
+|---------|-----------|---------------------------------------------------|----------|
+| CBS-005 | CWE-259   | Use of Hard-coded Password                        | high     |
+| CBS-006 | CWE-321   | Use of Hard-coded Cryptographic Key               | critical |
+| CBS-007 | CWE-335   | Incorrect Usage of Seeds in PRNG                  | high     |
+| CBS-008 | CWE-338   | Use of Cryptographically Weak PRNG                | critical |
+| CBS-009 | CWE-759   | Use of a One-Way Hash without a Salt              | high     |
+| CBS-010 | CWE-780   | Use of RSA Algorithm without OAEP                 | high     |
+| CBS-011 | CWE-916   | Password Hash With Insufficient Computational Effort | critical |
+| CBS-012 | CWE-1204  | Generation of Weak Initialization Vector (IV)     | high     |
+
+### Compliance rule (CBC-001)
+
+| Rule    | Category              | Description                                        |
+|---------|-----------------------|----------------------------------------------------|
+| CBC-001 | Expired certificate   | Certificates expired or close to expiration date   |
 
 ---
 

@@ -1,6 +1,8 @@
 # CBOM Security and Compliance Rules
 # Category: cbom-security, cbom-compliance
 # Evaluates cryptographic assets (algorithms, protocols, certificates, related-crypto-material) for weaknesses.
+# Change history:
+# 2026-07-31 15:55 - Added CBS-005 through CBS-011 from cwe.yaml gap analysis (CWE-259, CWE-321, CWE-335, CWE-338, CWE-759, CWE-780, CWE-916, CWE-1204)
 
 - id: CBS-001
   name: "Weak/Deprecated Cryptographic Algorithm"
@@ -162,4 +164,244 @@
       "subject": cryptoProperties.certificateProperties.subjectName,
       "issuer": cryptoProperties.certificateProperties.issuerName,
       "notValidAfter": cryptoProperties.certificateProperties.notValidAfter
+    }
+
+# CBS-005 maps to CWE-259: Use of Hard-coded Password
+- id: CBS-005
+  name: "Use of Hard-coded Password"
+  description: "The product contains a password that is hard-coded in source code, scripts, binaries, or configuration artifacts. Attackers who obtain access to the application can recover the password and use it to bypass authentication or gain unauthorized access."
+  severity: high
+  category: cbom-security
+  dry-run-support: full
+  standards:
+    nist-800-53:
+      - "IA-5 Authenticator Management"
+      - "SC-28 Protection of Information at Rest"
+    iso-27001:
+      - "A.5.17 Authentication Information"
+      - "A.8.24 Use of Cryptography"
+  condition: |
+    components[
+      properties[
+        $contains($lowercase(value), 'password')
+        and (
+          $contains($lowercase(value), 'hardcoded')
+          or $contains($lowercase(value), 'default')
+        )
+      ]
+    ]
+  location: |
+    {
+      "bomRef": $firstNonEmpty($."bom-ref", bom.serialNumber)
+    }
+  message: "Hard-coded password detected in component '{{ name }}'"
+  mitigation: "Remove embedded passwords and use secret-management solutions, vaults, managed identities, or secure runtime credential retrieval."
+  evidence: |
+    {
+      "credentialType": "password"
+    }
+
+# CBS-006 maps to CWE-321: Use of Hard-coded Cryptographic Key
+- id: CBS-006
+  name: "Use of Hard-coded Cryptographic Key"
+  description: "The product uses a hard-coded cryptographic key. Attackers can extract the key through reverse engineering, enabling decryption, forgery, impersonation, or unauthorized access."
+  severity: critical
+  category: cbom-security
+  dry-run-support: full
+  standards:
+    nist-800-53:
+      - "SC-12 Cryptographic Key Establishment and Management"
+      - "SC-13 Cryptographic Protection"
+    iso-27001:
+      - "A.8.24 Use of Cryptography"
+  condition: |
+    components[
+      cryptoProperties.assetType='key'
+      and cryptoProperties.cryptoFunctions.exists()
+      and (
+        properties[name='hardcoded']
+        or properties[name='embedded-key']
+      )
+    ]
+  location: |
+    {
+      "bomRef": $firstNonEmpty($."bom-ref", bom.serialNumber)
+    }
+  message: "Hard-coded cryptographic key detected in component '{{ name }}'"
+  mitigation: "Use external key management, HSMs, cloud key vaults, device provisioning, and periodic key rotation."
+  evidence: |
+    {
+      "assetType": cryptoProperties.assetType
+    }
+
+# CBS-007 maps to CWE-335: Incorrect Usage of Seeds in PRNG
+- id: CBS-007
+  name: "Incorrect Usage of Seeds in Pseudo-Random Number Generator (PRNG)"
+  description: "PRNGs seeded with predictable, reused, or insufficiently random values can generate predictable cryptographic values such as keys, IVs, tokens, or nonces."
+  severity: high
+  category: cbom-security
+  dry-run-support: full
+  standards:
+    nist-800-53:
+      - "SC-12 Cryptographic Key Establishment and Management"
+      - "SC-13 Cryptographic Protection"
+    iso-27001:
+      - "A.8.24 Use of Cryptography"
+  condition: |
+    components[
+      cryptoProperties.assetType='randomness'
+      and properties[name='predictable-seed']
+    ]
+  location: |
+    {
+      "bomRef": $firstNonEmpty($."bom-ref", bom.serialNumber)
+    }
+  message: "Predictable PRNG seed detected in component '{{ name }}'"
+  mitigation: "Seed PRNGs using cryptographically secure entropy sources provided by the operating system."
+
+# CBS-008 maps to CWE-338: Use of Cryptographically Weak PRNG
+- id: CBS-008
+  name: "Use of Cryptographically Weak PRNG"
+  description: "The product uses a pseudo-random number generator that is not suitable for cryptographic purposes, making generated secrets predictable."
+  severity: critical
+  category: cbom-security
+  dry-run-support: full
+  standards:
+    nist-800-53:
+      - "SC-12 Cryptographic Key Establishment and Management"
+      - "SC-13 Cryptographic Protection"
+    iso-27001:
+      - "A.8.24 Use of Cryptography"
+  condition: |
+    components[
+      cryptoProperties.assetType='randomness'
+      and (
+        $contains($lowercase(name), 'random')
+        or $contains($lowercase(name), 'prng')
+      )
+    ]
+  location: |
+    {
+      "bomRef": $firstNonEmpty($."bom-ref", bom.serialNumber)
+    }
+  message: "Cryptographically weak PRNG detected in component '{{ name }}'"
+  mitigation: "Use approved CSPRNGs such as SecureRandom, CryptGenRandom, getrandom(), or OS-provided cryptographic APIs."
+
+# CBS-009 maps to CWE-759: Use of a One-Way Hash without a Salt
+- id: CBS-009
+  name: "Use of a One-Way Hash without a Salt"
+  description: "Passwords or other sensitive values are hashed without a unique, random salt, enabling rainbow-table and large-scale cracking attacks."
+  severity: high
+  category: cbom-security
+  dry-run-support: full
+  standards:
+    nist-800-53:
+      - "IA-5 Authenticator Management"
+    iso-27001:
+      - "A.5.17 Authentication Information"
+  condition: |
+    components[
+      cryptoProperties.assetType='algorithm'
+      and cryptoProperties.algorithmProperties.primitive='hash'
+      and not properties[name='salt']
+    ]
+  location: |
+    {
+      "bomRef": $firstNonEmpty($."bom-ref", bom.serialNumber)
+    }
+  message: "Password hashing without salt detected in component '{{ name }}'"
+  mitigation: "Generate a unique random salt for every password and use Argon2, bcrypt, scrypt, or PBKDF2."
+  evidence: |
+    {
+      "primitive": cryptoProperties.algorithmProperties.primitive
+    }
+
+# CBS-010 maps to CWE-780: Use of RSA Algorithm without OAEP
+- id: CBS-010
+  name: "Use of RSA Algorithm without OAEP"
+  description: "RSA encryption is performed without OAEP padding, exposing the implementation to cryptographic attacks that exploit deterministic or weaker padding schemes."
+  severity: high
+  category: cbom-security
+  dry-run-support: full
+  standards:
+    nist-800-53:
+      - "SC-13 Cryptographic Protection"
+    iso-27001:
+      - "A.8.24 Use of Cryptography"
+  condition: |
+    components[
+      cryptoProperties.assetType='algorithm'
+      and $contains($lowercase($safeStr(cryptoProperties.algorithmProperties.algorithmFamily)), 'rsa')
+      and not $contains($lowercase($safeStr(cryptoProperties.algorithmProperties.mode)), 'oaep')
+    ]
+  location: |
+    {
+      "bomRef": $firstNonEmpty($."bom-ref", bom.serialNumber)
+    }
+  message: "RSA encryption without OAEP padding detected"
+  mitigation: "Use RSA-OAEP for encryption or transition to modern hybrid cryptographic designs."
+
+# CBS-011 maps to CWE-916: Use of Password Hash With Insufficient Computational Effort
+- id: CBS-011
+  name: "Use of Password Hash With Insufficient Computational Effort"
+  description: "Passwords are hashed using algorithms or configurations that are too fast, allowing attackers to perform brute-force or dictionary attacks using modern hardware."
+  severity: critical
+  category: cbom-security
+  dry-run-support: full
+  standards:
+    nist-800-53:
+      - "IA-5 Authenticator Management"
+      - "SC-28 Protection of Information at Rest"
+    iso-27001:
+      - "A.5.17 Authentication Information"
+  condition: |
+    components[
+      cryptoProperties.assetType='algorithm'
+      and (
+        $contains($lowercase($safeStr(cryptoProperties.algorithmProperties.algorithmFamily)), 'md5')
+        or $contains($lowercase($safeStr(cryptoProperties.algorithmProperties.algorithmFamily)), 'sha1')
+        or $contains($lowercase($safeStr(cryptoProperties.algorithmProperties.algorithmFamily)), 'sha-1')
+      )
+    ]
+  location: |
+    {
+      "bomRef": $firstNonEmpty($."bom-ref", bom.serialNumber)
+    }
+  message: "Password hash algorithm with insufficient computational effort detected"
+  mitigation: "Use adaptive password hashing algorithms such as Argon2, bcrypt, scrypt, or PBKDF2 and periodically increase work factors."
+  evidence: |
+    {
+      "algorithm": cryptoProperties.algorithmProperties.algorithmFamily
+    }
+
+# CBS-012 maps to CWE-1204: Generation of Weak Initialization Vector (IV)
+- id: CBS-012
+  name: "Generation of Weak Initialization Vector (IV)"
+  description: "Cryptographic operations use IVs that are predictable, static, reused, or generated with insufficient entropy, weakening confidentiality guarantees."
+  severity: high
+  category: cbom-security
+  dry-run-support: full
+  standards:
+    nist-800-53:
+      - "SC-12 Cryptographic Key Establishment and Management"
+      - "SC-13 Cryptographic Protection"
+    iso-27001:
+      - "A.8.24 Use of Cryptography"
+  condition: |
+    components[
+      cryptoProperties.assetType='algorithm'
+      and (
+        properties[name='static-iv']
+        or properties[name='predictable-iv']
+      )
+    ]
+  location: |
+    {
+      "bomRef": $firstNonEmpty($."bom-ref", bom.serialNumber)
+    }
+  message: "Weak or predictable initialization vector detected"
+  mitigation: "Generate unique cryptographically random IVs using approved CSPRNGs and never reuse IVs."
+  evidence: |
+    {
+      "ivManagement": "weak"
     }
