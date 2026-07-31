@@ -18,12 +18,17 @@ Change history:
  2026-07-31  Fix: added `import java.util.Random;` to the common Java import
               block in `_java_file()` so the CBS-003 insecure-PRNG snippet
               (which uses `java.util.Random`) compiles in every target class.
+  2026-08-01  Phase 2: Added local temp file strategy helpers (_make_temp_dir,
+              _ensure_gitignore_entry) for project-local, git-ignored temp
+              directories during multi-language app generation.
 """
 
 import os
 import random
+import shutil
 import sys
 import textwrap
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, List, Tuple
@@ -44,6 +49,33 @@ class Weakness:
 
 def _wk(category: str, description: str, tag: str = "") -> Weakness:
     return Weakness(category=category, description=description, tag=tag)
+
+
+# ---------------------------------------------------------------------------
+# Local temp file strategy
+# ---------------------------------------------------------------------------
+
+# Create a project-local, timestamped temp directory under .gen-tmp/.
+# Never uses OS-managed temp locations (no tempfile, $TMPDIR, %TEMP%).
+def _make_temp_dir(lang: str, app_name: str) -> Path:
+    project_root = Path(__file__).parent
+    tmp_root = project_root / ".gen-tmp"
+    tmp_root.mkdir(exist_ok=True)
+    safe_name = app_name[:20]
+    run_dir = tmp_root / f"{int(time.time())}-{lang}-{safe_name}"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    return run_dir
+
+
+# Add an entry to .gitignore at project root if it is not already present.
+def _ensure_gitignore_entry(project_root: Path, entry: str) -> None:
+    gi = project_root / ".gitignore"
+    if gi.exists():
+        if entry not in gi.read_text():
+            with gi.open("a") as f:
+                f.write(f"\n{entry}\n")
+    else:
+        gi.write_text(f"{entry}\n")
 
 
 # ---------------------------------------------------------------------------
