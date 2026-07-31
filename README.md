@@ -26,7 +26,7 @@ You will be prompted for:
 
 1. Prompts for language (`java`/`python`), application name, and version
 2. Creates a named output directory with a realistic multi-module application tree
-3. Randomly selects **8–26 weaknesses** from 39 distinct weakness factories (19 Java, 20 Python)
+3. Randomly selects **8–26 weaknesses** from 61 distinct weakness factories (33 Java, 28 Python)
 4. Distributes them naturally across 8 source files per language
 5. Prints a categorised summary with rule IDs (`CBS-001` through `CBS-004`)
 
@@ -126,7 +126,7 @@ The following rules were added from `cwe.yaml` to cover additional CWE mappings 
 ## Requirements
 
 - Python 3.8+ (standard library only — no external dependencies for the generator itself)
-- The generated **Java** app targets Java 17 / Maven 3.9+; BouncyCastle PQC snippets require Java 17+ with `bcprov-jdk18on` on the classpath
+- The generated **Java** app targets Java 17 / Maven 3.9+; BouncyCastle PQC snippets require Java 17+ with `bcprov-jdk18on` on the classpath; all required JDK imports (`java.util.Random`, etc.) are included in every generated file
 - The generated **Python** app lists its runtime dependencies in `requirements.txt`; PQC snippets require `cryptography >= 44.0.0` and/or `liboqs-python >= 0.10.0`
 - Created by Erwin Friethoff, Senior Security Architect at IBM. Please reach out for questions or suggestions.
 

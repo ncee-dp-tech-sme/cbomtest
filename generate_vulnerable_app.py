@@ -15,6 +15,9 @@ Change history:
               (ML-KEM, ML-DSA), Python/oqs (ML-KEM, ML-DSA, SLH-DSA, XMSS).
               Updated pom.xml generation to include BouncyCastle dependency.
               Updated requirements.txt generation to include liboqs-python.
+ 2026-07-31  Fix: added `import java.util.Random;` to the common Java import
+              block in `_java_file()` so the CBS-003 insecure-PRNG snippet
+              (which uses `java.util.Random`) compiles in every target class.
 """
 
 import os
@@ -1084,6 +1087,7 @@ def generate_java_app(base_dir: Path, app_name: str, version: str,
             "import java.security.*;",
             "import java.security.spec.*;",
             "import java.util.Base64;",
+            "import java.util.Random;",
             "import javax.crypto.*;",
             "import javax.crypto.spec.*;",
             "import javax.net.ssl.*;",
