@@ -73,6 +73,7 @@ AppName/
 ```
 AppName/
 ├── go.mod                                (golang.org/x/crypto v0.23.0)
+├── README.md
 └── crypto/
     ├── hash.go
     ├── cipher.go
@@ -85,6 +86,7 @@ AppName/
 ```
 AppName/
 ├── package.json                          (jsonwebtoken, mlkem, @noble/post-quantum)
+├── README.md
 └── src/
     ├── hash.js
     ├── cipher.js
@@ -98,6 +100,7 @@ AppName/
 ```
 AppName/
 ├── AppName.csproj                        (net9.0)
+├── README.md
 └── Crypto/
     ├── Hash.cs
     ├── Cipher.cs
@@ -110,6 +113,7 @@ AppName/
 ```
 AppName/
 ├── pubspec.yaml                          (crypto ^3.0.0, cryptography ^2.7.0)
+├── README.md
 └── lib/src/
     ├── hash.dart
     ├── cipher.dart
@@ -121,6 +125,7 @@ AppName/
 ```
 AppName/
 ├── CMakeLists.txt                        (OpenSSL required)
+├── README.md
 └── src/
     ├── hash.c
     ├── cipher.c
