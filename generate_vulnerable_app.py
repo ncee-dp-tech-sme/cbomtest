@@ -21,6 +21,9 @@ Change history:
   2026-08-01  Phase 2: Added local temp file strategy helpers (_make_temp_dir,
               _ensure_gitignore_entry) for project-local, git-ignored temp
               directories during multi-language app generation.
+  2026-08-01  Phase 4: Added generator functions for Go, JavaScript, C#, Dart,
+              and C/C++. Added _distribute() helper for snippet distribution.
+              Added import platform_guard for GSKit-crypto guard in generate_c_app.
 """
 
 import os
@@ -32,6 +35,8 @@ import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, List, Tuple
+
+import platform_guard
 
 # ---------------------------------------------------------------------------
 # Weakness catalogue
@@ -1592,6 +1597,258 @@ def generate_python_app(base_dir: Path, app_name: str, version: str,
     """))
 
     _write_readme(base_dir, app_name, version, description, "Python / Flask")
+    return injected
+
+
+# ---------------------------------------------------------------------------
+# Multi-language generator helpers
+# ---------------------------------------------------------------------------
+
+# Round-robin distribute (Weakness, snippet_str) pairs across file_map buckets.
+# PQC snippets (ML-KEM / ML-DSA / SLH-DSA) always land in the designated pqc bucket.
+def _distribute(snippets, file_map, pqc_key=None):
+    keys = list(file_map.keys())
+    pqc_terms = ("ml-kem", "ml-dsa", "slh-dsa")
+    rr_idx = 0
+    for wk, snippet in snippets:
+        desc_lower = wk.description.lower()
+        if pqc_key and any(t in desc_lower for t in pqc_terms):
+            file_map[pqc_key].append((wk, snippet))
+        else:
+            file_map[keys[rr_idx % len(keys)]].append((wk, snippet))
+            rr_idx += 1
+
+
+# ---- Go application ----
+
+def generate_go_app(base_dir: Path, app_name: str, version: str,
+                    weaknesses_to_inject: List[Tuple[Weakness, Callable[[], str]]]) -> List[Weakness]:
+    """Build the Go application tree and inject weaknesses."""
+    if base_dir.exists():
+        return []
+
+    app_lower = app_name.lower().replace("-", "").replace("_", "")
+    crypto_dir = base_dir / "crypto"
+    crypto_dir.mkdir(parents=True, exist_ok=True)
+
+    file_map = {
+        "crypto/hash.go": [],
+        "crypto/cipher.go": [],
+        "crypto/tls.go": [],
+        "crypto/pqc.go": [],
+    }
+    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    _distribute(snippets, file_map, pqc_key="crypto/pqc.go")
+
+    injected: List[Weakness] = []
+    for rel_path, entries in file_map.items():
+        parts = [
+            "package crypto",
+            "",
+        ]
+        for wk, snip in entries:
+            parts.append("")
+            parts.append(snip.strip())
+            injected.append(wk)
+        (base_dir / rel_path).write_text("\n".join(parts) + "\n")
+
+    (base_dir / "go.mod").write_text(textwrap.dedent(f"""\
+        module github.com/example/{app_lower}
+
+        go 1.22
+
+        require golang.org/x/crypto v0.23.0
+    """))
+    return injected
+
+
+# ---- JavaScript application ----
+
+def generate_js_app(base_dir: Path, app_name: str, version: str,
+                    weaknesses_to_inject: List[Tuple[Weakness, Callable[[], str]]]) -> List[Weakness]:
+    """Build the JavaScript application tree and inject weaknesses."""
+    if base_dir.exists():
+        return []
+
+    app_lower = app_name.lower().replace("-", "_").replace(" ", "_")
+    src_dir = base_dir / "src"
+    src_dir.mkdir(parents=True, exist_ok=True)
+
+    file_map = {
+        "src/hash.js": [],
+        "src/cipher.js": [],
+        "src/tls.js": [],
+        "src/jwt.js": [],
+        "src/pqc.js": [],
+    }
+    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    _distribute(snippets, file_map, pqc_key="src/pqc.js")
+
+    injected: List[Weakness] = []
+    for rel_path, entries in file_map.items():
+        parts = []
+        for wk, snip in entries:
+            parts.append(snip.strip())
+            injected.append(wk)
+        (base_dir / rel_path).write_text("\n\n".join(parts) + "\n")
+
+    app_name_lower = app_name.lower().replace(" ", "-")
+    import json
+    (base_dir / "package.json").write_text(json.dumps({
+        "name": app_name_lower,
+        "version": version,
+        "description": "Demo application",
+        "main": "src/index.js",
+        "dependencies": {
+            "jsonwebtoken": "^9.0.0",
+            "mlkem": "^1.0.0",
+            "@noble/post-quantum": "^0.2.0",
+        },
+    }, indent=2) + "\n")
+    return injected
+
+
+# ---- C# application ----
+
+def generate_csharp_app(base_dir: Path, app_name: str, version: str,
+                        weaknesses_to_inject: List[Tuple[Weakness, Callable[[], str]]]) -> List[Weakness]:
+    """Build the C# application tree and inject weaknesses."""
+    if base_dir.exists():
+        return []
+
+    class_name = _title(app_name)
+    crypto_dir = base_dir / "Crypto"
+    crypto_dir.mkdir(parents=True, exist_ok=True)
+
+    file_map = {
+        "Crypto/Hash.cs": [],
+        "Crypto/Cipher.cs": [],
+        "Crypto/Tls.cs": [],
+        "Crypto/Pqc.cs": [],
+    }
+    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    _distribute(snippets, file_map, pqc_key="Crypto/Pqc.cs")
+
+    injected: List[Weakness] = []
+    for rel_path, entries in file_map.items():
+        using_lines = []
+        body_lines = []
+        for wk, snip in entries:
+            for line in snip.strip().splitlines():
+                if line.startswith("using "):
+                    if line not in using_lines:
+                        using_lines.append(line)
+                else:
+                    body_lines.append("    " + line if line.strip() else "")
+            body_lines.append("")
+            injected.append(wk)
+
+        parts = [f"// {class_name} — demo application"]
+        if using_lines:
+            parts.extend(using_lines)
+        parts += [
+            f"namespace {class_name}.Crypto;",
+            "",
+            "public static partial class CryptoHelpers",
+            "{",
+        ]
+        parts.extend(body_lines)
+        parts.append("}")
+        (base_dir / rel_path).write_text("\n".join(parts) + "\n")
+
+    (base_dir / f"{class_name}.csproj").write_text(textwrap.dedent(f"""\
+        <Project Sdk="Microsoft.NET.Sdk">
+          <PropertyGroup>
+            <OutputType>Exe</OutputType>
+            <TargetFramework>net9.0</TargetFramework>
+          </PropertyGroup>
+        </Project>
+    """))
+    return injected
+
+
+# ---- Dart application ----
+
+def generate_dart_app(base_dir: Path, app_name: str, version: str,
+                      weaknesses_to_inject: List[Tuple[Weakness, Callable[[], str]]]) -> List[Weakness]:
+    """Build the Dart application tree and inject weaknesses."""
+    if base_dir.exists():
+        return []
+
+    app_lower = app_name.lower().replace("-", "_").replace(" ", "_")
+    lib_src = base_dir / "lib" / "src"
+    lib_src.mkdir(parents=True, exist_ok=True)
+
+    file_map = {
+        "lib/src/hash.dart": [],
+        "lib/src/cipher.dart": [],
+        "lib/src/kdf.dart": [],
+    }
+    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    _distribute(snippets, file_map)
+
+    injected: List[Weakness] = []
+    for rel_path, entries in file_map.items():
+        parts = []
+        for wk, snip in entries:
+            parts.append(snip.strip())
+            injected.append(wk)
+        (base_dir / rel_path).write_text("\n\n".join(parts) + "\n")
+
+    (base_dir / "pubspec.yaml").write_text(textwrap.dedent(f"""\
+        name: {app_lower}
+        version: {version}
+        environment:
+          sdk: ">=3.0.0 <4.0.0"
+        dependencies:
+          crypto: ^3.0.0
+          cryptography: ^2.7.0
+    """))
+    return injected
+
+
+# ---- C/C++ application ----
+
+def generate_c_app(base_dir: Path, app_name: str, version: str,
+                   weaknesses_to_inject: List[Tuple[Weakness, Callable[[], str]]]) -> List[Weakness]:
+    """Build the C/C++ application tree and inject weaknesses. Raises PlatformError for GSKit-crypto on macOS."""
+    # Check GSKit-crypto platform guard before touching the filesystem
+    for wk, _ in weaknesses_to_inject:
+        if "gskit" in wk.description.lower():
+            platform_guard.assert_supported("c", "gskit-crypto")
+            break
+
+    if base_dir.exists():
+        return []
+
+    src_dir = base_dir / "src"
+    src_dir.mkdir(parents=True, exist_ok=True)
+
+    class_name = _title(app_name)
+    file_map = {
+        "src/hash.c": [],
+        "src/cipher.c": [],
+        "src/tls.c": [],
+        "src/pqc.c": [],
+    }
+    snippets = [(wk, factory()) for wk, factory in weaknesses_to_inject]
+    _distribute(snippets, file_map, pqc_key="src/pqc.c")
+
+    injected: List[Weakness] = []
+    for rel_path, entries in file_map.items():
+        parts = []
+        for wk, snip in entries:
+            parts.append(snip.strip())
+            injected.append(wk)
+        (base_dir / rel_path).write_text("\n\n".join(parts) + "\n")
+
+    (base_dir / "CMakeLists.txt").write_text(textwrap.dedent(f"""\
+        cmake_minimum_required(VERSION 3.16)
+        project({class_name} VERSION {version})
+        find_package(OpenSSL REQUIRED)
+        add_executable({class_name} src/hash.c src/cipher.c src/tls.c src/pqc.c)
+        target_link_libraries({class_name} OpenSSL::SSL OpenSSL::Crypto)
+    """))
     return injected
 
 
