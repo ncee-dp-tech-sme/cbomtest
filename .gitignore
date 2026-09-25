@@ -73,8 +73,7 @@ Desktop.ini
 
 # Zip / scan results
 *.zip
-**/qs_explorer_result/quantum_safe_cryptography_analysis_*.json
-**/qs_explorer_result/quantum_safe_api_discovery_*.json
+**/qs_explorer_result/*
 k8s-port443/00-namespace.yaml
 k8s-port443/01-configmap.yaml
 k8s-port443/02-deployment.yaml
@@ -82,3 +81,5 @@ k8s-port443/README.md
 .gitignore
 task-outcomes/port443-proxy-setup.txt
 bob-task-9a839776fdb92ee9faa43817775fbf37-2026-07-15.json
+**/qs_scan_result/*
+

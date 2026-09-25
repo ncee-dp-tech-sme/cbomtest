@@ -1,0 +1,192 @@
+// ============================================================
+// Jenkinsfile — IBM Bob Shell Security Scan Pipeline
+// 2025-01-01: Initial version — vulnerability scan of source
+//             code and dependencies using IBM Bob Shell CLI
+// ============================================================
+
+pipeline {
+    agent any
+
+    // ----------------------------------------------------------------
+    // Pipeline-wide environment variables.
+    // BOBSHELL_API_KEY must be stored as a Jenkins Secret Text credential.
+    // ----------------------------------------------------------------
+    environment {
+        BOBSHELL_API_KEY = credentials('bobshell-api-key')
+        BOB_REPORT_DIR  = 'bob-security-reports'
+        BOB_RULES_DIR   = '.bob/rules'
+    }
+
+    options {
+        timestamps()
+        timeout(time: 30, unit: 'MINUTES')
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+
+    stages {
+
+        // ----------------------------------------------------------------
+        // Stage 1: Checkout source code
+        // ----------------------------------------------------------------
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        // ----------------------------------------------------------------
+        // Stage 2: Install / verify IBM Bob Shell
+        // ----------------------------------------------------------------
+        stage('Install Bob Shell') {
+            steps {
+                sh '''
+                    set -euo pipefail
+
+                    echo "==> Checking Bob Shell installation..."
+                    if ! command -v bob &> /dev/null; then
+                        echo "==> Bob Shell not found, installing..."
+                        curl -fsSL https://bob.ibm.com/download/bobshell.sh | bash
+                        # Re-source PATH so bob is available in this shell
+                        export PATH="$HOME/.local/bin:$PATH"
+                    fi
+
+                    bob --version
+                    echo "==> Bob Shell ready."
+                '''
+            }
+        }
+
+        // ----------------------------------------------------------------
+        // Stage 3: Accept license (required before first non-interactive run)
+        // ----------------------------------------------------------------
+        stage('Accept License') {
+            steps {
+                sh '''
+                    set -euo pipefail
+                    export PATH="$HOME/.local/bin:$PATH"
+                    bob --accept-license --auth-method api-key -p "List the files in the current directory" \
+                        --hide-intermediary-output || true
+                    echo "==> License accepted."
+                '''
+            }
+        }
+
+        // ----------------------------------------------------------------
+        // Stage 4: Prepare report output directory
+        // ----------------------------------------------------------------
+        stage('Prepare') {
+            steps {
+                sh 'mkdir -p "$BOB_REPORT_DIR"'
+            }
+        }
+
+        // ----------------------------------------------------------------
+        // Stage 5: Source code vulnerability scan
+        //   Instructs Bob Shell to review all source files for insecure
+        //   cryptography, hardcoded secrets, injection risks and other
+        //   security weaknesses, then write a structured Markdown report.
+        // ----------------------------------------------------------------
+        stage('Source Code Security Scan') {
+            steps {
+                sh '''
+                    set -euo pipefail
+                    export PATH="$HOME/.local/bin:$PATH"
+
+                    echo "==> Running Bob Shell source code security scan..."
+
+                    bob --auth-method api-key \
+                        --approval-mode full-auto \
+                        --hide-intermediary-output \
+                        -p "$(cat <<'PROMPT'
+You are a security engineer performing a source code security review.
+
+Scan all source files in the current workspace for:
+1. Insecure or weak cryptographic algorithms (MD5, SHA-1, DES, RC4, ECB mode, RSA < 2048-bit keys, hardcoded IVs/salts)
+2. Hardcoded credentials, API keys, tokens or passwords
+3. SQL injection, command injection, path traversal or XSS vulnerabilities
+4. Insecure random number generation used for security-sensitive operations
+5. Insecure TLS/SSL configurations (TLS < 1.2, certificate validation disabled)
+6. Sensitive data written to logs
+
+For each finding produce a table row with columns: File | Line | Severity (Critical/High/Medium/Low) | Rule ID | Description | Remediation
+
+Write the full report to the file bob-security-reports/source-scan-report.md in valid Markdown.
+Start the file with: # Bob Shell Source Code Security Report
+Include a summary section with total finding counts per severity level.
+PROMPT
+)"
+                    echo "==> Source code scan complete."
+                '''
+            }
+        }
+
+        // ----------------------------------------------------------------
+        // Stage 6: Dependency / supply chain vulnerability scan
+        //   Instructs Bob Shell to check all dependency manifests for
+        //   known vulnerable, outdated or end-of-life packages.
+        // ----------------------------------------------------------------
+        stage('Dependency Vulnerability Scan') {
+            steps {
+                sh '''
+                    set -euo pipefail
+                    export PATH="$HOME/.local/bin:$PATH"
+
+                    echo "==> Running Bob Shell dependency vulnerability scan..."
+
+                    bob --auth-method api-key \
+                        --approval-mode full-auto \
+                        --hide-intermediary-output \
+                        -p "$(cat <<'PROMPT'
+You are a DevSecOps engineer performing a supply chain security review.
+
+Examine all dependency manifest files in the workspace (pom.xml, build.gradle,
+requirements.txt, package.json, Gemfile, go.mod, Cargo.toml, etc.) and check for:
+
+1. Packages with known CVEs — list the CVE ID, CVSS score and affected version range
+2. Packages that have reached end-of-life or are no longer actively maintained
+3. Packages pinned to versions with known vulnerabilities
+4. Transitive dependency risks (flag where the direct dependency pulls in a vulnerable transitive dep)
+5. Packages that should be upgraded to the latest stable version
+
+For each finding produce a table row with columns:
+Manifest File | Package | Current Version | Recommended Version | CVE / Reason | Severity | Remediation
+
+Write the full report to the file bob-security-reports/dependency-scan-report.md in valid Markdown.
+Start the file with: # Bob Shell Dependency Vulnerability Report
+Include a summary section with total finding counts per severity level.
+PROMPT
+)"
+                    echo "==> Dependency scan complete."
+                '''
+            }
+        }
+
+        // ----------------------------------------------------------------
+        // Stage 7: Archive reports as Jenkins build artifacts
+        // ----------------------------------------------------------------
+        stage('Archive Reports') {
+            steps {
+                archiveArtifacts artifacts: "${BOB_REPORT_DIR}/**/*.md",
+                                 allowEmptyArchive: false,
+                                 fingerprint: true
+
+                echo "Reports archived under: ${BOB_REPORT_DIR}/"
+            }
+        }
+    }
+
+    // ----------------------------------------------------------------
+    // Post-build actions
+    // ----------------------------------------------------------------
+    post {
+        always {
+            echo "==> Bob Shell security scan pipeline finished with status: ${currentBuild.currentResult}"
+        }
+        failure {
+            echo "==> Pipeline FAILED. Check the console output and archived reports for details."
+        }
+        success {
+            echo "==> Pipeline SUCCEEDED. Security reports are available in the build artifacts."
+        }
+    }
+}
